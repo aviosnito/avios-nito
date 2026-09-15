@@ -167,6 +167,18 @@ svg{display:block}
 .hero-cta:hover{background:#44403c}
 @media(min-width:640px){.carousel-arrow{width:52px;height:52px}.carousel-arrow.left{left:28px}.carousel-arrow.right{right:28px}}
 
+.soon-toast{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .28s,visibility .28s}
+.soon-toast.on{opacity:1;visibility:visible}
+.soon-toast-bg{position:absolute;inset:0;background:rgba(20,18,16,.5)}
+.soon-toast-card{position:relative;z-index:1;width:420px;max-width:100%;background:var(--ink);color:#fff;border-radius:16px;padding:26px 24px 0;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);overflow:hidden;transform:scale(.94);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.soon-toast.on .soon-toast-card{transform:scale(1)}
+.soon-toast-x{position:absolute;top:10px;right:10px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:none;border:0;color:rgba(255,255,255,.7);cursor:pointer;border-radius:8px}
+.soon-toast-x:hover{color:#fff;background:rgba(255,255,255,.12)}
+.soon-toast-x svg{width:18px;height:18px}
+.soon-toast-txt{display:block;font-size:15px;line-height:1.55;font-weight:600;padding-right:24px}
+.soon-toast-bar{display:block;height:4px;margin:22px -24px 0;background:rgba(255,255,255,.18)}
+.soon-toast-fill{display:block;height:100%;width:0;background:#fff}
+
 /* ---------- Ajustes para celular ---------- */
 @media(max-width:640px){
   .slide{aspect-ratio:4/5}
@@ -188,7 +200,7 @@ svg{display:block}
   .mq-item span{padding:0 13px}
   .sec{padding:44px 0}
   .sec-head{margin-bottom:22px}
-@media(max-width:639px){.sec-head{padding-left:8px}}
+.sec-head{padding-left:8px}
   .hd-actions{gap:6px}
   .btn-pill{padding:8px 8px;font-size:10.5px;letter-spacing:.08em}
   .cart-btn,.search-btn{width:38px;height:38px}
@@ -199,12 +211,12 @@ svg{display:block}
   .pcard-body{padding:12px;gap:4px}
   .pcard-code{font-size:10px;letter-spacing:.12em}
   .pcard-title{font-size:14px;margin-top:3px}
-  .pcard-colors{font-size:12px}
+  .pcard-colors{font-size:12px;min-height:1.2em}
   .pcard-price{font-size:15px;margin-top:4px}
   .pcard-cu{font-size:10px}
-.pcard-soon{opacity:.5;filter:grayscale(.4)}
+
 .pcard-soon-tag{display:inline-block;margin-top:4px;font-size:10px;font-weight:800;letter-spacing:.06em;color:#2E7D5B;background:#E8F3EC;border-radius:6px;padding:4px 8px}
-.pcard-soon:hover{transform:none!important;box-shadow:none!important}
+
   .pcard-img .big{font-size:38px}
   .pcard-ph{font-size:9px;top:10px;left:10px;letter-spacing:.14em}
 }
@@ -667,6 +679,14 @@ svg{display:block}
   <main id="view"></main>
 
   <!-- Footer -->
+  <div class="soon-toast" id="soon-toast" role="status">
+    <div class="soon-toast-bg" data-action="soon-close"></div>
+    <div class="soon-toast-card">
+      <button class="soon-toast-x" data-action="soon-close" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <span class="soon-toast-txt">Este producto todavía no está a la venta — es un próximo ingreso. ¡Volvé a visitarnos pronto para conseguirlo!</span>
+      <span class="soon-toast-bar"><span class="soon-toast-fill" id="soon-toast-fill"></span></span>
+    </div>
+  </div>
   <div class="modal" id="modal-delorder">
     <div class="modal-bg" data-action="close-delorder"></div>
     <div class="modal-card modal-card-sm">
@@ -1391,30 +1411,39 @@ const CATS = [
     { id:"RY-413", title:"N° 413", img:"413marmolbeige.png", colors:cc("beige"), price:0, desc:"" },
     { id:"RY-415", title:"N° 415", img:"415maderacolor3d3.png", colors:cc("bronce"), price:0, desc:"" },
   ]},
-  { id:"cordones", idx:"06", name:"Cordones | Elásticos", blurb:"Cordones y elásticos.", direct:true, products:[
-    { id:"RY-284", title:"N° 284", img:"284.png", colors:cc("crudo"), price:0, desc:"" },
-    { id:"RY-285", title:"N° 285", img:"285.png", colors:cc("crudo"), price:0, desc:"" },
-    { id:"RY-286", title:"N° 286", img:"286.png", colors:cc("crudo"), price:0, desc:"" },
-    { id:"RY-287", title:"N° 287", img:"287beige.png", imgs:{"Beige":"287beige.png","Negro":"287negro.png"}, colors:cc("beige","negro"), price:0, desc:"" },
-    { id:"RY-293", title:"N° 293", img:"293.png", colors:cc("crudo"), price:0, desc:"" },
-    { id:"RY-294", title:"N° 294", img:"294.png", colors:cc("negro"), price:0, desc:"" },
-    { id:"RY-295", title:"N° 295", img:"295.png", colors:cc("crudo"), price:0, desc:"" },
-    { id:"RY-296", title:"N° 296", img:"296.png", colors:cc("negro"), price:0, desc:"" },
-    { id:"RY-297", title:"N° 297", img:"297.png", colors:cc("negro"), price:0, desc:"" },
-    { id:"RY-E26", title:"N° E26", img:"e26.png", colors:[], price:0, desc:"" },
-    { id:"RY-E27", title:"N° E27", img:"e27.png", colors:[], price:0, desc:"" },
-    { id:"RY-E29", title:"N° E29", img:"e29.png", colors:[], price:0, desc:"" },
-    { id:"RY-E30", title:"N° E30", img:"e30.png", colors:[], price:0, desc:"" },
-    { id:"RY-E31", title:"N° E31", img:"e31.png", colors:[], price:0, desc:"" },
-    { id:"RY-E32", title:"N° E32", img:"e32.png", colors:[], price:0, desc:"" },
-    { id:"RY-E36", title:"N° E36", img:"e36.png", colors:[], price:0, desc:"" },
-    { id:"RY-E37", title:"N° E37", img:"e37.png", colors:[], price:0, desc:"" },
-    { id:"RY-E38", title:"N° E38", img:"e38.png", colors:[], price:0, desc:"" },
-    { id:"RY-E39", title:"N° E39", img:"e39.png", colors:[], price:0, desc:"" },
-    { id:"RY-E40", title:"N° E40", img:"e40.png", colors:[], price:0, desc:"" },
-    { id:"RY-E50", title:"N° E50", img:"e50.png", colors:[], price:0, desc:"" },
-    { id:"RY-E51", title:"N° E51", img:"e51.png", colors:[], price:0, desc:"" },
-    { id:"RY-E53", title:"N° E53", img:"e53.png", colors:[], price:0, desc:"" },
+  { id:"cordones", idx:"06", name:"CORDONES | ELÁSTICOS | CIERRES", blurb:"Cordones y elásticos.", subs:[
+    { id:"co-cordones", name:"Cordones", products:[
+      { id:"RY-284", title:"N° 284", img:"284.png", colors:cc("crudo"), price:0, desc:"" },
+      { id:"RY-285", title:"N° 285", img:"285.png", colors:cc("crudo"), price:0, desc:"" },
+      { id:"RY-286", title:"N° 286", img:"286.png", colors:cc("crudo"), price:0, desc:"" },
+      { id:"RY-287", title:"N° 287", img:"287beige.png", imgs:{"Beige":"287beige.png","Negro":"287negro.png"}, colors:cc("beige","negro"), price:0, desc:"" },
+    ]},
+    { id:"co-elasticos", name:"Elásticos", products:[
+      { id:"RY-293", title:"N° 293", img:"293.png", colors:cc("crudo"), price:0, desc:"" },
+      { id:"RY-294", title:"N° 294", img:"294.png", colors:cc("negro"), price:0, desc:"" },
+      { id:"RY-295", title:"N° 295", img:"295.png", colors:cc("crudo"), price:0, desc:"" },
+      { id:"RY-296", title:"N° 296", img:"296.png", colors:cc("negro"), price:0, desc:"" },
+      { id:"RY-297", title:"N° 297", img:"297.png", colors:cc("negro"), price:0, desc:"" },
+      { id:"RY-E26", title:"N° E26", img:"e26.png", colors:[], price:0, desc:"" },
+      { id:"RY-E27", title:"N° E27", img:"e27.png", colors:[], price:0, desc:"" },
+      { id:"RY-E29", title:"N° E29", img:"e29.png", colors:[], price:0, desc:"" },
+      { id:"RY-E30", title:"N° E30", img:"e30.png", colors:[], price:0, desc:"" },
+      { id:"RY-E31", title:"N° E31", img:"e31.png", colors:[], price:0, desc:"" },
+      { id:"RY-E32", title:"N° E32", img:"e32.png", colors:[], price:0, desc:"" },
+      { id:"RY-E36", title:"N° E36", img:"e36.png", colors:[], price:0, desc:"" },
+      { id:"RY-E37", title:"N° E37", img:"e37.png", colors:[], price:0, desc:"" },
+      { id:"RY-E38", title:"N° E38", img:"e38.png", colors:[], price:0, desc:"" },
+      { id:"RY-E39", title:"N° E39", img:"e39.png", colors:[], price:0, desc:"" },
+      { id:"RY-E40", title:"N° E40", img:"e40.png", colors:[], price:0, desc:"" },
+      { id:"RY-E50", title:"N° E50", img:"e50.png", colors:[], price:0, desc:"" },
+      { id:"RY-E51", title:"N° E51", img:"e51.png", colors:[], price:0, desc:"" },
+      { id:"RY-E53", title:"N° E53", img:"e53.png", colors:[], price:0, desc:"" },
+    ]},
+    { id:"co-cierre", name:"Cierre", products:[
+      { id:"RY-E45", title:"N° E45", img:"e45.png", colors:cc("negro"), price:0, desc:"Cierre doble carril importado" },
+      { id:"RY-E46", title:"N° E46", img:"e46.png", colors:cc("negro"), price:0, desc:"Cierre doble carril importado" },
+      { id:"RY-E49", title:"N° E49", img:"e49.png", colors:cc("negro"), price:0, desc:"Cierre doble carril importado" },
+    ]},
   ]},
   { id:"flecos", idx:"07", name:"Flecos | Cinta de Ganchos", blurb:"Flecos y cintas de terminación.", subs:[
     { id:"pu-flecos", name:"Flecos", products:[
@@ -2017,7 +2046,10 @@ const XL = {
   "P103":{p:290,u:"u",m:200,med:["34l"]},
   "P104":{p:250,u:"u",m:500,med:["21,5 x 25 mm"]},
   "P105":{p:370,u:"u",m:100,med:["40l"]},
-  "P106":{p:330,u:"u",m:200,med:["34l"]}
+  "P106":{p:330,u:"u",m:200,med:["34l"]},
+  "E45":{p:1480,u:"u",m:100,med:["50 cm"]},
+  "E46":{p:1550,u:"u",m:100,med:["65 cm"]},
+  "E49":{p:1350,u:"u",m:100,med:["40 cm"]}
 };
 const UNIT_SUF = {u:"cada unidad", yarda:"cada yarda", metro:"cada metro", paq3:"cada paquete (3 mts)"};
 const UNIT_MIN = {u:"u.", yarda:"yardas", metro:"mts", paq3:"paq. (3 mts)"};
@@ -2129,6 +2161,18 @@ function adminOrderCard(o, p){
       <div class="oi-total"><span>Total</span><b class="tnum">${priceLabel(o.total)}</b></div>
     </details>
   </div>`;
+}
+let soonToastTimer=null;
+function hideSoonToast(){ const t=$("#soon-toast"); if(t) t.classList.remove("on"); clearTimeout(soonToastTimer); }
+function showSoonToast(){
+  const t=$("#soon-toast"), fill=$("#soon-toast-fill");
+  if(!t||!fill) return;
+  clearTimeout(soonToastTimer);
+  t.classList.remove("on"); fill.style.transition="none"; fill.style.width="0%";
+  void t.offsetWidth; // reinicia la animación
+  t.classList.add("on");
+  requestAnimationFrame(()=>{ fill.style.transition="width 10s linear"; fill.style.width="100%"; });
+  soonToastTimer=setTimeout(()=>{ t.classList.remove("on"); }, 10000);
 }
 function closeOrderMenus(){ document.querySelectorAll(".ao-menu.on").forEach(m=>m.classList.remove("on")); }
 function toggleOrderMenu(id){ const m=$("#aom-"+id); if(!m) return; const open=!m.classList.contains("on"); closeOrderMenus(); if(open) m.classList.add("on"); }
@@ -2287,7 +2331,7 @@ function renderHome(){
   const stats=[["Directo","de fábrica"],["+500","productos en stock"],["100 u.","mínimo por artículo"],["Envíos","a todo el país"]];
   const mqItem = kw.map(k=>`<span class="mq-item"><span>${k}</span><span class="mq-diamond">◆</span></span>`).join("");
   const novCards = getNovedades().map(p=>`
-    <button class="pcard nov-card${pPrice(p)>0?``:` pcard-soon`}" data-action="${pPrice(p)>0?`open-prod-any`:`noop`}" data-prod="${p.id}" ${pPrice(p)>0?``:`aria-disabled="true"`}>
+    <button class="pcard nov-card${pPrice(p)>0?``:` pcard-soon`}" data-action="${pPrice(p)>0?`open-prod-any`:`soon-msg`}" data-prod="${p.id}" ${pPrice(p)>0?``:`aria-disabled="true"`}>
       <div class="pcard-img">${p.img?`<img class="pcard-photo" src="/.netlify/images?url=/${p.img}&w=600&q=72" alt="${esc(p.title)}" loading="lazy" decoding="async">`:`<span class="big tnum">${num(p.id)}</span><span class="pcard-ph">Foto próximamente</span>`}</div>
       <div class="pcard-body">
         <div>
@@ -2395,7 +2439,7 @@ function renderCategoryView(){
       `</nav>`;
   }
   const cards = products.map(p=>`
-    <button class="pcard${pPrice(p)>0?``:` pcard-soon`}" data-action="${pPrice(p)>0?`open-prod`:`noop`}" data-prod="${p.id}" ${pPrice(p)>0?``:`aria-disabled="true"`}>
+    <button class="pcard${pPrice(p)>0?``:` pcard-soon`}" data-action="${pPrice(p)>0?`open-prod`:`soon-msg`}" data-prod="${p.id}" ${pPrice(p)>0?``:`aria-disabled="true"`}>
       <div class="pcard-img">${p.img?`<img class="pcard-photo" src="/.netlify/images?url=/${p.img}&w=600&q=72" alt="${esc(p.title)}" loading="lazy" decoding="async">`:`<span class="big tnum">${num(p.id)}</span><span class="pcard-ph">Foto próximamente</span>`}</div>
       <div class="pcard-body">
         <div>
@@ -2831,7 +2875,7 @@ async function doEditAccount(){
   await refreshUser(); closeAuthModals();
 }
 /* ---- Checkout 3 pasos ---- */
-const PAY = { alias:"PORTÓN.REINA.MES", cvu:"0150527602000103418850", banco:"Banco ICBC", titular:"Jacmetex SRL", cuit:"30-71597738-5" };
+const PAY = { alias:"nitoavios", cvu:"0000003100048600084497", banco:"Banco ICBC", titular:"JACME TEX S.R.L.", cuit:"30-71597738-5" };
 const checkoutState = { step:1 };
 function openCheckout(){
   closeCart(); if(!AUTH.current()){ openLogin(); return; } if(state.cart.length===0) return;
@@ -3010,6 +3054,8 @@ document.addEventListener("click", e=>{
   else if(a==="close-delorder") closeDelOrder();
   else if(a==="confirm-delorder") confirmDelOrder();
   else if(a==="order-pdf") orderPDF(t.dataset.id);
+  else if(a==="soon-msg") showSoonToast();
+  else if(a==="soon-close") hideSoonToast();
   else if(a==="open-editaccount") openEditAccount();
   else if(a==="do-editaccount") doEditAccount();
   else if(a==="checkout") openCheckout();
