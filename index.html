@@ -2,7 +2,7 @@
 <html lang="es" class="booting">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
 <title>Avíos Nito · Avíos y accesorios por mayor</title>
 <meta name="description" content="Importación y venta por mayor de avíos y accesorios de indumentaria." />
 <meta property="og:type" content="website" />
@@ -24,6 +24,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 html.booting body{opacity:0}
 body{opacity:1;transition:opacity .3s ease}
@@ -599,6 +600,10 @@ svg{display:block}
 .catalog-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin:14px 0 20px;flex-wrap:wrap}
 .catalog-btns{display:flex;gap:10px}
 .cat-exp{border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.03em;cursor:pointer;transition:.15s}
+.cat-exp{position:relative}
+.cat-exp.loading .btn-label{visibility:hidden}
+.cat-exp.loading .btn-spin{display:block;position:absolute;top:50%;left:50%;margin:-9px 0 0 -9px}
+.cat-exp.loading{cursor:wait;opacity:.85}
 .cat-exp:hover{background:#44403c}
 .cat-tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
 .cat-table{width:100%;border-collapse:collapse;font-size:13px;min-width:820px}
@@ -616,13 +621,24 @@ svg{display:block}
 .cats-btn .chev{width:16px;height:16px;transition:.2s}
 body.mega-open .cats-btn .chev{transform:rotate(180deg)}
 .cats-btn-m{display:none}
+.search-btn-fixed{display:none}
+.cart-fab{display:none}
+.cart-edge-line{display:none}
 @media(max-width:640px){
-  .hd-inner{justify-content:flex-start;gap:10px}
+  .hd-inner{justify-content:flex-start;gap:8px}
+  .search-btn-fixed{display:flex;flex-shrink:0}
   .hd-actions{flex:1;min-width:0;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
-    -webkit-mask-image:linear-gradient(to right,transparent,#000 22px);mask-image:linear-gradient(to right,transparent,#000 22px)}
+    -webkit-mask-image:linear-gradient(to left,transparent,#000 22px);mask-image:linear-gradient(to left,transparent,#000 22px)}
   .hd-actions::-webkit-scrollbar{display:none}
   .hd-actions>*{flex-shrink:0}
+  .hd-actions .cart-btn{display:none}
   .brand-btn{flex-shrink:0}
+  .cart-fab{display:flex;position:fixed;right:0;top:22vh;z-index:38;width:52px;height:52px;padding-right:6px;border-radius:999px 0 0 999px;background:var(--paper);color:var(--ink);align-items:center;justify-content:center;box-shadow:-4px 4px 18px -8px rgba(0,0,0,.22);border:1px solid var(--line);border-right:0;cursor:pointer}
+  .cart-edge-line{display:block;position:fixed;right:0;top:64px;bottom:0;width:1px;background:var(--line);z-index:37;pointer-events:none}
+  .cart-fab .cart-ic{width:24px;height:24px}
+  .cart-fab .cart-ic path{fill:currentColor}
+  .cart-fab .cart-ic .stroke{fill:none;stroke:currentColor;stroke-width:2}
+  .cart-fab .badge{top:-4px;right:-4px}
 }
 .cat-pill{display:inline-flex;align-items:center;gap:5px;margin-left:2px}
 .cat-chev{width:13px;height:13px;transition:transform .2s}
@@ -757,7 +773,7 @@ body.mega-open{overflow:hidden}
 .pass-req.ok .pr-tick{color:#2E7D5B}
 .auth-submit:disabled{opacity:.45;cursor:not-allowed}
 .auth-submit{position:relative}
-.btn-spin{display:none;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:btnspin .7s linear infinite}
+.btn-spin{display:none;box-sizing:border-box!important;width:18px!important;height:18px!important;border:2.5px solid rgba(255,255,255,.35)!important;border-top-color:#fff!important;border-radius:50%!important;animation:btnspin .7s linear infinite}
 .auth-submit.loading .btn-label{visibility:hidden}
 .auth-submit.loading .btn-spin{display:block;position:absolute;top:50%;left:50%;margin:-9px 0 0 -9px}
 @keyframes btnspin{to{transform:rotate(360deg)}}
@@ -798,10 +814,10 @@ body.mega-open{overflow:hidden}
           <input id="search-input-desk" type="text" placeholder="Buscar productos..." autocomplete="off" />
         </div>
       </div>
+      <button class="search-btn search-btn-fixed" data-action="open-search" aria-label="Buscar productos">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
       <div class="hd-actions">
-        <button class="search-btn" data-action="open-search" aria-label="Buscar productos">
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        </button>
         <button class="btn-pill cat-pill" data-action="open-mega">CATEGORÍAS <svg class="cat-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="auth-area" id="auth-area"></div>
         <button class="cart-btn" data-action="open-cart" aria-label="Abrir carrito">
@@ -815,6 +831,15 @@ body.mega-open{overflow:hidden}
       </div>
     </div>
   </header>
+
+  <div class="cart-edge-line" aria-hidden="true"></div>
+  <button class="cart-fab" data-action="open-cart" aria-label="Abrir carrito">
+    <svg class="cart-ic" viewBox="0 0 38.14 29.96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M36.14,9.95v18.01H2V9.95h34.14M38.14,7.95H0v22.01h38.14V7.95h0Z"/>
+      <path class="stroke" d="M25.63,13.94V4.66c-.2-.32-2.19-3.39-5.99-3.65-2.79-.19-5.5,1.22-7.03,3.64v9.27"/>
+    </svg>
+    <span class="badge hidden" id="badge-fab">0</span>
+  </button>
 
   <main id="view"></main>
 
@@ -1663,8 +1688,8 @@ const XL = {
   13:{p:0,u:"u",m:0,med:["ancho 1,8 cm"]},
   14:{p:0,u:"u",m:0,med:["ancho 1,7 cm"]},
   15:{p:0,u:"u",m:0,med:["ancho 1,5 cm"]},
-  17:{p:720,u:"u",m:100,med:["5 x 6 cm"]},
-  18:{p:850,u:"u",m:100,med:["5 x 6 cm"]},
+  17:{p:720,u:"u",m:100,med:[]},
+  18:{p:850,u:"u",m:100,med:[]},
   21:{p:650,u:"u",m:100,med:["6,5 x 3,5 cm"]},
   27:{p:990,u:"u",m:100,med:["diametro 5,5 cm"]},
   31:{p:790,u:"u",m:100,med:["5,4 x 3,7 cm"]},
@@ -1970,7 +1995,7 @@ const XL = {
   450:{p:880,u:"u",m:50,med:["6 x 5,5 cm"]},
   451:{p:680,u:"u",m:100,med:["5 x 4,87 cm"]},
   452:{p:690,u:"u",m:100,med:["4,5 cm"]},
-  453:{p:490,u:"u",m:100,med:["4,9 x 1,9 cm"]},
+  453:{p:490,u:"u",m:100,med:[]},
   455:{p:1290,u:"u",m:50,med:["8 x 6,5 cm"]},
   456:{p:260,u:"u",m:200,med:["diametro 2 cm"]},
   457:{p:260,u:"u",m:200,med:["diametro 2 cm"]},
@@ -2837,9 +2862,9 @@ function addToCart(){
 function flashAdd(btn){ if(!btn||btn.dataset.f) return; btn.dataset.f="1"; const o=btn.textContent; btn.textContent="✓ Agregado"; btn.classList.add("flash-ok"); setTimeout(()=>{ btn.textContent=o; btn.classList.remove("flash-ok"); delete btn.dataset.f; },1100); }
 function removeItem(key){ state.cart=state.cart.filter(x=>x.key!==key); updateCartUI(); }
 function updateCartUI(){
-  const n=cartCount(), badge=$("#badge");
-  badge.textContent = n>999?"999+":n; badge.classList.toggle("hidden", n===0);
-  $("#cart-total").textContent = priceLabel(cartTotal());
+  const n=cartCount(), badgeTxt = n>999?"999+":n;
+  document.querySelectorAll("#badge,#badge-fab").forEach(b=>{ b.textContent=badgeTxt; b.classList.toggle("hidden", n===0); });
+  $("#cart-total").textContent = state.cart.length===0 ? "-" : priceLabel(cartTotal());
   const body=$("#cart-body");
   if(state.cart.length===0){
     body.innerHTML = `<div class="cart-empty"><div class="circle">${IC.bag}</div><p>Tu carrito está vacío</p><small>Agregá productos desde el catálogo para verlos acá.</small></div>`;
@@ -2986,7 +3011,7 @@ function renderCatalog(){
     <button class="back" data-action="home" aria-label="Volver">${IC.arrowL}</button>
     <div class="catalog-head">
       <div><p class="eyebrow">Lista completa</p><h1 class="admin-h1">Catálogo</h1></div>
-      <div class="catalog-btns"><button class="cat-exp" data-action="catalog-pdf">Generar PDF</button><button class="cat-exp" data-action="catalog-excel">Generar Excel</button></div>
+      <div class="catalog-btns"><button class="cat-exp" id="catalog-pdf-btn" data-action="catalog-pdf"><span class="btn-label">Generar PDF</span><span class="btn-spin"></span></button><button class="cat-exp" id="catalog-excel-btn" data-action="catalog-excel"><span class="btn-label">Generar Excel</span><span class="btn-spin"></span></button></div>
     </div>
     <div class="cat-tablewrap">
       <table class="cat-table">
@@ -2999,46 +3024,69 @@ function renderCatalog(){
 function openCatalog(){ state.view="catalog"; render(); window.scrollTo({top:0}); pushHist(); }
 /* --- Exportar Excel (CSV con BOM, abre en Excel) --- */
 function catalogExcel(){
-  const rows=catRows();
-  const esc=v=>{ v=(v==null?"":String(v)); return /[",;\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; };
-  const lines=[["Categoría","Artículo","Color","Material","Paquete (mínimo)","Descripción","Medidas","Precio"].map(esc).join(";")];
-  let grupo="";
-  rows.forEach(r=>{ if(r.tipo==="head"){ grupo=r.label; return; }
-    const p=r.p;
-    lines.push([grupo, p.title, catColor(p), catMaterial(p), catPaquete(p), catDesc(p), catMedida(p), catPrecioTxt(p)].map(esc).join(";"));
-  });
-  const csv="\ufeff"+lines.join("\r\n");
-  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="catalogo-aviosnito.csv"; a.click(); URL.revokeObjectURL(a.href);
+  if(!window.XLSX){ alert("No se pudo generar el Excel."); return; }
+  const btn=$("#catalog-excel-btn"); if(btn) btn.classList.add("loading");
+  try{
+    const rows=catRows();
+    const aoa=[["Categoría","Artículo","Color","Material","Paquete (mínimo)","Descripción","Medidas","Precio"]];
+    let grupo="";
+    rows.forEach(r=>{ if(r.tipo==="head"){ grupo=r.label; return; }
+      const p=r.p;
+      aoa.push([grupo, p.title, catColor(p), catMaterial(p), catPaquete(p), catDesc(p), catMedida(p), catPrecioTxt(p)]);
+    });
+    const ws=XLSX.utils.aoa_to_sheet(aoa);
+    ws["!cols"]=[{wch:26},{wch:10},{wch:16},{wch:14},{wch:16},{wch:32},{wch:18},{wch:16}];
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Catálogo");
+    XLSX.writeFile(wb, "catalogo-aviosnito.xlsx");
+  } catch(e){ alert("No se pudo generar el Excel. "+(e&&e.message?e.message:"")); }
+  if(btn) btn.classList.remove("loading");
 }
 /* --- Exportar PDF (jsPDF con autoTable manual) --- */
 async function imgToDataURL2(url){ try{ const r=await fetch(url); const b=await r.blob(); return await new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(b); }); }catch(e){ return null; } }
+async function preloadThumbs(rows){
+  const map={}; const items=rows.filter(r=>r.tipo==="prod" && r.p.img);
+  const BATCH=24;
+  for(let i=0;i<items.length;i+=BATCH){
+    const chunk=items.slice(i,i+BATCH);
+    await Promise.all(chunk.map(async r=>{
+      const url=`/.netlify/images?url=/${r.p.img}&w=90&h=90&fit=cover&position=center&q=75`;
+      map[r.p.img]=await imgToDataURL2(url);
+    }));
+  }
+  return map;
+}
 async function catalogPDF(){
   const JS=(window.jspdf&&window.jspdf.jsPDF)?window.jspdf.jsPDF:null;
   if(!JS){ alert("No se pudo generar el PDF."); return; }
-  const rows=catRows();
-  const doc=new JS({unit:"mm",format:"a4",orientation:"landscape"});
-  const L=10, R=287; let y=14;
-  doc.setFont("helvetica","bold"); doc.setFontSize(15); doc.text("AVIOS NITO · Catálogo", L, y); y+=8;
-  const cols=[{t:"Artículo",x:10,w:22},{t:"Foto",x:32,w:16},{t:"Color",x:48,w:26},{t:"Material",x:74,w:22},{t:"Paquete",x:96,w:30},{t:"Descripción",x:126,w:55},{t:"Medidas",x:181,w:40},{t:"Precio",x:221,w:66}];
-  function header(){ doc.setFillColor(20,18,16); doc.rect(L,y-4,R-L,7,"F"); doc.setTextColor(255); doc.setFont("helvetica","bold"); doc.setFontSize(8); cols.forEach(c=>doc.text(c.t,c.x+1,y)); y+=6; doc.setTextColor(20); }
-  header();
-  doc.setFont("helvetica","normal"); doc.setFontSize(8);
-  for(const r of rows){
-    if(y>188){ doc.addPage(); y=14; header(); doc.setFont("helvetica","normal"); doc.setFontSize(8); }
-    if(r.tipo==="head"){ doc.setFont("helvetica","bold"); doc.setFillColor(235,230,220); doc.rect(L,y-4,R-L,6,"F"); doc.text(String(r.label),L+1,y); y+=6; doc.setFont("helvetica","normal"); continue; }
-    const p=r.p;
-    const vals=[p.title, "", catColor(p), catMaterial(p), catPaquete(p), catDesc(p), catMedida(p), catPrecioTxt(p)];
-    let maxLines=1;
-    const cells=cols.map((c,ci)=>{ if(ci===1) return [""]; const txt=doc.splitTextToSize(String(vals[ci]||""), c.w-2); maxLines=Math.max(maxLines,txt.length); return txt; });
-    const rowH=Math.max(maxLines*4+2, 15);
-    // foto
-    if(p.img){ const d=await imgToDataURL2(`/.netlify/images?url=/${p.img}&w=90&h=90&fit=cover&position=center&q=75`); if(d){ try{ doc.addImage(d,"JPEG",cols[1].x+1,y-4,12,12); }catch(e){} } }
-    cells.forEach((txt,ci)=>{ if(ci!==1) doc.text(txt, cols[ci].x+1, y); });
-    y += rowH;
-    doc.setDrawColor(230); doc.line(L,y-3.5,R,y-3.5);
-  }
-  doc.save("catalogo-aviosnito.pdf");
+  const btn=$("#catalog-pdf-btn"); if(btn) btn.classList.add("loading");
+  try{
+    const rows=catRows();
+    const thumbs=await preloadThumbs(rows);
+    const doc=new JS({unit:"mm",format:"a4",orientation:"landscape"});
+    const L=10, R=287; let y=14;
+    doc.setFont("helvetica","bold"); doc.setFontSize(15); doc.text("AVIOS NITO · Catálogo", L, y); y+=8;
+    const cols=[{t:"Artículo",x:10,w:22},{t:"Foto",x:32,w:16},{t:"Color",x:48,w:26},{t:"Material",x:74,w:22},{t:"Paquete",x:96,w:30},{t:"Descripción",x:126,w:55},{t:"Medidas",x:181,w:40},{t:"Precio",x:221,w:66}];
+    function header(){ doc.setFillColor(20,18,16); doc.rect(L,y-4,R-L,7,"F"); doc.setTextColor(255); doc.setFont("helvetica","bold"); doc.setFontSize(8); cols.forEach(c=>doc.text(c.t,c.x+1,y)); y+=6; doc.setTextColor(20); }
+    header();
+    doc.setFont("helvetica","normal"); doc.setFontSize(8);
+    for(const r of rows){
+      if(y>188){ doc.addPage(); y=14; header(); doc.setFont("helvetica","normal"); doc.setFontSize(8); }
+      if(r.tipo==="head"){ doc.setFont("helvetica","bold"); doc.setFillColor(235,230,220); doc.rect(L,y-4,R-L,6,"F"); doc.text(String(r.label),L+1,y); y+=6; doc.setFont("helvetica","normal"); continue; }
+      const p=r.p;
+      const vals=[p.title, "", catColor(p), catMaterial(p), catPaquete(p), catDesc(p), catMedida(p), catPrecioTxt(p)];
+      let maxLines=1;
+      const cells=cols.map((c,ci)=>{ if(ci===1) return [""]; const txt=doc.splitTextToSize(String(vals[ci]||""), c.w-2); maxLines=Math.max(maxLines,txt.length); return txt; });
+      const rowH=Math.max(maxLines*4+2, 15);
+      const d=p.img?thumbs[p.img]:null;
+      if(d){ try{ doc.addImage(d,"JPEG",cols[1].x+1,y-4,12,12); }catch(e){} }
+      cells.forEach((txt,ci)=>{ if(ci!==1) doc.text(txt, cols[ci].x+1, y); });
+      y += rowH;
+      doc.setDrawColor(230); doc.line(L,y-3.5,R,y-3.5);
+    }
+    doc.save("catalogo-aviosnito.pdf");
+  } catch(e){ alert("No se pudo generar el PDF. "+(e&&e.message?e.message:"")); }
+  if(btn) btn.classList.remove("loading");
 }
 
 const ZOOM=2.4;
@@ -3605,9 +3653,6 @@ updateCartUI();
 renderAuth();
 render();
 if(sb){ sb.auth.onAuthStateChange(()=>{ refreshUser(); }); refreshUser(); }
-function initHdScroll(){ const el=$(".hd-actions"); if(el && window.innerWidth<=640) el.scrollLeft = el.scrollWidth; }
-requestAnimationFrame(()=>requestAnimationFrame(initHdScroll));
-window.addEventListener("resize", initHdScroll);
 try{ history.replaceState(snapshot(), ""); }catch(e){}
 function reveal(){ document.documentElement.classList.remove("booting"); }
 requestAnimationFrame(()=>requestAnimationFrame(reveal));
