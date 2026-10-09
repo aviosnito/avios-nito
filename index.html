@@ -287,6 +287,7 @@ svg{display:block}
 .tab:hover{color:var(--ink)}
 .tab.on{color:var(--ink);border-bottom-color:var(--ink)}
 .cat-products{padding:32px 0 64px}
+@media(max-width:639px){ .hd2-cat.has-subs,.hd2-cat.has-subs+.hd2-sep{display:none} }
 
 /* ---------- Breadcrumb ---------- */
 .crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;
@@ -2705,7 +2706,7 @@ function renderCategoryView(){
   return `<div class="fade">
     <div class="hd2"><div class="wrap hd2-inner">
       <button class="hd2-back" data-action="home" aria-label="Volver">${IC.arrowL}</button>
-      <span class="hd2-cat">${esc(c.name)}</span>
+      <span class="hd2-cat${c.subs?" has-subs":""}">${esc(c.name)}</span>
       ${tabs}
     </div></div>
     <div class="wrap cat-products"><div class="plist">${cards}</div></div>
