@@ -287,6 +287,54 @@ svg{display:block}
 .tab:hover{color:var(--ink)}
 .tab.on{color:var(--ink);border-bottom-color:var(--ink)}
 .cat-products{padding:32px 0 64px}
+
+/* ---------- Descuento ---------- */
+.tb{margin-bottom:16px}
+.tb-row{display:flex;align-items:baseline;justify-content:space-between}
+.tb-row span,.tb-old span,.tb-new span{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.tb-row b{font-size:24px;font-weight:700}
+.tb-old{display:flex;align-items:baseline;justify-content:space-between}
+.tb-old s{font-size:16px;color:var(--muted);text-decoration:line-through;text-decoration-thickness:2px}
+.tb-new{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:6px}
+.tb-new span{color:#2E7D5B}
+.tb-new em{font-style:normal;background:#2E7D5B;color:#fff;font-size:10px;padding:2px 6px;margin-left:6px;letter-spacing:.06em;white-space:nowrap}
+.tb-new b{font-size:26px;font-weight:700;color:#2E7D5B;white-space:nowrap}
+.tb-hint{margin-top:8px;font-size:12.5px;color:var(--muted);background:#f4efe1;border-left:3px solid #C6A44E;padding:8px 10px}
+.subtotal:has(.sub-disc){display:block}
+.sub-disc .sub-old,.sub-disc .sub-new{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.sub-disc .sub-old s{font-size:16px;color:var(--muted);text-decoration:line-through;text-decoration-thickness:2px}
+.sub-disc .sub-new{margin-top:4px}
+.sub-disc .sub-new span{color:#2E7D5B}
+.sub-disc .sub-new em{font-style:normal;background:#2E7D5B;color:#fff;font-size:10px;padding:2px 6px;margin-left:6px;letter-spacing:.06em;white-space:nowrap}
+.sub-disc .sub-new b{font-size:22px;color:#2E7D5B;white-space:nowrap}
+.co-tb{margin-top:16px;padding-top:14px;border-top:2px solid var(--ink)}
+.co-tb .tb{margin-bottom:0}
+.promo-modal{position:fixed;inset:0;z-index:130;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(20,20,20,.55)}
+.promo-modal.on{display:flex;animation:pmFade .25s ease}
+@keyframes pmFade{from{opacity:0}to{opacity:1}}
+.promo-card{position:relative;width:440px;max-width:100%;background:#141414;color:#fff;padding:44px 32px 32px;text-align:center;border:1px solid #C6A44E;box-shadow:0 24px 60px rgba(0,0,0,.45);animation:pmUp .3s ease}
+@keyframes pmUp{from{transform:translateY(18px);opacity:0}to{transform:none;opacity:1}}
+.promo-card::before{content:"";position:absolute;inset:8px;border:1px solid rgba(198,164,78,.35);pointer-events:none}
+.promo-x{position:absolute;top:12px;right:12px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.8}
+.promo-x:hover{opacity:1}
+.promo-x svg{width:20px;height:20px;stroke-width:2}
+.promo-eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#C6A44E;font-weight:700}
+.promo-big{font-size:84px;line-height:1;font-weight:700;color:#C6A44E;margin:10px 0 2px;letter-spacing:-.04em}
+.promo-big small{font-size:34px;letter-spacing:0;margin-left:4px}
+.promo-t{font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.promo-p{margin:14px 0 24px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.82)}
+.promo-p b{color:#fff}
+.promo-cta{width:100%;background:#C6A44E;color:#141414;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:13px;padding:15px}
+.promo-cta:hover{background:#d6b55e}
+.promo-chip{position:fixed;right:16px;bottom:16px;z-index:36;max-width:300px;display:none;align-items:center;gap:12px;background:#141414;color:#fff;border:1px solid #C6A44E;padding:12px 40px 12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.promo-chip.on{display:flex;animation:pmUp .35s ease}
+.promo-chip-pct{font-size:26px;font-weight:700;color:#C6A44E;line-height:1;white-space:nowrap}
+.promo-chip-txt{font-size:12.5px;line-height:1.35}
+.promo-chip-txt b{display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.promo-chip-x{position:absolute;top:4px;right:4px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.75}
+.promo-chip-x:hover{opacity:1}
+.promo-chip-x svg{width:16px;height:16px;stroke-width:2.2}
+@media(max-width:639px){.promo-chip{right:10px;bottom:10px;max-width:calc(100vw - 20px)}.promo-big{font-size:68px}}
 @media(max-width:639px){ .hd2-cat.has-subs,.hd2-cat.has-subs+.hd2-sep{display:none} }
 
 /* ---------- Breadcrumb ---------- */
@@ -802,6 +850,21 @@ body.mega-open{overflow:hidden}
 </style>
 </head>
 <body>
+<div class="promo-modal" id="promo-modal" role="dialog" aria-modal="true" aria-label="Promoción">
+  <div class="promo-card">
+    <button class="promo-x" data-action="promo-close" aria-label="Cerrar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    <p class="promo-eyebrow">Promoción mayorista</p>
+    <div class="promo-big">10<small>% OFF</small></div>
+    <p class="promo-t">En toda la página</p>
+    <p class="promo-p">Comprando <b>$200.000 o más</b> te descontamos el <b>10%</b> sobre el total de tu carrito, sin importar los artículos que elijas. El descuento se aplica solo.</p>
+    <button class="promo-cta" data-action="promo-close">Ver productos</button>
+  </div>
+</div>
+<div class="promo-chip" id="promo-chip">
+  <div class="promo-chip-pct">10%</div>
+  <div class="promo-chip-txt"><b>OFF en toda la página</b>Comprando desde $200.000</div>
+  <button class="promo-chip-x" data-action="promo-chip-close" aria-label="Cerrar aviso"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+</div>
 <div id="app">
   <!-- Header -->
   <header class="hd" id="header">
@@ -944,7 +1007,7 @@ body.mega-open{overflow:hidden}
     </div>
     <div class="drawer-body" id="cart-body"></div>
     <div class="drawer-foot">
-      <div class="drawer-total"><span>Total</span><b class="tnum" id="cart-total">$0</b></div>
+      <div id="cart-totals"></div>
       <button class="checkout active" data-action="checkout">Finalizar compra</button>
     </div>
   </aside>
@@ -2328,6 +2391,7 @@ const CAT_IMG_PUNTILLAS_BAND = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABA
 const money = n => "$" + Number(n).toLocaleString("es-AR");
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const num = id => id.split("-")[1];
+const ordDisc = o => { const sum=(o.items||[]).reduce((a,i)=>a+(i.qty||0)*(i.price||0),0); const d=sum-(o.total||0); return (o.total>0 && d>0)?d:0; };
 const priceLabel = n => (n && n>0) ? money(n) : "Consultar precio";
 
 /* ================= Estado ================= */
@@ -2379,7 +2443,7 @@ function renderAdminList(){
   if(anio) arr=arr.filter(o=>String(new Date(o.created_at).getFullYear())===anio);
   if(!ADMIN.orders.length){ list.innerHTML=`<p class="admin-empty">Todavía no hay pedidos.</p>`; return; }
   if(!arr.length){ list.innerHTML=`<p class="admin-empty">No hay pedidos en este período.</p>`; return; }
-  list.innerHTML=arr.map(o=>adminOrderCard(o, ADMIN.profiles[o.user_id])).join("");
+  list.innerHTML=arr.map(o=>adminOrderCard(o, ADMIN.profiles[o.user_id]||o.invitado)).join("");
 }
 function adminOrderCard(o, p){
   p=p||{};
@@ -2401,12 +2465,12 @@ function adminOrderCard(o, p){
       <div class="ao-buyer-name">${buyer}</div>
       <div class="ao-buyer-grid"><span>DNI</span><b>${esc(p.dni||"—")}</b><span>Tel</span><b>${esc(p.telefono||"—")}</b><span>Mail</span><b>${esc(p.mail||"—")}</b></div>
     </div>
-    <div class="ao-total"><span>Total</span><b>${priceLabel(o.total)}</b></div>
+    ${ordDisc(o)?`<div class="ao-total" style="border:0;margin:0;padding:12px 0 0;font-weight:400"><span>Descuento ${DISC_PCT}%</span><span>-${priceLabel(ordDisc(o))}</span></div>`:``}<div class="ao-total"><span>Total</span><b>${priceLabel(o.total)}</b></div>
     <button class="ao-pdf" data-action="order-pdf" data-id="${o.id}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 19h16"/></svg>Descargar PDF</button>
     <details class="ao-more"><summary>Más información</summary>
       ${envio}
       <div class="oi-list">${rows}</div>
-      <div class="oi-total"><span>Total</span><b class="tnum">${priceLabel(o.total)}</b></div>
+      ${ordDisc(o)?`<div class="oi-total" style="font-weight:400"><span>Descuento ${DISC_PCT}%</span><span>-${priceLabel(ordDisc(o))}</span></div>`:``}<div class="oi-total"><span>Total</span><b class="tnum">${priceLabel(o.total)}</b></div>
     </details>
   </div>`;
 }
@@ -2433,7 +2497,7 @@ async function setOrderStatus(id, estado){
   const { error }=await sb.from("orders").update({ estado }).eq("id", id);
   if(error){ alert("No se pudo cambiar el estado. "+(error.message||"")); return; }
   const o=ADMIN.orders.find(x=>x.id===id);
-  if(o){ o.estado=estado; const card=$("#ao-"+id); if(card) card.outerHTML=adminOrderCard(o, ADMIN.profiles[o.user_id]); }
+  if(o){ o.estado=estado; const card=$("#ao-"+id); if(card) card.outerHTML=adminOrderCard(o, ADMIN.profiles[o.user_id]||o.invitado); }
 }
 let delTargetId=null;
 function askDelOrder(id){ delTargetId=id; closeOrderMenus(); const m=$("#modal-delorder"); if(m) m.classList.add("on"); }
@@ -2454,7 +2518,7 @@ async function imgToDataURL(url){
 }
 async function orderPDF(id){
   const o=ADMIN.orders.find(x=>x.id===id); if(!o) return;
-  const p=ADMIN.profiles[o.user_id]||{};
+  const p=ADMIN.profiles[o.user_id]||o.invitado||{};
   const JS=(window.jspdf&&window.jspdf.jsPDF)?window.jspdf.jsPDF:null;
   if(!JS){ alert("No se pudo generar el PDF (librería no disponible)."); return; }
   const btn=document.querySelector('[data-action="order-pdf"][data-id="'+id+'"]');
@@ -2489,6 +2553,8 @@ async function orderPDF(id){
     }
     doc.setDrawColor(20); doc.line(L, y-4, R, y-4); y+=1;
     doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    const dsc=ordDisc(o);
+    if(dsc){ doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.text("Descuento "+DISC_PCT+"%", L, y); doc.text("-"+String(priceLabel(dsc)), R, y, {align:"right"}); y+=16; doc.setFont("helvetica","bold"); doc.setFontSize(12); }
     doc.text("TOTAL", L, y); doc.text(String(priceLabel(o.total)), R, y, {align:"right"});
     doc.save(`pedido-${o.codigo||id}.pdf`);
   }catch(e){ alert("No se pudo generar el PDF. "+(e&&e.message?e.message:"")); }
@@ -2750,7 +2816,7 @@ function renderProduct(){
           </div>
           </div>
         <div class="buy">
-          <div class="subtotal"><span>Subtotal</span><b class="tnum" id="subtotal">${priceLabel(pPrice(p)*qty)}</b></div>
+          <div class="subtotal" id="subtotal-box">${subtotalHTML(pPrice(p)*qty)}</div>
           ${buyBlock}
         </div>
       </div>
@@ -2865,7 +2931,20 @@ function closeSearch(){
 
 /* ================= Carrito ================= */
 function cartCount(){ return state.cart.reduce((a,i)=>a+i.qty,0); }
-function cartTotal(){ return state.cart.reduce((a,i)=>a+i.qty*i.price,0); }
+const DISC_MIN=200000, DISC_PCT=10;
+function cartSubtotal(){ return state.cart.reduce((a,i)=>a+i.qty*i.price,0); }
+function cartDiscount(){ const t=cartSubtotal(); return t>=DISC_MIN ? Math.round(t*DISC_PCT/100) : 0; }
+function cartTotal(){ return cartSubtotal()-cartDiscount(); }
+function subtotalHTML(v){
+  if(v>=DISC_MIN){ const f=v-Math.round(v*DISC_PCT/100); return `<div class="sub-disc"><div class="sub-old"><span>Subtotal</span><s class="tnum">${priceLabel(v)}</s></div><div class="sub-new"><span>Precio con descuento <em>${DISC_PCT}% OFF</em></span><b class="tnum" id="subtotal">${priceLabel(f)}</b></div></div>`; }
+  return `<span>Subtotal</span><b class="tnum" id="subtotal">${priceLabel(v)}</b>`;
+}
+function totalBlock(label){
+  const sub=cartSubtotal(), d=cartDiscount();
+  if(d>0) return `<div class="tb"><div class="tb-old"><span>${label}</span><s class="tnum">${priceLabel(sub)}</s></div><div class="tb-new"><span>Precio con descuento <em>${DISC_PCT}% OFF</em></span><b class="tnum">${priceLabel(sub-d)}</b></div></div>`;
+  const falta=DISC_MIN-sub;
+  return `<div class="tb"><div class="tb-row"><span>${label}</span><b class="tnum">${priceLabel(sub)}</b></div>${sub>0?`<div class="tb-hint">Sumá ${money(falta)} más y llevate un <b>${DISC_PCT}% OFF</b> en toda tu compra</div>`:``}</div>`;
+}
 function addToCart(){
   const p=state.prod, color=p.colors[state.sel.ci]||{n:"",h:"transparent"}, qty=state.sel.qty;
   const i = state.cart.findIndex(x=>x.id===p.id && x.color===color.n);
@@ -2878,8 +2957,9 @@ function flashAdd(btn){ if(!btn||btn.dataset.f) return; btn.dataset.f="1"; const
 function removeItem(key){ state.cart=state.cart.filter(x=>x.key!==key); updateCartUI(); }
 function updateCartUI(){
   const n=cartCount(), badgeTxt = n>999?"999+":n;
+  document.querySelectorAll(".add-cart-count").forEach(c=>{ c.textContent=n>999?"999+":n; });
   document.querySelectorAll("#badge,#badge-fab").forEach(b=>{ b.textContent=badgeTxt; b.classList.toggle("hidden", n===0); });
-  $("#cart-total").textContent = state.cart.length===0 ? "-" : priceLabel(cartTotal());
+  $("#cart-totals").innerHTML = state.cart.length===0 ? `<div class="tb"><div class="tb-row"><span>Total</span><b>-</b></div></div>` : totalBlock("Total");
   const body=$("#cart-body");
   if(state.cart.length===0){
     body.innerHTML = `<div class="cart-empty"><div class="circle">${IC.bag}</div><p>Tu carrito está vacío</p><small>Agregá productos desde el catálogo para verlos acá.</small></div>`;
@@ -3129,7 +3209,7 @@ function setQty(n){
   const mn=pMin(state.prod);
   n = Math.max(mn, Math.round((n||mn)/mn)*mn);
   state.sel.qty = n;
-  const st=$("#subtotal"); if(st) st.textContent = priceLabel(pPrice(state.prod)*n);
+  const st=$("#subtotal-box"); if(st) st.innerHTML = subtotalHTML(pPrice(state.prod)*n);
   const inp=$("#qty-input"); if(inp) inp.textContent = qtyDisplay(state.prod, n);
   const dec=document.querySelector('[data-action="qty-dec"]'); if(dec) dec.disabled = n<=pMin(state.prod);
 }
@@ -3170,7 +3250,7 @@ async function notifyOwnerNewOrder(o, u){
       "Pedido: "+(o.codigo||""),"",
       "Debe transferir antes de: "+plazo,"",
       "Productos:", pedido,"",
-      "Total: "+priceLabel(o.total),"",
+      (o.descuento>0?"Subtotal: "+priceLabel(o.total+o.descuento)+"<br>Descuento "+DISC_PCT+"%: -"+priceLabel(o.descuento)+"<br>":"")+"Total: "+priceLabel(o.total),"",
       "Envío:", envio,"",
       "Comprador:",
       "Nombre: "+`${u.nombre||""} ${u.apellido||""}`.trim(),
@@ -3270,7 +3350,7 @@ function orderCardHTML(o){
   return `<div class="order-card"><div class="order-top"><span class="order-id">Pedido ${esc(o.codigo||"")}</span><span class="order-date">${esc(fmtDateTime(o.created_at))}</span></div>
     <span class="order-status">${esc(o.estado||"")}</span>
     <div class="order-total"><span>Total</span><span class="tnum">${priceLabel(o.total)}</span></div>
-    <details class="oc-more"><summary>Más información</summary>${o.envio_tipo?`<div class="ao-envio"><span class="ao-k">Envío</span><span>${esc(envioResumen(o.envio||{tipo:o.envio_tipo}))}</span></div>`:``}<div class="oi-list">${rows}</div><div class="oi-total"><span>Total</span><b class="tnum">${priceLabel(o.total)}</b></div></details></div>`;
+    <details class="oc-more"><summary>Más información</summary>${o.envio_tipo?`<div class="ao-envio"><span class="ao-k">Envío</span><span>${esc(envioResumen(o.envio||{tipo:o.envio_tipo}))}</span></div>`:``}<div class="oi-list">${rows}</div>${ordDisc(o)?`<div class="oi-total" style="font-weight:400"><span>Descuento ${DISC_PCT}%</span><span>-${priceLabel(ordDisc(o))}</span></div>`:``}<div class="oi-total"><span>Total</span><b class="tnum">${priceLabel(o.total)}</b></div></details></div>`;
 }
 async function openOrdersPage(){
   closeAuthModals(); closeUserMenu();
@@ -3293,7 +3373,7 @@ function writeOrdersDoc(win, u, orders){
             <details class="oc-more"><summary>Más información</summary>
               ${o.envio_tipo?`<div class="oi-envio"><b>Envío:</b> ${esc(envioResumen(o.envio||{tipo:o.envio_tipo}))}</div>`:``}
               ${(o.items||[]).map(it=>{ const th=itemThumb(it); return `<div class="oi-row"><div class="oi-thumb">${th?`<img src="${th}" alt="">`:``}</div><div class="oi-info"><div class="oi-name">${esc(it.title)}</div><div class="oi-sub">${esc(it.color||"")} · ${it.qty} ${UNIT_MIN[it.unit]||"u."} × ${priceLabel(it.price)}</div></div><div class="oi-sub-total">${priceLabel((it.qty||0)*(it.price||0))}</div></div>`; }).join("")}
-              <div class="oi-total"><span>Total</span><b>${priceLabel(o.total)}</b></div>
+              ${ordDisc(o)?`<div class="oi-total" style="font-weight:400"><span>Descuento ${DISC_PCT}%</span><span>-${priceLabel(ordDisc(o))}</span></div>`:``}<div class="oi-total"><span>Total</span><b>${priceLabel(o.total)}</b></div>
             </details>
           </div>`).join("")+`</div>`);
   const who = u ? `${esc(u.nombre||"")} ${esc(u.apellido||"")} · ${esc(u.mail||"")}` : "";
@@ -3518,7 +3598,7 @@ function renderCheckout(){
   } else if(st===3){
     inner=`<h2 class="modal-h2">Resumen del pedido</h2><div class="co-body">
       ${state.cart.map(it=>`<div class="co-sum-item"><div><div class="co-sum-name">${esc(it.title)}</div><div class="co-sum-meta">${esc(it.color)} · ${it.qty} ${UNIT_MIN[it.unit]||"u."} × ${priceLabel(it.price)}</div></div><div class="co-sum-price tnum">${priceLabel(it.qty*it.price)}</div></div>`).join("")}
-      <div class="co-total"><span>Total</span><b class="tnum">${priceLabel(cartTotal())}</b></div><div class="co-msg"><b>Envío:</b> ${esc(envioResumen(checkoutState.envio))}</div></div>
+      <div class="co-tb">${totalBlock("Total")}</div><div class="co-msg"><b>Envío:</b> ${esc(envioResumen(checkoutState.envio))}</div></div>
       <div class="co-nav"><button class="co-back" data-action="checkout-back">Atrás</button><button class="co-next" data-action="checkout-next">Continuar</button></div>`;
   } else {
     inner=`<h2 class="modal-h2">Pago por transferencia</h2><div class="co-body">
@@ -3529,7 +3609,7 @@ function renderCheckout(){
       <div class="pay-field"><div class="pay-field-l"><div class="pay-field-k">CUIT</div><div class="pay-field-v">${PAY.cuit}</div></div></div>
       <div class="pay-field"><div class="pay-field-l"><div class="pay-field-k">Alias</div><div class="pay-field-v">${PAY.alias}</div></div><button class="copy-btn" data-action="copy" data-copy="${PAY.alias}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16V4a2 2 0 0 1 2-2h10"/></svg>Copiar</button></div>
       <div class="pay-field"><div class="pay-field-l"><div class="pay-field-k">CBU</div><div class="pay-field-v">${PAY.cvu}</div></div><button class="copy-btn" data-action="copy" data-copy="${PAY.cvu}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16V4a2 2 0 0 1 2-2h10"/></svg>Copiar</button></div>
-      <div class="co-total"><span>Total a transferir</span><b class="tnum">${priceLabel(cartTotal())}</b></div></div>
+      <div class="co-tb">${totalBlock("Total a transferir")}</div></div>
       <div class="co-nav"><button class="co-next co-next-full" data-action="confirm-order">Confirmar pedido</button></div>`;
   }
   body.innerHTML = stepper(st)+inner;
@@ -3539,15 +3619,21 @@ function copyText(txt,btn){
   try{ navigator.clipboard.writeText(txt).then(done, ()=>fallbackCopy(txt,done)); }catch(e){ fallbackCopy(txt,done); }
 }
 function fallbackCopy(txt,cb){ try{ const ta=document.createElement("textarea"); ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); cb&&cb(); }catch(e){} }
+let orderSending=false;
 async function confirmOrder(){
+  if(orderSending || checkoutState.done || !state.cart.length) return;
   const acct=AUTH.current(); const g=checkoutState.guest; const u=acct||g; if(!u || !sb) return; const now=new Date();
+  orderSending=true;
+  const cb=document.querySelector('[data-action="confirm-order"]'); if(cb){ cb.disabled=true; cb.textContent="Enviando…"; }
+  try{
   const codigo="RY"+String(now.getFullYear()).slice(2)+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"-"+Math.floor(1000+Math.random()*9000);
   const items=state.cart.map(it=>({title:it.title,color:it.color,qty:it.qty,price:it.price,unit:it.unit,img:it.img}));
   const env=checkoutState.envio||{tipo:"Retiro por depósito"};
   const { error } = await sb.from("orders").insert({ codigo, user_id:acct?acct.id:null, invitado:acct?null:{nombre:g.nombre,apellido:g.apellido,dni:g.dni,mail:g.mail,telefono:g.telefono}, total:cartTotal(), items, estado:"Pendiente de pago", envio_tipo:env.tipo, envio:env });
-  if(error){ alert("No se pudo registrar el pedido. "+(error.message||"")); return; }
-  notifyOwnerNewOrder({ codigo, total:cartTotal(), items, envio_tipo:env.tipo, envio:env }, u);
+  if(error){ alert("No se pudo registrar el pedido. "+(error.message||"")); if(cb){ cb.disabled=false; cb.textContent="Confirmar pedido"; } return; }
+  notifyOwnerNewOrder({ codigo, total:cartTotal(), descuento:cartDiscount(), items, envio_tipo:env.tipo, envio:env }, u);
   state.cart=[]; updateCartUI(); checkoutState.done=true; checkoutState.lastId=codigo; renderCheckout();
+  }finally{ orderSending=false; }
 }
 function finishCheckout(){ checkoutState.done=false; checkoutState.step=1; closeCheckout(); }
 
@@ -3556,6 +3642,8 @@ document.addEventListener("click", e=>{
   const t = e.target.closest("[data-action]");
   if(!t) return;
   const a = t.dataset.action;
+  if(a==="promo-close"){ promoClose(); return; }
+  if(a==="promo-chip-close"){ promoChipClose(); return; }
   if(a==="home") home();
   else if(a==="open-cat") openCat(findCat(t.dataset.cat), t.dataset.sub);
   else if(a==="pick-sub"){ state.sub = findSub(state.cat, t.dataset.sub); render(); pushHist(); }
@@ -3664,6 +3752,18 @@ try{
   if(mqMob.addEventListener) mqMob.addEventListener("change", onMq);
   else if(mqMob.addListener) mqMob.addListener(onMq);
 }catch(e){}
+/* ================= Promo 10% ================= */
+(function(){
+  const modal=document.getElementById("promo-modal"), chip=document.getElementById("promo-chip");
+  let seen=false; try{ seen=sessionStorage.getItem("promoSeen")==="1"; }catch(e){}
+  let chipClosed=false; try{ chipClosed=sessionStorage.getItem("promoChipX")==="1"; }catch(e){}
+  const showChip=()=>{ if(!chipClosed) chip.classList.add("on"); };
+  window.promoClose=function(){ modal.classList.remove("on"); try{ sessionStorage.setItem("promoSeen","1"); }catch(e){} showChip(); };
+  window.promoChipClose=function(){ chip.classList.remove("on"); chipClosed=true; try{ sessionStorage.setItem("promoChipX","1"); }catch(e){} };
+  modal.addEventListener("click",e=>{ if(e.target===modal) promoClose(); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape" && modal.classList.contains("on")) promoClose(); });
+  if(seen) showChip(); else setTimeout(()=>modal.classList.add("on"),900);
+})();
 updateCartUI();
 renderAuth();
 render();
