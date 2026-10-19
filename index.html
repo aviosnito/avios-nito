@@ -385,6 +385,34 @@ svg{display:block}
 .prod-img-zoomable{cursor:zoom-in}
 .prod-img-zoomable.zoomed{cursor:zoom-out}
 .prod-img-zoomable.zoomed .prod-photo{transition:transform .05s linear}
+.gal-track{display:flex;width:100%;height:100%;transition:transform .35s cubic-bezier(.22,.61,.36,1);will-change:transform}
+.gal-slide{flex:0 0 100%;min-width:0;height:100%;overflow:hidden;position:relative}
+.prod-img-zoomable{touch-action:pan-y}
+.prod-img-zoomable.zoomed{touch-action:none}
+.prod-img .carousel-arrow{width:38px;height:38px}
+.prod-img .carousel-arrow .ic{width:19px;height:19px}
+.prod-img .carousel-arrow.left{left:8px}
+.prod-img .carousel-arrow.right{right:8px}
+.prod-img .carousel-dots{bottom:10px;gap:6px}
+.prod-img.zoomed .carousel-arrow,.prod-img.zoomed .carousel-dots{display:none}
+@media(min-width:768px){
+.apub-prod-ed .prod-grid>div:last-child{display:flex;flex-direction:column;justify-content:space-between}
+.apub-prod-ed .prod-grid>div:last-child>div{margin-top:0!important}
+.apub-prod-ed .prod-grid>div:last-child>.buy{padding-top:24px}
+.apub-prod-ed .apub-msg:empty{display:none}
+.apub-prod-ed>.apub-notes{margin-top:18px}
+}
+.apub-xs-l{margin:14px 0 0;font-size:12px;font-weight:600;color:var(--muted);font-family:'Poppins',sans-serif}
+.apub-xs-l span{font-weight:400}
+.apub-xs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+.apub-xs-cell{position:relative}
+.apub-xs-slot{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:4/5;background:var(--bone);border:1.5px dashed var(--line2);color:var(--muted);cursor:pointer;overflow:hidden;padding:0;transition:border-color .15s,color .15s}
+.apub-xs-slot.has{border-style:solid}
+.apub-xs-slot:hover{border-color:var(--ink);color:var(--ink)}
+.apub-xs-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.apub-xs-plus{font-size:30px;line-height:1;font-weight:300}
+.apub-xs-del{position:absolute;top:4px;right:4px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:rgba(20,18,16,.78);color:#fff;font-size:16px;line-height:1;padding:0;cursor:pointer}
+.apub-xs-del:hover{background:#b42318}
 .zoom-hint{position:absolute;bottom:12px;right:12px;z-index:2;width:38px;height:38px;border-radius:999px;background:rgba(20,18,16,.62);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
 .zoom-hint svg{width:19px;height:19px}
 .prod-img-zoomable:hover .zoom-hint{opacity:1}
@@ -2824,6 +2852,7 @@ function ovApply(p){
   if(d.desc!=null) p.desc=d.desc;
   if(d.img!=null) p.img=d.img;
   if(d.imgs!=null) p.imgs=d.imgs;
+  if(d.extra!=null) p.extra=d.extra;
   if(d.colors!=null) p.colors=d.colors;
   if(d.price!=null) p.ovPrice=Number(d.price)||0;
   if(d.unit!=null) p.ovUnit=d.unit;
@@ -2841,8 +2870,10 @@ function ovState(p){
   if(!r && FORCE_NOSTOCK.indexOf(p.id)>=0) return "nostock";   // forzados sólo si no hay override
   return pPrice(p)>0 ? "ok" : "drop";                          // 'normal' sin precio = oculto (como hoy)
 }
+const DESCR = {"RY-342":"Puntilla negra elastizada, con lycra y tachas cuadradas.","RY-343":"Puntilla blanca con lycra y tachas plateadas. Elastizada.","RY-345":"Broderie blanco con calados de flores y borde festoneado.","RY-346":"Puntilla de crochet beige, calada.","RY-430":"Puntilla negra con lycra, floral y con borde festoneado. Elastizada, ideal para lencería.","RY-431":"Puntilla blanca elastizada con lycra, de diseño floral. Estira y se adapta al cuerpo.","RY-432":"Puntilla chantilly negra, ancha, con flores y terminación de pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-433":"Puntilla chantilly blanca, ancha, con flores y pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-436":"Puntilla negra con flores grandes y borde de pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-437":"Puntilla blanca con flores y terminación en pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-438":"Puntilla negra festoneada, con flores y pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-439":"Puntilla blanca festoneada, con flores y borde de pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-474":"Puntilla negra de diseño geométrico, con pestañas en los dos bordes. De nylon, no elastizada. Precio por tira de 3 m.","RY-475":"Puntilla blanca de diseño geométrico, con pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-476":"Puntilla negra con rosas, una línea brillante al centro y pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-477":"Puntilla blanca con rosas y terminación en pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-478":"Puntilla de tul negro con lycra, borde festoneado y tachas. Elastizada.","RY-493":"Puntilla de tul negro elastizada, con lycra, borde en zigzag y tachas.","RY-494":"Puntilla negra ancha con strass y borde de pestañas. De nylon, no elastizada. Precio por tira de 3 m.","RY-U01":"Cinta de ganchos negra con ganchos metálicos plateados.","RY-U02":"Cinta de ganchos blanca, con ganchos metálicos plateados.","RY-U08":"Tira de pelo largo símil piel, negra.","RY-U09":"Tira de pelo largo símil piel, blanca.","RY-U10":"Tira de pelo largo símil piel, crema con manchitas marrones.","RY-U11":"Cinta con pompones de pelo en negro.","RY-U12":"Cinta con pompones de pelo en blanco.","RY-U13":"Cinta con pompones de pelo color camel.","RY-U14":"Cinta con pompones de pelo en rosa empolvado.","RY-U36":"Volado crudo con elástico arriba y terminación en broderie.","RY-U37":"Volado plisado en escocés negro y blanco, rematado con crochet crudo.","RY-U38":"Volado plisado vichy negro y blanco con borde de crochet crudo.","RY-U39":"Volado plisado escocés azul y blanco, con terminación de crochet crudo.","RY-U40":"Volado plisado vichy rosa y blanco, rematado con crochet crudo.","RY-U41":"Volado plisado en escocés marrón y blanco con crochet crudo en el borde.","RY-U45":"Puntilla negra floral con borde festoneado. Con lycra, elastizada.","RY-U63":"Puntilla blanca elastizada de diseño floral, con borde festoneado. Con lycra.","RY-U64":"Puntilla negra calada con flores y borde festoneado. Elastizada, con lycra.","RY-U65":"Puntilla negra con lycra, de flores grandes y borde ondulado. Elastizada.","RY-U66":"Puntilla blanca de flores grandes y borde ondulado. Con lycra, elastizada.","RY-U67":"Puntilla negra elastizada, con borde de arcos festoneados. Con lycra.","RY-U68":"Puntilla blanca con arcos festoneados. Elastizada, con lycra.","RY-204":"Moño de jean desteñido con contorno de brillos. Parche de algodón con deflecado, se aplica con costura o pegado.","RY-248":"Estrella lisa en jean azul oscuro, con bordes deflecados. Parche de algodón para coser o pegar.","RY-249":"Mariposa de jean gris bordada en hilo fucsia. Jean de algodón deflecado, se coloca cosido o pegado.","RY-254":"Osito de jean con ojo en X y contorno dorado. Parche de algodón deflecado: se cose o se pega.","RY-255":"Osito de jean con corazón rojo bordado. Parche en jean de algodón con deflecado, listo para coser o pegar.","RY-256":"Frase “Be real not perfect” bordada sobre jean degradé. Parche de algodón deflecado, se aplica con costura o pegado.","RY-257":"Estrella de jean desteñida con contorno de cadenita. Jean de algodón con deflecado; se cose o se pega.","RY-258":"Número “1895” bordado en marrón con borde blanco. Parche de algodón con deflecado, para coser o pegar.","RY-278":"Estrella de jean con bordado en hilo blanco. Parche deflecado de algodón, se coloca con costura o pegado.","RY-279":"Estrella de jean degradé con bordado, brillos y flecos abajo. Parche de algodón con deflecado; se cose o se pega.","RY-280":"Jean gris con motivo floral bordado en hilo blanco. Parche de algodón deflecado, cosido o pegado.","RY-281":"Mariposa de jean celeste con bordado blanco en las alas. Parche de algodón con deflecado: se aplica cosiendo o pegando.","RY-282":"Cerezas con aplicación de tela, bordado negro y deflecado de colores. Parche de jean de algodón, para coser o pegar.","RY-283":"Mariposa de jean azul oscuro desteñido con brillos en las alas. Parche de algodón con deflecado, se cose o se pega.","RY-17":"V plateada lisa. De Samac (aleación de zinc), resistente al agua.","RY-18":"Pieza plateada en V con strass. Es de Samac (aleación de zinc) y resiste el agua.","RY-21":"V angosta plateada, de línea fina. En Samac (aleación de zinc), resistente al agua.","RY-27":"Espiral plateada con disco negro al centro. De Samac (aleación de zinc), resistente al agua.","RY-33":"Tres aros plateados entrelazados. Es de Samac (aleación de zinc) y resiste el agua.","RY-34":"Tres aros plateados entrelazados, más finos. En Samac (aleación de zinc), resistente al agua.","RY-37":"Aro plateado liso. De Samac (aleación de zinc), resistente al agua.","RY-39":"Gancho dorado curvo con piedra color ámbar en la punta. Base de Samac (aleación de zinc), resistente al agua.","RY-42":"Alambre plateado ondulado con terminaciones en bolita. Es de Samac (aleación de zinc) y resiste el agua.","RY-43":"Regulador plateado para tiras. En Samac (aleación de zinc), resistente al agua.","RY-44":"Regulador plateado mini, para tiras finas. De Samac (aleación de zinc), resistente al agua.","RY-45":"Regulador plateado chico. Es de Samac (aleación de zinc) y resiste el agua.","RY-46":"Pasador plateado alargado para tiras. En Samac (aleación de zinc), resistente al agua.","RY-47":"Hebilla rectangular chica, plateada con esmalte negro. De Samac (aleación de zinc), resistente al agua.","RY-48":"Hebilla rectangular plateada con esmalte negro. Es de Samac (aleación de zinc) y resiste el agua.","RY-52":"V plateada con interior esmaltado en negro. En Samac (aleación de zinc), resistente al agua.","RY-55":"U plateada con terminaciones en punta. De Samac (aleación de zinc), resistente al agua.","RY-59":"Ganchos plateados con piedras color ámbar. La base es de Samac (aleación de zinc) y resiste el agua.","RY-61":"Gancho de alambre plateado en U, con bolitas en las puntas. Es de Samac (aleación de zinc) y resiste el agua.","RY-64":"Herradura plateada con interior negro. En Samac (aleación de zinc), resistente al agua.","RY-66":"Pieza de alambre plateado con perla en la punta. Base de Samac (aleación de zinc), resistente al agua.","RY-69":"Aro irregular abierto, en dorado o plateado. De Samac (aleación de zinc), resistente al agua.","RY-74":"Aro irregular martillado. Es de Samac (aleación de zinc) y resiste el agua.","RY-80":"Hebilla plateada de forma irregular, con barra al centro. En Samac (aleación de zinc), resistente al agua.","RY-81":"Hebilla plateada cuadrada de bordes ondulados. De Samac (aleación de zinc), resistente al agua.","RY-84":"Gancho dorado con piedra ámbar. La base es de Samac (aleación de zinc) y resiste el agua.","RY-87":"Aro plateado de forma irregular, liso y brillante. Es de Samac (aleación de zinc) y resiste el agua.","RY-88":"Alambre dorado ondulado con bolitas en los extremos. En Samac (aleación de zinc), resistente al agua.","RY-91":"Espiral en plata vieja. De Samac (aleación de zinc), resistente al agua.","RY-92":"Hebilla plateada lisa de forma irregular, con barra. Es de Samac (aleación de zinc) y resiste el agua.","RY-95":"Pieza de alambre plateado en doble U. En Samac (aleación de zinc), resistente al agua.","RY-96":"Gancho de alambre plateado con perla. Base de Samac (aleación de zinc), resistente al agua.","RY-97":"V plateada grande con interior negro. De Samac (aleación de zinc), resistente al agua.","RY-98":"V plateada calada, simple. Es de Samac (aleación de zinc) y resiste el agua.","RY-105":"Botón dorado cuadrado de superficie martillada. En Samac (aleación de zinc), resistente al agua.","RY-106":"Botón dorado grande, de forma irregular. De Samac (aleación de zinc), resistente al agua.","RY-108":"Botón dorado ondulado, con relieve. Es de Samac (aleación de zinc) y resiste el agua.","RY-109":"Botón dorado redondo con textura. En Samac (aleación de zinc), resistente al agua.","RY-110":"Botón dorado alargado de superficie ondulada. De Samac (aleación de zinc), resistente al agua.","RY-112":"Moño dorado con pliegues. Es de Samac (aleación de zinc) y resiste el agua.","RY-117":"Aro dorado abierto con terminaciones en gota. En Samac (aleación de zinc), resistente al agua.","RY-119":"Hebilla redonda plateada con acabado martillado. De Samac (aleación de zinc), resistente al agua.","RY-120":"Canuto plateado liso. Es de Samac (aleación de zinc) y resiste el agua.","RY-124":"Pasador en plata vieja con relieve. En Samac (aleación de zinc), resistente al agua.","RY-126":"Conector dorado con corazón de strass y un aro a cada lado. De Samac (aleación de zinc), resistente al agua.","RY-133":"Hebilla oval plateada martillada. Es de Samac (aleación de zinc) y resiste el agua.","RY-134":"Hebilla oval grande, plateada y martillada. En Samac (aleación de zinc), resistente al agua.","RY-138":"Moño en plata vieja. De Samac (aleación de zinc), resistente al agua.","RY-143":"Hebilla rectangular plateada cubierta de strass. Es de Samac (aleación de zinc) y resiste el agua.","RY-144":"Hebilla plateada grande, de forma irregular y con textura. En Samac (aleación de zinc), resistente al agua.","RY-145":"Hebilla redonda plateada, lisa y brillante. De Samac (aleación de zinc), resistente al agua.","RY-148":"Pieza plateada lisa en forma de poroto. Es de Samac (aleación de zinc) y resiste el agua.","RY-149":"Conector plateado con discos superpuestos y dos aros. En Samac (aleación de zinc), resistente al agua.","RY-155":"Argolla dorada con textura. De Samac (aleación de zinc), resistente al agua.","RY-158":"Hebilla plateada con textura arrugada. Es de Samac (aleación de zinc) y resiste el agua.","RY-161":"Hebilla oval plateada lisa. En Samac (aleación de zinc), resistente al agua.","RY-162":"Gancho de alambre plateado en U. De Samac (aleación de zinc), resistente al agua.","RY-164":"Hebilla plateada martillada de contorno irregular. Es de Samac (aleación de zinc) y resiste el agua.","RY-165":"Aro plateado martillado. En Samac (aleación de zinc), resistente al agua.","RY-166":"Aro dorado martillado. De Samac (aleación de zinc), resistente al agua.","RY-168":"Cadena dorada de eslabones cuadrados con strass. Es de Samac (aleación de zinc) y resiste el agua.","RY-169":"Conector plateado de eslabones rectangulares. En Samac (aleación de zinc), resistente al agua.","RY-170":"Conector plateado de eslabones cuadrados con strass. De Samac (aleación de zinc), resistente al agua.","RY-171":"Conector plateado tipo eslabón, con barra. Es de Samac (aleación de zinc) y resiste el agua.","RY-172":"Conector plateado de eslabones con strass. En Samac (aleación de zinc), resistente al agua.","RY-173":"Doble aro plateado oscuro con terminaciones en bolita. De Samac (aleación de zinc), resistente al agua.","RY-174":"Herradura plateada martillada. Es de Samac (aleación de zinc) y resiste el agua.","RY-179":"Hebilla oval dorada con borde negro. En Samac (aleación de zinc), resistente al agua.","RY-181":"Hebilla oval dorada de textura ondulada. De Samac (aleación de zinc), resistente al agua.","RY-182":"Cadena plateada de eslabones gruesos, con argollas en los extremos. Es de Samac (aleación de zinc) y resiste el agua.","RY-183":"Conector plateado con disco central y dos aros. En Samac (aleación de zinc), resistente al agua.","RY-184":"Tres aros plateados encadenados. De Samac (aleación de zinc), resistente al agua.","RY-185":"Cadena de aros plateados con strass. Es de Samac (aleación de zinc) y resiste el agua.","RY-187":"Conector plateado de eslabones rectangulares lisos. En Samac (aleación de zinc), resistente al agua.","RY-188":"Dos aros plateados unidos. De Samac (aleación de zinc), resistente al agua.","RY-189":"Cadena de aros plateados. Es de Samac (aleación de zinc) y resiste el agua.","RY-190":"Cadena larga de aros plateados. En Samac (aleación de zinc), resistente al agua.","RY-191":"Cadena plateada de eslabones finos. De Samac (aleación de zinc), resistente al agua.","RY-194":"Cadena dorada con dijes martillados. Es de Samac (aleación de zinc) y resiste el agua.","RY-195":"Cadena de aros plateados lisos. En Samac (aleación de zinc), resistente al agua.","RY-198":"Hebilla dorada en forma de gota, cubierta de strass. De Samac (aleación de zinc), resistente al agua.","RY-199":"Hebilla dorada de contorno ondulado. Es de Samac (aleación de zinc) y resiste el agua.","RY-200":"Gota dorada lisa y brillante. En Samac (aleación de zinc), resistente al agua.","RY-202":"Argolla dorada con textura, alta. De Samac (aleación de zinc), resistente al agua.","RY-203":"Argolla dorada con textura. Es de Samac (aleación de zinc) y resiste el agua.","RY-205":"Cadena dorada de eslabones cuadrados gruesos. En Samac (aleación de zinc), resistente al agua.","RY-207":"Gota dorada alargada, lisa y brillante. De Samac (aleación de zinc), resistente al agua.","RY-208":"Corazón dorado de forma irregular. Es de Samac (aleación de zinc) y resiste el agua.","RY-209":"Cadena corta de aros dorados. En Samac (aleación de zinc), resistente al agua.","RY-210":"Hebilla dorada de forma geométrica irregular. De Samac (aleación de zinc), resistente al agua.","RY-211":"Estrella dorada con strass. Es de Samac (aleación de zinc) y resiste el agua.","RY-213":"Pieza dorada con piedra marmolada beige. La base es de Samac (aleación de zinc) y resiste el agua.","RY-214":"Conector plateado con strass y colgantes de cristal. En Samac (aleación de zinc), resistente al agua.","RY-216":"Hebilla dorada en forma de gota con strass. De Samac (aleación de zinc), resistente al agua.","RY-217":"Aro dorado irregular con textura martillada. Es de Samac (aleación de zinc) y resiste el agua.","RY-218":"Aro plateado irregular de textura martillada. En Samac (aleación de zinc), resistente al agua.","RY-219":"Botón negro clásico. De plástico.","RY-220":"Botón blanco clásico. De plástico.","RY-221":"Botón negro clásico, tamaño chico. De plástico.","RY-222":"Botón blanco clásico, tamaño chico. De plástico.","RY-225":"Botón marrón brillante. De plástico.","RY-226":"Botón marrón brillante, tamaño chico. De plástico.","RY-227":"Botón con acabado dorado y flor en relieve. De plástico.","RY-229":"Botón dorado en forma de corazón con strass. De plástico.","RY-230":"Botón dorado con borde de strass. De plástico.","RY-231":"Botón plateado labrado. De plástico.","RY-240":"Hebilla cuadrada con efecto tejido, color caramelo. De plástico.","RY-241":"Hebilla rectangular marmolada en beige. De plástico.","RY-242":"Hebilla rectangular chica, marmolada en beige. De plástico.","RY-244":"Hebilla redonda con barra, en carey ámbar. De plástico.","RY-245":"Hebilla redonda con barra, en negro. De plástico.","RY-246":"Argolla color carey. De plástico.","RY-247":"Argolla marrón. De plástico.","RY-298":"Botón dorado en forma de flor. De Samac (aleación de zinc), resistente al agua.","RY-299":"Botón dorado calado de forma irregular. Es de Samac (aleación de zinc) y resiste el agua.","RY-300":"Botón dorado chico con relieve. En Samac (aleación de zinc), resistente al agua.","RY-301":"Botón dorado de forma irregular. De Samac (aleación de zinc), resistente al agua.","RY-302":"Botón dorado ovalado y ondulado. Es de Samac (aleación de zinc) y resiste el agua.","RY-347":"Aro abierto dorado con estrella calada y bolitas en las puntas. En Samac (aleación de zinc), resistente al agua.","RY-348":"Aro abierto plateado con estrella calada al centro. De Samac (aleación de zinc), resistente al agua.","RY-349":"Doble herradura plateada. Es de Samac (aleación de zinc) y resiste el agua.","RY-350":"Barra dorada con bolitas en los extremos. En Samac (aleación de zinc), resistente al agua.","RY-351":"Estrella plateada calada con borde negro. De Samac (aleación de zinc), resistente al agua.","RY-355":"Conector dorado bordeado de perlas. Base de Samac (aleación de zinc), resistente al agua.","RY-357":"Conector dorado con disco martillado. Es de Samac (aleación de zinc) y resiste el agua.","RY-359":"Cadena de tres discos dorados martillados. En Samac (aleación de zinc), resistente al agua.","RY-360":"Cadena de aros plateados en tamaño creciente. De Samac (aleación de zinc), resistente al agua.","RY-361":"Gota dorada lisa, más chica. Es de Samac (aleación de zinc) y resiste el agua.","RY-364":"Pieza plateada en forma de poroto, con manchas negras. En Samac (aleación de zinc), resistente al agua.","RY-366":"Hebilla circular dorada con textura en relieve. De Samac (aleación de zinc), resistente al agua.","RY-367":"Hebilla dorada de forma irregular. Es de Samac (aleación de zinc) y resiste el agua.","RY-373":"Aro abierto dorado con una rosa al centro. En Samac (aleación de zinc), resistente al agua.","RY-374":"Aro abierto dorado con mariposa calada. De Samac (aleación de zinc), resistente al agua.","RY-376":"Aro abierto plateado con bolitas, tamaño mini. Es de Samac (aleación de zinc) y resiste el agua.","RY-377":"Aro abierto plateado con bolitas en las puntas. En Samac (aleación de zinc), resistente al agua.","RY-378":"Aro abierto plateado con bolitas en las puntas, tamaño grande. De Samac (aleación de zinc), resistente al agua.","RY-398":"Cadena de aros plateados grandes. Es de Samac (aleación de zinc) y resiste el agua.","RY-399":"Cadena de aros plateados de distintos tamaños. En Samac (aleación de zinc), resistente al agua.","RY-440":"Aro dorado abierto con estrellas de mar y conchas. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-441":"Disco dorado esmaltado en blanco. Es de Samac (aleación de zinc) y resiste el agua.","RY-442":"Medallón dorado esmaltado con estrella de mar y perla. La base es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-450":"Flor dorada con relieve. En Samac (aleación de zinc), resistente al agua.","RY-451":"Aro dorado abierto con un moño. De Samac (aleación de zinc), resistente al agua.","RY-452":"Adorno dorado curvo con dos cristales. Base de Samac (aleación de zinc), resistente al agua.","RY-453":"Hebilla dorada con caracol cauri. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-455":"Concha dorada con dijes de conchitas, estrellas y tortuga. En Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-457":"Botón plateado martillado, de 2 cm. De Samac (aleación de zinc), resistente al agua.","RY-459":"Botón plateado martillado, de 3 cm. Es de Samac (aleación de zinc) y resiste el agua.","RY-461":"Botón dorado martillado, de 3 cm. En Samac (aleación de zinc), resistente al agua.","RY-463":"Botón dorado martillado de 2,5 cm. De Samac (aleación de zinc), resistente al agua.","RY-464":"Rosa dorada en relieve. Es de Samac (aleación de zinc) y resiste el agua.","RY-465":"Mariposa dorada texturada. En Samac (aleación de zinc), resistente al agua.","RY-466":"Girasol dorado con strass. De Samac (aleación de zinc), resistente al agua.","RY-469":"Estrella de mar dorada con esmalte turquesa. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-470":"Aro dorado con corazón de cristal rosado. La base es de Samac (aleación de zinc) y resiste el agua.","RY-471":"Cadena dorada de tres eslabones irregulares. En Samac (aleación de zinc), resistente al agua.","RY-472":"Doble cadena dorada sobre placa. De Samac (aleación de zinc), resistente al agua.","RY-473":"Doble cadena plateada sobre placa. Es de Samac (aleación de zinc) y resiste el agua.","RY-479":"Conector dorado de dos eslabones martillados. En Samac (aleación de zinc), resistente al agua.","RY-480":"U grande plateada con textura. De Samac (aleación de zinc), resistente al agua.","RY-481":"Hebilla triangular dorada con dijes de concha, estrella y caracol. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-491":"Eslabón dorado martillado en forma de S. En Samac (aleación de zinc), resistente al agua.","RY-492":"Botón dorado en forma de corazón, martillado. De Samac (aleación de zinc), resistente al agua.","RY-P01":"Hebilla dorada calada con un ananá. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-P02":"Estrella de mar dorada con textura. En Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P03":"Hebilla dorada con estrella de mar. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P04":"Aro dorado en U con una rama de coral. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-P05":"Pieza dorada martillada de forma irregular. En Samac (aleación de zinc), resistente al agua.","RY-P06":"Hebilla dorada calada con caballito de mar y estrella. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P07":"Hebilla dorada con rama de coral calada. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-R08":"Aro dorado en U con estrella de mar al centro. En Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P09":"Conector dorado con sol y un aro a cada lado. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P10":"Cadena plateada de cuatro estrellas caladas de tamaño creciente. Es de Samac (aleación de zinc) y resiste el agua.","RY-P11":"Hebilla dorada calada con cerezas. En Samac (aleación de zinc), resistente al agua.","RY-P12":"Botón metálico plateado en forma de estrella, cubierto de strass. De Samac (aleación de zinc), resistente al agua.","RY-P13":"Sol dorado de rayos ondulados con aro central. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-P14":"Estrella de mar dorada con esmalte turquesa. En Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P15":"Marco ovalado dorado con centro marrón rojizo. Base de Samac (aleación de zinc), resistente al agua.","RY-P16":"Marco ovalado dorado con centro marmolado beige y marrón. La base es de Samac (aleación de zinc) y resiste el agua.","RY-P17":"Conector dorado de tres aros martillados con perlas. Base de Samac (aleación de zinc), resistente al agua.","RY-P18":"Espiral dorada con piedra redonda nacarada. La base es de Samac (aleación de zinc) y resiste el agua.","RY-P20":"Aro dorado en U con una palmera suspendida. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P21":"Botón metálico dorado con un leopardo en relieve. Es de Samac (aleación de zinc) y resiste el agua.","RY-P22":"Hebilla dorada calada con palmera. En Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P24":"Hebilla dorada calada con flores tropicales. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P25":"U grande dorada martillada. Es de Samac (aleación de zinc) y resiste el agua.","RY-P26":"Conector plateado con estrella punteada y dos aros. En Samac (aleación de zinc), resistente al agua.","RY-P27":"Conector dorado con flor y strass central. De Samac (aleación de zinc), resistente al agua.","RY-P28":"Botón metálico dorado en forma de flor. Es de Samac (aleación de zinc) y resiste el agua.","RY-P29":"Dije dorado de sol con argolla. En Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P30":"Dije en plata vieja con un felino. De Samac (aleación de zinc), resistente al agua.","RY-P31":"Conector en plata vieja con estrella al centro. Es de Samac (aleación de zinc) y resiste el agua.","RY-P32":"Estrella plateada calada, simple. En Samac (aleación de zinc), resistente al agua.","RY-P35":"Adorno ovalado dorado con piedra marmolada crema. Base de Samac (aleación de zinc), resistente al agua.","RY-P37":"Hebilla dorada calada con sol. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P38":"Hebilla dorada con un coco y su flor. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-P39":"Espiral dorada con relieve. En Samac (aleación de zinc), resistente al agua.","RY-P40":"Estrella de mar dorada cubierta de strass. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P41":"U dorada con piedras color crema. La base es de Samac (aleación de zinc) y resiste el agua.","RY-P42":"Pasador triangular dorado con ojal. Es de Samac (aleación de zinc) y resiste el agua.","RY-P43":"Conector dorado con espiral y argollas a los costados. En Samac (aleación de zinc), resistente al agua.","RY-P44":"Botón metálico dorado con forma de cangrejo. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P54":"Hebilla ovalada dorada con estrellas de mar. Es de Samac (aleación de zinc) y resiste el agua. Ideal para bikini.","RY-P55":"Hebilla circular dorada texturada, con estrellas de mar. En Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P56":"Hebilla ovalada dorada con conchas. De Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P57":"Hebilla ovalada dorada, ondulada y calada. Es de Samac (aleación de zinc) y resiste el agua.","RY-P58":"Hebilla ovalada plateada, ondulada y calada. En Samac (aleación de zinc), resistente al agua.","RY-P59":"Hebilla ovalada dorada con relieve ondulado. De Samac (aleación de zinc), resistente al agua.","RY-P60":"Hebilla ovalada plateada con relieve ondulado. Es de Samac (aleación de zinc) y resiste el agua.","RY-P61":"Hebilla dorada calada con palmera y flor tropical. En Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P63":"Concha dorada con esmalte turquesa y perla. Base de Samac (aleación de zinc), resistente al agua. Ideal para bikini.","RY-P65":"Hebilla ovalada dorada con tres hendiduras. De Samac (aleación de zinc), resistente al agua.","RY-P66":"Doble V plateada. Es de Samac (aleación de zinc) y resiste el agua.","RY-P67":"Doble V dorada. En Samac (aleación de zinc), resistente al agua.","RY-P70":"Botón japonés negro con nudo central.","RY-P71":"Botón japonés blanco con nudo central.","RY-P72":"Botón plástico metalizado dorado con forma de estrella de mar. Ideal para bikini.","RY-P73":"Botón plástico metalizado plateado en forma de corazón.","RY-P74":"Botón plástico metalizado plateado, de forma irregular.","RY-P75":"Botón plástico metalizado dorado con forma de flor tropical. Ideal para bikini.","RY-P76":"Botón plástico metalizado dorado con forma de caracol. Ideal para bikini.","RY-P77":"Botón plástico metalizado dorado con forma de rosa.","RY-P78":"Botón plástico metalizado dorado, de forma irregular.","RY-P79":"Botón plástico redondo martillado en plateado y negro.","RY-P80":"Botón plástico redondo martillado en dorado y negro.","RY-P81":"Botón plástico chico, redondo y martillado en plateado y negro.","RY-P82":"Botón plástico chico, redondo y martillado en dorado y negro.","RY-P101":"Botón plástico oval, blanco perlado, con dos agujeros.","RY-P102":"Botón plástico oval, beige veteado, con dos agujeros.","RY-P103":"Botón plástico en forma de flor, con perlas y strass.","RY-P104":"Botón plástico chico en forma de flor, con perlas y strass.","RY-P105":"Botón plástico oval, blanco perlado, con borde dorado.","RY-P106":"Botón plástico oval blanco perlado con borde dorado, en tamaño más chico.","RY-P124":"Colgante con perla, cuentas y dije de abanico con strass.","RY-P125":"Colgante con perla, cuentas y dije ovalado.","RY-R01":"Puntera dorada calada. De plástico.","RY-R02":"Puntera dorada con textura de escamas. De Samac (aleación de zinc), resistente al agua.","RY-R03":"Canuto dorado liso. De plástico.","RY-R04":"Cadena de tres rombos marmolados en crema y caramelo. De resina con argollas metálicas, ideal para bikini.","RY-R05":"Cadena de tres rombos en ámbar translúcido. Es de resina, con argollas metálicas. Ideal para bikini.","RY-R06":"Pasador ovalado marmolado en crema y caramelo. De resina, ideal para bikini.","RY-R07":"Pasador ovalado en marrón carey. Es de resina, ideal para bikini.","RY-P08":"Pasador ovalado en azul intenso. De resina, ideal para bikini.","RY-R09":"Pasador ovalado en verde esmeralda. Es de resina, ideal para bikini.","RY-R10":"Pasador ovalado en rosa empolvado. De resina, ideal para bikini.","RY-R11":"Cadena de cuatro eslabones marmolados en crema y caramelo. Es de resina, ideal para bikini.","RY-R12":"Cadena de cuatro eslabones en carey ámbar. De resina, ideal para bikini.","RY-R13":"Cadena de cuatro eslabones en verde petróleo. Es de resina, ideal para bikini.","RY-R14":"Cadena de cuatro eslabones en bordó. De resina, ideal para bikini.","RY-R15":"Colgante de caracol cauri marmolado. De resina con argolla metálica, ideal para bikini.","RY-R16":"Colgante de caballito de mar en beige. Es de resina, con argolla metálica. Ideal para bikini.","RY-R17":"Colgante redondo marmolado en crema y caramelo. De resina con argolla metálica, ideal para bikini.","RY-R18":"Colgante de estrella de mar crema. Es de resina, con argolla metálica. Ideal para bikini.","RY-R19":"Colgante de concha en crema y caramelo. De resina con argolla metálica, ideal para bikini.","RY-R20":"Colgante de concha grande en crema y caramelo. Es de resina, con argolla metálica. Ideal para bikini.","RY-R21":"Colgante redondo grande, marmolado. De resina con argolla metálica, ideal para bikini.","RY-R22":"Esfera plateada lisa. De plástico.","RY-R23":"Esfera dorada lisa. De plástico.","RY-R24":"Colgante irregular en marrón carey. Es de resina, con argolla metálica. Ideal para bikini.","RY-R25":"Colgante irregular en verde petróleo. De resina con argolla metálica, ideal para bikini.","RY-R27":"Colgante irregular en color coral. Es de resina, con argolla metálica. Ideal para bikini.","RY-R28":"Colgante irregular en crema. De resina con argolla metálica, ideal para bikini.","RY-R36":"Cuenta color caramelo. Es de resina, ideal para bikini.","RY-R45":"Cuenta irregular marmolada en crema y caramelo. De resina, ideal para bikini.","RY-R46":"Cuenta irregular en marrón carey. Es de resina, ideal para bikini.","RY-R54":"Cadena con tres estrellas marmoladas en crema y caramelo. De resina con argollas metálicas, ideal para bikini.","RY-R55":"Cadena con tres corazones marmolados en crema y caramelo. Es de resina, con argollas metálicas. Ideal para bikini.","RY-R56":"Cadena con una concha y un rombo marmolados. De resina con argollas metálicas, ideal para bikini.","RY-R57":"Cadena corta con dos cuentas color caramelo. Es de resina, con argollas metálicas. Ideal para bikini.","RY-R58":"Cadena de tres piezas redondeadas, marmoladas en crema y caramelo. De resina con argollas metálicas, ideal para bikini.","RY-R59":"Cadena de tres piezas redondeadas en ámbar translúcido. Es de resina, con argollas metálicas. Ideal para bikini.","RY-R60":"Cadena de tres piezas redondeadas en verde esmeralda marmolado. De resina con argollas metálicas, ideal para bikini.","RY-R61":"Colgante con concha, estrella de mar, cuenta y concha grande. Es de resina, con argolla metálica. Ideal para bikini.","RY-R62":"Colgante con cuentas, caracol y concha. De resina con argolla metálica, ideal para bikini.","RY-R63":"Colgante con cuentas, caballito de mar y concha. Es de resina, con argolla metálica. Ideal para bikini.","RY-R64":"Caracol cauri marmolado. De resina, ideal para bikini.","RY-R65":"Disco marmolado rosado con orificio. Es de resina, ideal para bikini.","RY-284":"Cordón crudo con zigzag marrón y punteras marrones.","RY-285":"Cordón crudo con punteras en forma de corazón negro.","RY-286":"Cordón crudo liso con punteras doradas.","RY-297":"Cordón redondo negro con trama gris.","RY-322A":"Elástico de cintura tejido con la palabra FASHION y ojal para cordón.","RY-322B":"Elástico de cintura negro con la palabra FASHION tejida y ojal.","RY-323A":"Elástico negro con rayas y la leyenda “Interesting Black Rock”.","RY-323B":"Elástico marrón de rayas con la leyenda “Interesting Black Rock”.","RY-324A":"Elástico negro de rayas contrastantes, con ojal para cordón.","RY-324B":"Elástico blanco con rayas negras y ojal.","RY-293":"Elástico liso con acabado satinado.","RY-294":"Elástico negro con estrellas blancas.","RY-295":"Elástico con la palabra SPORT y bordes negros.","RY-296":"Elástico negro con franja central gris.","RY-E36":"Elástico crudo calado con una línea central brillante.","RY-E37":"Elástico crudo con franjas oscuras y strass.","RY-E38":"Elástico crudo con bordes negros y una onda de strass con corazones.","RY-E39":"Elástico crudo con bordes negros y lunares de strass.","RY-E40":"Elástico color camel salpicado de brillos.","RY-E45":"Cierre doble carril importado","RY-E46":"Cierre doble carril importado","RY-E49":"Cierre doble carril importado","RY-330":"Fleco marrón de tiras finas con strass.","RY-331":"Fleco beige con strass en cada tira.","RY-443":"Fleco de lentejuelas negras, de 17 cm de largo.","RY-444":"Fleco de lentejuelas plateado.","RY-445":"Fleco de lentejuelas en tono natural.","RY-446":"Fleco de lentejuelas dorado con reflejo rosado.","RY-447":"Fleco de lentejuelas color champagne.","RY-448":"Fleco de lentejuelas azul navy.","RY-U03":"Fleco de lentejuelas turquesa.","RY-U04":"Fleco de lentejuelas fucsia.","RY-U05":"Fleco de lentejuelas negro.","RY-U06":"Fleco de lentejuelas blanco.","RY-326":"Cinta negra con tachas redondas plateadas incrustadas.","RY-327":"Cinta negra con tachas piramidales plateadas.","RY-328":"Cinta negra con ojalillos metálicos plateados.","RY-371":"Cinta de ganchos blanca, con ganchos metálicos cada 2 cm.","RY-372":"Cinta de ganchos negra con ganchos metálicos separados cada 2 cm.","RY-427":"Cordón fino de strass plateados."};
 function buildProduct(src, isNew){
   const p = isNew ? { id:src } : JSON.parse(JSON.stringify(src));
+  if(!isNew && (!p.desc || !String(p.desc).trim()) && typeof DESCR!=="undefined" && DESCR[p.id]) p.desc=DESCR[p.id];
   ovApply(p);
   if(!p.colors) p.colors=[];
   if(p.desc==null) p.desc="";
@@ -2891,6 +2922,7 @@ function rebuildCatalog(){
   const visible = fresh.filter(function(c){ return (c.products&&c.products.length)||(c.subs&&c.subs.length); });
   CATS.length = 0; visible.forEach(function(c){ CATS.push(c); });
   reresolveState();
+  try{ searchReindex(); }catch(e){}   // el buscador siempre refleja el estado actual
 }
 rebuildCatalog();   // estado inicial (sin modificaciones) = comportamiento actual
 function imgURL(file, params){ if(!file) return ""; if(/^https?:\/\//i.test(file)) return file; return "/.netlify/images?url=/"+file+(params?("&"+params):""); }
@@ -3334,7 +3366,7 @@ function renderProduct(){
   return `<div class="prod fade"><div class="wrap">
     <button class="back" data-action="back" aria-label="Volver">${IC.arrowL}</button>
     <div class="prod-grid">
-      <div class="prod-img${p.img?` prod-img-zoomable`:``}" id="prod-imgbox">${p.img?`<img id="prod-photo" class="prod-photo" src="/.netlify/images?url=/${(p.imgs&&p.imgs[color.n])?p.imgs[color.n]:p.img}&w=1000&q=78" alt="${esc(p.title)}" decoding="async"><span class="zoom-hint" id="zoom-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2M11 8v6M8 11h6"/></svg></span>`:`<span class="big tnum">${num(p.id)}</span><span class="ph">Foto próximamente</span>`}</div>
+      <div class="prod-img${p.img?` prod-img-zoomable`:``}" id="prod-imgbox">${p.img?`${galHTML(p,color)}<span class="zoom-hint" id="zoom-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2M11 8v6M8 11h6"/></svg></span>`:`<span class="big tnum">${num(p.id)}</span><span class="ph">Foto próximamente</span>`}</div>
       <div>
         <p class="prod-code tnum">${p.id}</p>
         <h1 class="prod-title">${esc(p.title)}</h1>
@@ -3418,15 +3450,20 @@ function relatedProducts(cur){
 
 /* ================= Buscador ================= */
 const ALL_PRODUCTS = [];
-CATS.forEach(c=>{
-  if(c.subs) c.subs.forEach(s=> s.products.forEach(p=> ALL_PRODUCTS.push({p, cat:c, sub:s})));
-  else (c.products||[]).forEach(p=> ALL_PRODUCTS.push({p, cat:c, sub:null}));
-});
 const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-ALL_PRODUCTS.forEach(e=>{
-  e.hay = norm([e.p.title, e.p.id, e.p.desc, e.cat.name, e.sub?e.sub.name:"",
-                e.p.colors.map(c=>c.n).join(" ")].join(" "));
-});
+/* índice del buscador: se reconstruye cada vez que cambia el catálogo (estado, precio, etc.) */
+function searchReindex(){
+  ALL_PRODUCTS.length = 0;
+  CATS.forEach(c=>{
+    if(c.subs) c.subs.forEach(s=> s.products.forEach(p=> ALL_PRODUCTS.push({p, cat:c, sub:s})));
+    else (c.products||[]).forEach(p=> ALL_PRODUCTS.push({p, cat:c, sub:null}));
+  });
+  ALL_PRODUCTS.forEach(e=>{
+    e.hay = norm([e.p.title, e.p.id, e.p.desc, e.cat.name, e.sub?e.sub.name:"",
+                  e.p.colors.map(c=>c.n).join(" ")].join(" "));
+  });
+}
+searchReindex();
 
 function searchProducts(q){
   const terms = norm(q).split(/\s+/).filter(Boolean);
@@ -3530,7 +3567,7 @@ function pickColor(ci){
   document.querySelectorAll(".swatch").forEach((el,i)=>el.classList.toggle("on", i===ci));
   const cn=$("#color-name"); if(cn && state.prod.colors[ci]) cn.textContent = state.prod.colors[ci].n;
   const ph=$("#prod-photo"), pr=state.prod;
-  if(ph && pr.imgs && pr.colors[ci]){ const nm=pr.colors[ci].n; if(pr.imgs[nm]) ph.src="/.netlify/images?url=/"+pr.imgs[nm]+"&w=1000&q=78"; }
+  if(ph && pr.imgs && pr.colors[ci]){ const nm=pr.colors[ci].n; if(pr.imgs[nm]){ ph.src=imgURL(pr.imgs[nm],"w=1000&q=78"); galGo(0); } }
 }
 
 
@@ -3725,26 +3762,79 @@ async function catalogPDF(){
   if(btn) btn.classList.remove("loading");
 }
 
+/* ================= Galería de la publicación (foto principal + hasta 3 extra) ================= */
+function galUrls(p,color){
+  const first=(p.imgs&&color&&p.imgs[color.n])?p.imgs[color.n]:p.img;
+  const out=[first]; (p.extra||[]).forEach(u=>{ if(u) out.push(u); });
+  return out;
+}
+function galHTML(p,color){
+  const urls=galUrls(p,color), n=urls.length;
+  if(state.galFor!==p.id){ state.galFor=p.id; state.galI=0; }
+  if(!(state.galI>=0 && state.galI<n)) state.galI=0;
+  const slides=urls.map((u,i)=>`<div class="gal-slide"><img ${i===0?'id="prod-photo" ':''}class="prod-photo" src="${imgURL(u,"w=1000&q=78")}" alt="${esc(p.title)}" decoding="async"${i>0?' loading="lazy"':''} draggable="false"></div>`).join("");
+  let nav="";
+  if(n>1){
+    nav=`<button class="carousel-arrow left gal-arrow" data-action="gal-prev" aria-label="Foto anterior">${IC.chevL}</button>`
+      +`<button class="carousel-arrow right gal-arrow" data-action="gal-next" aria-label="Foto siguiente">${IC.chevR}</button>`
+      +`<div class="carousel-dots gal-dots">${urls.map((u,i)=>`<button class="dot gal-dot${i===state.galI?" on":""}" data-action="gal-goto" data-i="${i}" aria-label="Ir a la foto ${i+1}"></button>`).join("")}</div>`;
+  }
+  return `<div class="gal-track" id="gal-track" style="transform:translateX(-${state.galI*100}%)">${slides}</div>${nav}`;
+}
+function galGo(i){
+  const tr=document.getElementById("gal-track"); if(!tr) return;
+  const n=tr.children.length; if(n<1) return;
+  i=((i%n)+n)%n; state.galI=i;
+  const b=document.getElementById("prod-imgbox"); if(b && b._zoomOff) b._zoomOff();
+  tr.style.transition=""; tr.style.transform="translateX(-"+(i*100)+"%)";
+  document.querySelectorAll(".gal-dot").forEach((d,k)=>d.classList.toggle("on",k===i));
+}
+
 const ZOOM=2.4;
 function initZoom(){
-  const box=$("#prod-imgbox"), img=$("#prod-photo");
-  if(!box||!img||!box.classList.contains("prod-img-zoomable")) return;
+  const box=$("#prod-imgbox"), img0=$("#prod-photo");
+  if(!box||!img0||!box.classList.contains("prod-img-zoomable")) return;
+  const track=$("#gal-track");
+  const nSl=()=>track?track.children.length:1;
+  const curImg=()=>{ const im=box.querySelectorAll(".gal-slide img"); return im[state.galI]||img0; };
+  const noZoomTarget=e=>!!(e.target.closest&&e.target.closest(".carousel-arrow,.gal-dots"));
   let on=false, lastTouch=0;
   function moveTo(clientX, clientY){
     const r=box.getBoundingClientRect();
     let px=(clientX-r.left)/r.width, py=(clientY-r.top)/r.height;
     px=Math.max(0,Math.min(1,px)); py=Math.max(0,Math.min(1,py));
     const tx=(0.5-px)*(ZOOM-1)*100, ty=(0.5-py)*(ZOOM-1)*100;
-    img.style.transform=`scale(${ZOOM}) translate(${tx/ZOOM}%,${ty/ZOOM}%)`;
+    curImg().style.transform=`scale(${ZOOM}) translate(${tx/ZOOM}%,${ty/ZOOM}%)`;
   }
-  function zoomOff(){ on=false; box.classList.remove("zoomed"); img.style.transform=""; }
+  function zoomOff(){ on=false; box.classList.remove("zoomed"); box.querySelectorAll(".gal-slide img").forEach(im=>{ im.style.transform=""; }); }
+  box._zoomOff=zoomOff;
   function zoomOn(x,y){ on=true; box.classList.add("zoomed"); moveTo(x,y); }
   function toggle(x,y){ if(on) zoomOff(); else zoomOn(x,y); }
-  box.addEventListener("click", e=>{ if(Date.now()-lastTouch<600) return; toggle(e.clientX,e.clientY); });
+  box.addEventListener("click", e=>{ if(Date.now()-lastTouch<600) return; if(noZoomTarget(e)) return; toggle(e.clientX,e.clientY); });
   box.addEventListener("mousemove", e=>{ if(on && Date.now()-lastTouch>600) moveTo(e.clientX,e.clientY); });
   box.addEventListener("mouseleave", ()=>{ if(Date.now()-lastTouch>600) zoomOff(); });
-  box.addEventListener("touchstart", e=>{ lastTouch=Date.now(); const t=e.touches[0]; toggle(t.clientX,t.clientY); }, {passive:true});
-  box.addEventListener("touchmove", e=>{ lastTouch=Date.now(); if(on){ const t=e.touches[0]; moveTo(t.clientX,t.clientY); e.preventDefault(); } }, {passive:false});
+  /* táctil: tocar = zoom; deslizar a los costados = cambiar de foto; arrastrar con zoom = mover la imagen */
+  let tx0=0, ty0=0, tdx=0, tdy=0, tmode="", tw=1;
+  box.addEventListener("touchstart", e=>{
+    lastTouch=Date.now();
+    if(noZoomTarget(e)){ tmode="btn"; return; }
+    const t=e.touches[0]; tx0=t.clientX; ty0=t.clientY; tdx=0; tdy=0; tmode=""; tw=box.getBoundingClientRect().width||1;
+  }, {passive:true});
+  box.addEventListener("touchmove", e=>{
+    lastTouch=Date.now(); if(tmode==="btn") return;
+    const t=e.touches[0]; tdx=t.clientX-tx0; tdy=t.clientY-ty0;
+    if(on){ if(Math.abs(tdx)>8||Math.abs(tdy)>8) tmode="pan"; moveTo(t.clientX,t.clientY); e.preventDefault(); return; }
+    if(!tmode && (Math.abs(tdx)>8||Math.abs(tdy)>8)) tmode=(Math.abs(tdx)>Math.abs(tdy) && nSl()>1)?"swipe":"scroll";
+    if(tmode==="swipe"){ e.preventDefault(); track.style.transition="none"; track.style.transform="translateX(calc(-"+(state.galI*100)+"% + "+tdx+"px))"; }
+  }, {passive:false});
+  box.addEventListener("touchend", e=>{
+    lastTouch=Date.now();
+    if(tmode==="btn"){ tmode=""; return; }
+    if(tmode==="swipe"){ const th=Math.min(60,tw*0.2); galGo(Math.abs(tdx)>th ? state.galI+(tdx<0?1:-1) : state.galI); }
+    else if(tmode===""){ const t=e.changedTouches[0]; toggle(t.clientX,t.clientY); }
+    tmode="";
+  }, {passive:true});
+  box.addEventListener("touchcancel", ()=>{ if(tmode==="swipe") galGo(state.galI); tmode=""; }, {passive:true});
 }
 function setQty(n){
   const mn=pMin(state.prod);
@@ -3850,6 +3940,7 @@ document.addEventListener("change", e=>{
   if(e.target.id==="of-cat-filter"){ ofSyncInputs(); ofState.cat=e.target.value; ofListRerender(ofType(ofState.typeId)); return; }
   if(e.target.id==="apub-file"){ apubOnPhotoPick(e.target.files&&e.target.files[0]); return; }
   if(e.target.id==="apub-nfile"){ apubNewOnPhoto(e.target.files&&e.target.files[0]); return; }
+  if(e.target.id==="apub-xfile"){ const fl=e.target.files&&e.target.files[0]; apubXOnPick(fl); try{ e.target.value=""; }catch(_){} return; }
   if(e.target.id==="apub-n-cat"){ apubNew.cat=e.target.value; apubNew.sub=""; const w=document.getElementById("apub-n-subwrap"); if(w) w.innerHTML=apubNewSubHTML(); return; }
   if(e.target.id==="apub-e-unit"){ apubEditSync(); return; }
   if(e.target.id==="apub-n-unit"){ const u=document.getElementById("apub-n-minunit"); if(u) u.textContent=UNIT_MIN[e.target.value]||"u."; return; }
@@ -4265,6 +4356,11 @@ document.addEventListener("click", e=>{
   else if(a==="apub-clear-filter"){ apubState.q=""; apubState.cat=""; render(); }
   else if(a==="apub-new-open"){ apubNew.open=true; render(); window.scrollTo({top:0}); }
   else if(a==="apub-new-photo"){ const f=$("#apub-nfile"); if(f) f.click(); }
+  else if(a==="apub-xs-pick"){ apubXT={form:t.dataset.form, i:parseInt(t.dataset.i,10)}; const f=$("#apub-xfile"); if(f) f.click(); }
+  else if(a==="apub-xs-del"){ apubXsDel(t.dataset.form, parseInt(t.dataset.i,10)); }
+  else if(a==="gal-prev"){ galGo((state.galI||0)-1); }
+  else if(a==="gal-next"){ galGo((state.galI||0)+1); }
+  else if(a==="gal-goto"){ galGo(parseInt(t.dataset.i,10)||0); }
   else if(a==="apub-ed-open"){ apubEditSync(); apubEdit.open[t.dataset.f]=true; apubEdit.dd=false; apubSdOpen=null; apubEditRerender(t.dataset.f); }
   else if(a==="apub-ed-done"){ apubEditSync(); apubEdit.open[t.dataset.f]=false; apubEdit.dd=false; apubSdOpen=null; apubEditRerender(); }
   else if(a==="apub-ed-dd"){ apubEdit.dd=!apubEdit.dd; apubEdRenderColors(); }
@@ -4427,7 +4523,7 @@ const APUB_UNITS = [
 ];
 const apubState = { tab:"crear", q:"", cat:"", editingId:null, photoBlob:null, photoPreview:null, saving:false, delView:"activas", confirm:null, working:false, leave:null, ofInfo:null, ofDel:null, ofDelErr:"" };
 
-function openAdminPub(){ if(!(state.user&&state.user.is_owner)) return; closeUserMenu(); apubState.tab="crear"; apubState.editingId=null; apubState.photoBlob=null; apubState.photoPreview=null; apubState.leave=null; apubNewReset(); go("adminpub"); }
+function openAdminPub(){ if(!(state.user&&state.user.is_owner)) return; closeUserMenu(); apubState.tab="crear"; apubState.editingId=null; apubState.photoBlob=null; apubXsFree(apubState); apubState.photoPreview=null; apubState.leave=null; apubNewReset(); go("adminpub"); }
 
 /* ---- Carga del overlay (modificaciones) desde Supabase + caché local ---- */
 function setOverlay(rows){
@@ -4525,6 +4621,7 @@ function renderAdminPub(){
     <div class="wrap apub-body">${body}</div>
     <input type="file" id="apub-file" accept="image/*" style="display:none">
     <input type="file" id="apub-nfile" accept="image/*" style="display:none">
+    <input type="file" id="apub-xfile" accept="image/*" style="display:none">
   </div>`;
 }
 
@@ -4578,7 +4675,7 @@ function apubOpenEdit(id){
   const orig={ title:p.title||"", price:pPrice(p)||0, unit:pUnit(p), min:pMin(p)||0, desc:p.desc||"", med:(pMed(p)||[]).slice(), colors:(p.colors||[]).map(c=>({n:c.n,h:c.h})), dd:false,
     estado:(k==="soon"?"proximamente":(k==="nostock"?"nostock":"normal")) };
   apubEdit.orig=orig; apubEdit.draft=JSON.parse(JSON.stringify(orig)); apubEdit.open={};
-  apubState.editingId=id; apubEdit.dd=false; apubState.photoBlob=null; apubState.photoPreview=null; apubState.saving=false; apubSdOpen=null;
+  apubState.editingId=id; apubEdit.dd=false; apubState.photoBlob=null; apubXsFree(apubState); apubState.photoPreview=null; apubState.saving=false; apubSdOpen=null;
   render(); window.scrollTo({top:0});
 }
 /* pasa lo que hay en los campos abiertos al borrador */
@@ -4641,7 +4738,7 @@ function apubEditDirty(){
     || JSON.stringify(d.med||[])!==JSON.stringify(o.med||[])
     || JSON.stringify(d.colors||[])!==JSON.stringify(o.colors||[])
     || (d.estado||"normal")!==o.estado
-    || !!apubState.photoBlob;
+    || !!apubState.photoBlob || apubXsDirty("edit");
 }
 function apubEditForm(){
   const f=apubFindAdmin(apubState.editingId);
@@ -4660,23 +4757,22 @@ function apubEditForm(){
       <button class="apub-back" data-action="apub-cancel">${IC.arrowL} Volver</button>
       <p class="apub-crumbtxt">${esc(catTxt)}</p>
     </div>
-    <div class="prod apub-prod">
+    <div class="prod apub-prod apub-prod-ed">
     <div class="prod-grid">
       <div>
         <div class="apub-pwrap">
           <div class="prod-img apub-pimg apub-pimg-ed" id="apub-e-imgbox">${prev?`<img class="prod-photo" src="${prev}" alt="Foto de la publicación">`:`<div class="apub-pimg-ph"><b>Sin foto</b></div>`}</div>
           <button type="button" class="apub-pencil apub-pencil-photo" data-action="apub-pick-photo" aria-label="Cambiar foto" title="Cambiar foto">${APUB_PENCIL}</button>
         </div>
-        <div class="apub-notes">
-          <p class="apub-note">El fondo de la imagen debe ser color <b>arena #efe7da</b>, igual que el resto del catálogo.</p>
-          <p class="apub-note">El formato ideal para las imágenes es la proporción <b>4:5</b> (vertical).</p>
-        </div>
+        ${apubXsHTML("edit")}
       </div>
       <div>
+        <div class="apub-ed-head">
         <p class="prod-code tnum">${esc(p.id)}</p>
         <div class="apub-fld">
           ${o("title")?`<input id="apub-e-title" class="apub-input apub-e-title" maxlength="40" value="${esc(d.title)}" aria-label="Título">`:`<h1 class="prod-title">${esc(d.title)}</h1>`}
           ${o("title")?apubDoneBtn("title"):apubPencil("title","título")}
+        </div>
         </div>
         <div class="apub-fld apub-fld-price">
           ${o("price")
@@ -4726,6 +4822,10 @@ function apubEditForm(){
         </div>
       </div>
     </div>
+    <div class="apub-notes">
+      <p class="apub-note">El fondo de la imagen debe ser color <b>arena #efe7da</b>, igual que el resto del catálogo.</p>
+      <p class="apub-note">El formato ideal para las imágenes es la proporción <b>4:5</b> (vertical).</p>
+    </div>
     </div>`;
 }
 
@@ -4754,9 +4854,50 @@ async function apubOnPhotoPick(file){
     if(box) box.innerHTML=`<img class="prod-photo" src="${apubState.photoPreview}" alt="Foto de la publicación">`;
   }catch(err){ apubMsg(err.message||"No se pudo cargar la foto", true); }
 }
+/* ---- Fotos adicionales: 3 mini slots 4:5 (Crear y Editar) ---- */
+const APUB_XN=3;
+let apubXT=null;   // slot elegido: {form:"new"|"edit", i}
+function apubXsMake(urls){ const a=[]; for(let i=0;i<APUB_XN;i++) a.push({url:(urls&&urls[i])||"", blob:null, preview:null}); return a; }
+function apubXsFree(st){ if(!st) return; if(st.xs) st.xs.forEach(x=>{ if(x&&x.preview){ try{ URL.revokeObjectURL(x.preview); }catch(e){} } }); st.xs=null; }
+function apubEditExtra(){ const r=CATALOG_OV[apubState.editingId]; return (r&&r.data&&r.data.extra)||[]; }
+function apubXsState(form){ const st=(form==="new")?apubNew:apubState; if(!st.xs) st.xs=apubXsMake(form==="edit"?apubEditExtra():[]); return st; }
+function apubXsDirty(form){
+  const st=(form==="new")?apubNew:apubState; if(!st.xs) return false;
+  const o=(form==="edit")?apubEditExtra():[];
+  return st.xs.some((x,i)=>!!x.blob || (x.url||"")!==(o[i]||""));
+}
+function apubXsHTML(form){
+  const st=apubXsState(form);
+  const cells=st.xs.map((x,i)=>{
+    const src=x.preview||(x.url?imgURL(x.url,"w=300&q=72"):"");
+    return `<div class="apub-xs-cell"><button type="button" class="apub-xs-slot${src?" has":""}" data-action="apub-xs-pick" data-form="${form}" data-i="${i}" aria-label="${src?"Cambiar":"Agregar"} foto adicional ${i+1}">${src?`<img src="${src}" alt="Foto adicional ${i+1}">`:`<span class="apub-xs-plus">+</span>`}</button>${src?`<button type="button" class="apub-xs-del" data-action="apub-xs-del" data-form="${form}" data-i="${i}" aria-label="Quitar foto adicional ${i+1}" title="Quitar">×</button>`:""}</div>`;
+  }).join("");
+  return `<div id="apub-xs-${form}"><p class="apub-xs-l">Fotos adicionales <span>(opcional · hasta 3)</span></p><div class="apub-xs">${cells}</div></div>`;
+}
+function apubXsRender(form){ const el=document.getElementById("apub-xs-"+form); if(el) el.outerHTML=apubXsHTML(form); }
+async function apubXOnPick(file){
+  const t=apubXT; apubXT=null; if(!file||!t) return;
+  const st=apubXsState(t.form);
+  try{
+    const blob=await apubCompress(file,1200);
+    const x=st.xs[t.i]; if(!x) return;
+    if(x.preview){ try{ URL.revokeObjectURL(x.preview); }catch(e){} }
+    x.blob=blob; x.preview=URL.createObjectURL(blob);
+    apubXsRender(t.form);
+  }catch(err){ (t.form==="new"?apubNewMsg:apubMsg)((err&&err.message)||"No se pudo cargar la foto", true); }
+}
+function apubXsDel(form,i){
+  const st=apubXsState(form); const x=st.xs[i]; if(!x) return;
+  if(x.preview){ try{ URL.revokeObjectURL(x.preview); }catch(e){} }
+  x.blob=null; x.preview=null; x.url="";
+  apubXsRender(form);
+}
+async function apubXsDeleteStored(urls){
+  for(const u of (urls||[])){ const pth=apubStoragePath(u); if(pth){ try{ await sb.storage.from("productos").remove([pth]); }catch(e){} } }
+}
 function apubStoragePath(url){ const m=/\/productos\/(.+)$/.exec(url||""); return m?decodeURIComponent(m[1].split("?")[0]):null; }
-async function apubUploadPhoto(){
-  const blob=apubState.photoBlob; if(!blob) return null;
+async function apubUploadPhoto(blob0){
+  const blob=blob0||apubState.photoBlob; if(!blob) return null;
   const name="p_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)+".jpg";
   const up=await sb.storage.from("productos").upload(name, blob, {contentType:"image/jpeg", upsert:false});
   if(up.error) throw up.error;
@@ -4790,16 +4931,25 @@ async function apubSave(){
   if(JSON.stringify(med)!==JSON.stringify(o.med)) data.med=med;
   const colorsNow=(d.colors||[]).map(c=>({n:c.n,h:c.h}));
   if(JSON.stringify(colorsNow)!==JSON.stringify(o.colors||[])) data.colors=colorsNow;
-  const changed = JSON.stringify(data)!==JSON.stringify(prevData) || estado!==o.estado || !!apubState.photoBlob;
-  if(!changed){ apubState.editingId=null; apubState.photoBlob=null; apubState.photoPreview=null; render(); return; }
+  const changed = JSON.stringify(data)!==JSON.stringify(prevData) || estado!==o.estado || !!apubState.photoBlob || apubXsDirty("edit");
+  if(!changed){ apubState.editingId=null; apubState.photoBlob=null; apubXsFree(apubState); apubState.photoPreview=null; render(); return; }
   /* 3) estado "guardando" sin redibujar, para conservar lo escrito si algo falla */
   apubState.saving=true;
   const saveBtn=document.querySelector('[data-action="apub-save"]');
   const setBtn=(busy)=>{ if(saveBtn){ saveBtn.textContent=busy?"Guardando…":"Guardar cambios"; saveBtn.classList.toggle("loading",busy); } };
   setBtn(true); apubMsg("", false);
-  let uploaded=null;
+  let uploaded=null; const upX=[];
   try{
-    let oldPhoto=null;
+    let oldPhoto=null; let oldX=[];
+    if(apubXsDirty("edit")){
+      const xo=(prevData.extra||[]); const fin=[];
+      for(let i=0;i<APUB_XN;i++){
+        const x=apubState.xs[i]; let u=x.url||"";
+        if(x.blob){ const nu=await apubUploadPhoto(x.blob); if(nu){ upX.push(apubStoragePath(nu)); u=nu; } }
+        fin.push(u); if(xo[i] && xo[i]!==u) oldX.push(xo[i]);
+      }
+      data.extra=fin;
+    }
     if(apubState.photoBlob){
       const url=await apubUploadPhoto();
       if(url){ uploaded=apubStoragePath(url); if(prevData.img && /^https?:/i.test(prevData.img)) oldPhoto=prevData.img; data.img=url; data.imgs={}; }
@@ -4809,11 +4959,13 @@ async function apubSave(){
     if(error) throw error;
     if(!saved || !saved.length) throw new Error("Supabase no guardó el cambio (revisá los permisos de administrador).");
     if(oldPhoto){ const pth=apubStoragePath(oldPhoto); if(pth){ try{ await sb.storage.from("productos").remove([pth]); }catch(e){} } }
+    if(oldX.length) apubXsDeleteStored(oldX);
     CATALOG_OV[id]=row; cacheOverlay(); rebuildCatalog();
-    apubState.saving=false; apubState.editingId=null; apubState.photoBlob=null; apubState.photoPreview=null;
+    apubState.saving=false; apubState.editingId=null; apubState.photoBlob=null; apubXsFree(apubState); apubState.photoPreview=null;
     render();
   }catch(err){
     if(uploaded){ try{ await sb.storage.from("productos").remove([uploaded]); }catch(e){} }
+    if(upX.length){ try{ await sb.storage.from("productos").remove(upX); }catch(e){} }
     apubState.saving=false; setBtn(false);
     apubMsg((err&&err.message)?("No se pudo guardar: "+err.message):"No se pudo guardar.", true);
   }
@@ -4945,6 +5097,7 @@ async function apubDelConfirm(){
       if(error) throw error;
       if(!gone || !gone.length) throw new Error("Supabase no borró la fila (revisá los permisos de administrador).");
       if(img && /^https?:/i.test(img)){ const pth=apubStoragePath(img); if(pth){ try{ await sb.storage.from("productos").remove([pth]); }catch(e){} } }
+      if(row.data&&row.data.extra) apubXsDeleteStored(row.data.extra);
       delete CATALOG_OV[id];
     } else {
       const prev=CATALOG_OV[id]||{}; const data=prev.data||{};
@@ -4998,7 +5151,7 @@ function apubNewReset(){
   if(apubDoneTimer){ clearTimeout(apubDoneTimer); apubDoneTimer=null; }
   if(apubNew.photoPreview) try{ URL.revokeObjectURL(apubNew.photoPreview); }catch(e){}
   apubNew.open=false; apubNew.done=false; apubNew.ddOpen=false;
-  apubNew.cat=""; apubNew.sub=""; apubNew.colors=[]; apubNew.photoBlob=null; apubNew.photoPreview=null; apubNew.saving=false;
+  apubNew.cat=""; apubNew.sub=""; apubNew.colors=[]; apubNew.photoBlob=null; apubXsFree(apubNew); apubNew.photoPreview=null; apubNew.saving=false;
   apubNew.f={ title:"", price:"", unit:"u", min:"100", med:"", desc:"", estado:"normal" };
 }
 /* lee los valores actuales del DOM al estado (antes de re-renderizar o de salir) */
@@ -5017,7 +5170,7 @@ function apubNewDirty(){
   try{ apubNewSync(); }catch(e){}
   const f=apubNew.f;
   return !!( String(f.title||"").trim() || String(f.price||"").trim() || String(f.med||"").trim() || String(f.desc||"").trim()
-    || apubNew.colors.length || apubNew.photoBlob || apubNew.cat || apubNew.sub
+    || apubNew.colors.length || apubNew.photoBlob || apubXsDirty("new") || apubNew.cat || apubNew.sub
     || f.unit!=="u" || String(f.min)!=="100" || f.estado!=="normal" );
 }
 function apubNewActive(){ return state.view==="adminpub" && apubState.tab==="crear" && apubNew.open && !apubNew.done; }
@@ -5081,6 +5234,7 @@ function apubCreateForm(){
       <div>
         <div class="prod-img apub-pimg" id="apub-n-imgbox" data-action="apub-new-photo" role="button" tabindex="0" aria-label="Subir foto">${apubNewImgHTML()}</div>
         <button class="apub-btn-ghost apub-photobtn" id="apub-n-photobtn" data-action="apub-new-photo">${apubNew.photoPreview?"Cambiar foto":"Subir foto"}</button>
+        ${apubXsHTML("new")}
         <div class="apub-notes">
           <p class="apub-note">El fondo de la imagen debe ser color <b>arena #efe7da</b>, igual que el resto del catálogo.</p>
           <p class="apub-note">El formato ideal para las imágenes es la proporción <b>4:5</b> (vertical).</p>
@@ -5153,7 +5307,7 @@ async function apubNewSave(){
   const btn=document.querySelector('[data-action="apub-new-save"]');
   const setBtn=busy=>{ if(btn){ btn.textContent=busy?"Publicando…":"Publicar"; btn.classList.toggle("loading",busy); } };
   setBtn(true); apubNewMsg("", false);
-  let uploaded=null;
+  let uploaded=null; const upX=[];
   try{
     const name="p_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)+".jpg";
     const up=await sb.storage.from("productos").upload(name, apubNew.photoBlob, {contentType:"image/jpeg", upsert:false});
@@ -5163,6 +5317,15 @@ async function apubNewSave(){
     const colors=apubNew.colors.map(k=>C[k]).filter(Boolean);
     const data={ title:"N° "+tt, price, unit:f.unit||"u", min:minQ,
       med:(f.med||"").trim()?[(f.med||"").trim()]:[], desc:(f.desc||"").trim(), img:imgUrl, imgs:{}, colors };
+    if(apubXsDirty("new")){
+      const fin=[];
+      for(let i=0;i<APUB_XN;i++){
+        const x=apubNew.xs[i]; let u="";
+        if(x && x.blob){ const nu=await apubUploadPhoto(x.blob); if(nu){ upX.push(apubStoragePath(nu)); u=nu; } }
+        fin.push(u);
+      }
+      if(fin.some(Boolean)) data.extra=fin;
+    }
     const row={ id, es_nueva:true, estado:f.estado||"normal", cat:apubNew.cat, sub:apubNew.sub||null, data };
     const { data:saved, error } = await sb.from("products").upsert(row, { onConflict:"id" }).select();
     if(error) throw error;
@@ -5173,6 +5336,7 @@ async function apubNewSave(){
     apubDoneTimer=setTimeout(()=>{ apubDoneTimer=null; apubNew.done=false; if(state.view==="adminpub" && apubState.tab==="crear") render(); }, 1000);
   }catch(err){
     if(uploaded){ try{ await sb.storage.from("productos").remove([uploaded]); }catch(e){} }   // no dejar fotos huérfanas
+    if(upX.length){ try{ await sb.storage.from("productos").remove(upX); }catch(e){} }
     apubNew.saving=false; setBtn(false);
     apubNewMsg((err&&err.message)?("No se pudo publicar: "+err.message):"No se pudo publicar.", true);
   }
@@ -5181,7 +5345,7 @@ async function apubNewSave(){
 /* ---- Aviso al salir con datos sin guardar ---- */
 function apubLeaveAsk(pending,kind){ pending=pending||{}; pending.kind=kind||"new"; apubState.leave=pending; apubSyncModal(); }
 function apubLeaveStay(){ apubState.leave=null; apubSyncModal(); }
-function apubEditReset(){ apubState.editingId=null; apubState.photoBlob=null; if(apubState.photoPreview){ try{ URL.revokeObjectURL(apubState.photoPreview); }catch(e){} } apubState.photoPreview=null; apubEdit.draft=null; apubEdit.orig=null; apubEdit.open={}; apubEdit.dd=false; }
+function apubEditReset(){ apubState.editingId=null; apubState.photoBlob=null; apubXsFree(apubState); if(apubState.photoPreview){ try{ URL.revokeObjectURL(apubState.photoPreview); }catch(e){} } apubState.photoPreview=null; apubEdit.draft=null; apubEdit.orig=null; apubEdit.open={}; apubEdit.dd=false; }
 function apubLeaveProceed(p){
   if(!p) return;
   if(p.state!==undefined){ try{ applyHist(p.state); }catch(e){} }
@@ -5206,7 +5370,7 @@ document.addEventListener("click", function(e){
   if(!apubNewActive()) return;
   const t=e.target.closest("[data-action]"); if(!t) return;
   const a=t.dataset.action;
-  if(a.indexOf("apub-new-")===0 || a.indexOf("apub-leave-")===0 || a.indexOf("apub-sd-")===0 || APUB_FREE_ACTIONS.indexOf(a)>=0) return;
+  if(a.indexOf("apub-new-")===0 || a.indexOf("apub-xs-")===0 || a.indexOf("apub-leave-")===0 || a.indexOf("apub-sd-")===0 || APUB_FREE_ACTIONS.indexOf(a)>=0) return;
   if(a==="apub-tab" && t.dataset.tab==="crear") return;
   if(!apubNewDirty()){ apubNewReset(); return; }      // formulario vacío: se puede salir sin aviso
   e.preventDefault(); e.stopImmediatePropagation();
@@ -5217,7 +5381,7 @@ document.addEventListener("click", function(e){          // aviso al salir de la
   if(!(state.view==="adminpub" && apubState.tab==="editar" && apubState.editingId)) return;
   const t=e.target.closest("[data-action]"); if(!t) return;
   const a=t.dataset.action;
-  if(APUB_ED_OK.some(x=>a.indexOf(x)===0) || a==="apub-save" || a==="apub-pick-photo" || APUB_FREE_ACTIONS.indexOf(a)>=0) return;
+  if(APUB_ED_OK.some(x=>a.indexOf(x)===0) || a==="apub-save" || a==="apub-pick-photo" || a.indexOf("apub-xs-")===0 || APUB_FREE_ACTIONS.indexOf(a)>=0) return;
   if(!apubEditDirty()) return;
   e.preventDefault(); e.stopImmediatePropagation();
   apubLeaveAsk({el:t},"edit");
