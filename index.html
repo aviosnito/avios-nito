@@ -847,6 +847,438 @@ body.mega-open{overflow:hidden}
 .ft-bottom button:hover{color:var(--ink)}
 
 .hidden{display:none!important}
+
+/* ===== Panel del dueño (publicaciones + ofertas) + sidebar — Aviosnito (ángulos rectos) ===== */
+.apub,#apub-modal-root,.sidebar,.sb-back,.hb-btn{--fill:#f3f3f3;--fill-2:#fafafa;--sand:#ececec;--sand-2:#e3e3e3;--sand-hi:#f1f1f1;--accent:#111;--accent-dk:#111;--muted:#78716c;--muted2:#a8a29e;--ink:#1c1917;--ink-soft:#333;--sh-lg:0 18px 40px -20px rgba(0,0,0,.35);--r:0px;--r-sm:0px;--r-xs:0px;--r-lg:0px;--r-pill:0px;}
+.hb-btn{background:none;border:0!important;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;color:var(--ink);flex-shrink:0;margin-right:2px}
+@media(hover:hover){.hb-btn:hover{background:var(--fill)}}
+#app .hb-btn{border-radius:0}
+.hb-ic{width:22px;height:22px}
+@keyframes hbSpin360{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.hb-ic.spin{animation:hbSpin360 .5s ease}
+
+html.sb-open,body.sb-open{overflow:hidden!important}
+.sb-head .sb-brand{background:none;border:0;cursor:pointer;display:inline-flex;align-items:center;padding:0}
+.sb-head .sb-brand .brand{font-size:19px}
+
+.sb-back{position:fixed;inset:0;background:rgba(30,27,23,.45);z-index:120;opacity:0;pointer-events:none;transition:opacity .25s}
+.sb-back.on{opacity:1;pointer-events:auto}
+
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:280px;max-width:82vw;background:#fff;z-index:121;
+  transform:translateX(-100%);transition:transform .28s cubic-bezier(.22,1,.36,1);
+  box-shadow:12px 0 32px -12px rgba(30,27,23,.25);display:flex;flex-direction:column;
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.sidebar.on{transform:translateX(0)}
+#sidebar-content{display:flex;flex-direction:column;height:100%;padding:22px 14px}
+
+.sb-item{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:0!important;
+  padding:13px 12px;font-family:'Nunito Sans',sans-serif;font-size:15px;font-weight:600;color:var(--ink);
+  cursor:pointer;transition:.15s}
+#app .sb-item{border-radius:0}
+.sb-item:hover{background:var(--fill)}
+.sb-item .ic{width:20px;height:20px;flex-shrink:0;color:var(--muted)}
+.sb-item.sb-disabled{color:var(--muted2);cursor:not-allowed;pointer-events:none}
+.sb-item.sb-disabled .ic{color:var(--muted2);opacity:.6}
+.sb-spacer{flex:1}
+.sb-user{display:flex;align-items:center;gap:14px;padding:13px 12px;color:var(--ink);font-weight:700;font-size:15px}
+.sb-user .ic{width:22px;height:22px;flex-shrink:0;color:var(--accent-dk)}
+.hd-left{display:flex;align-items:center;gap:0}
+.sb-back{touch-action:none}
+.sidebar{touch-action:pan-y}
+
+/* Header interno del sidebar: hamburguesa + logo, misma altura que el header real */
+.sb-head{display:flex;align-items:center;gap:10px;padding:0 18px;min-height:64px;flex-shrink:0}
+.sb-head .hb-btn{margin-right:0}
+.sb-head .brand-logo{height:23px;width:auto;color:var(--ink)}
+#sidebar-content{padding-top:10px}
+
+/* Contacto: WhatsApp en verde */
+.contact-link.wa .ic{color:#25D366}
+
+/* Cerrar sesión en el sidebar: ícono rojo */
+.sb-item.sb-logout .ic{color:#b91c1c}
+.sb-item.sb-logout{color:#b91c1c}
+@media(max-width:640px){ body.is-owner .cart-btn, body.is-owner .cart-fab{display:none!important} }
+.apub{min-height:60vh}
+.apub-subhd{position:sticky;top:64px;z-index:40;background:rgba(255,255,255,.98);box-shadow:0 1px 0 var(--sand-2),0 6px 18px -16px rgba(33,29,22,.4)}
+.apub-subhd-in{display:flex;align-items:center;gap:8px;min-height:52px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.apub-subhd-in::-webkit-scrollbar{display:none}
+.apub-tab{flex:0 0 auto;white-space:nowrap;background:var(--fill);color:var(--ink-soft);border:0;cursor:pointer;
+  font-family:'Poppins',sans-serif;font-weight:600;font-size:13.5px;padding:9px 16px;transition:.15s}
+#app .apub-tab{border-radius:0}
+.apub-tab:hover{background:var(--sand)}
+.apub-tab.on{background:var(--accent);color:#fff}
+.apub-tab.dis{opacity:.55;cursor:default;display:inline-flex;align-items:center;gap:6px}
+.apub-tab.dis:hover{background:var(--fill)}
+.apub-soon{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--sand-2);color:var(--muted);padding:2px 6px}
+#app .apub-soon{border-radius:0}
+.apub-body{padding-top:22px;padding-bottom:60px}
+.apub-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.apub-back{display:inline-flex;align-items:center;gap:6px;background:var(--fill);border:0;cursor:pointer;color:var(--ink);
+  font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;padding:8px 14px}
+#app .apub-back{border-radius:0}
+.apub-back:hover{background:var(--sand)}
+.apub-back svg{width:16px;height:16px}
+.apub-tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.apub-input{font-family:'Nunito Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--fill-2);
+  border:1px solid var(--sand-2);padding:10px 13px;outline:none;transition:.15s}
+#app .apub-input{border-radius:0}
+.apub-input:focus{border-color:var(--accent);background:#fff}
+.apub-sel{cursor:pointer}
+#apub-search{flex:1 1 260px}
+.apub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.apub-card{display:flex;align-items:center;gap:13px;background:var(--fill-2);padding:11px;border:1px solid var(--sand-2)}
+#app .apub-card{border-radius:0}
+.apub-thumb{flex:0 0 62px;width:62px;height:62px;background:var(--sand);display:flex;align-items:center;justify-content:center;overflow:hidden}
+#app .apub-thumb{border-radius:0}
+.apub-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.apub-nothumb{font-family:'Poppins',sans-serif;font-weight:600;color:var(--muted)}
+.apub-info{flex:1 1 auto;min-width:0}
+.apub-id{font-size:11px;color:var(--muted);letter-spacing:.02em}
+.apub-title{font-family:'Poppins',sans-serif;font-weight:600;font-size:14.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.apub-meta{display:flex;align-items:center;gap:8px;margin-top:4px}
+.apub-badge{font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;color:#fff}
+#app .apub-badge{border-radius:0}
+.apub-badge.b-ok{background:#4C8C4A}
+.apub-badge.b-soon{background:#8A6D1B}
+.apub-badge.b-nostock{background:#B23B3B}
+.apub-badge.b-hidden{background:var(--muted2)}
+.apub-price{font-size:13px;color:var(--ink-soft)}
+.apub-edit-btn{flex:0 0 auto;background:var(--accent);color:#fff;border:0;cursor:pointer;
+  font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;padding:9px 16px;transition:.15s}
+#app .apub-edit-btn{border-radius:0}
+.apub-edit-btn:hover{background:#5b4e3a}
+/* Formulario */
+.apub-form{display:grid;grid-template-columns:260px 1fr;gap:26px;align-items:start;max-width:860px}
+.apub-form-photo{display:flex;flex-direction:column;gap:11px}
+.apub-photo-box{width:100%;aspect-ratio:1/1;background:var(--sand);display:flex;align-items:center;justify-content:center;overflow:hidden}
+#app .apub-photo-box{border-radius:0}
+.apub-photo-box img{width:100%;height:100%;object-fit:cover;display:block}
+.apub-photo-ph{color:var(--muted);font-family:'Poppins',sans-serif;font-weight:600}
+.apub-note{font-size:12px;color:var(--muted);line-height:1.5}
+.apub-note b{color:var(--ink-soft)}
+.apub-form-fields{display:flex;flex-direction:column;gap:7px}
+.apub-l{font-family:'Poppins',sans-serif;font-weight:600;font-size:12.5px;color:var(--ink-soft);margin-top:6px}
+.apub-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.apub-row2>div{display:flex;flex-direction:column;gap:6px}
+.apub-ta{resize:vertical;line-height:1.5}
+.apub-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.apub-btn-ghost{background:var(--fill);color:var(--ink);border:0;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:13.5px;padding:11px 18px;transition:.15s}
+#app .apub-btn-ghost{border-radius:0}
+.apub-btn-ghost:hover{background:var(--sand)}
+.apub-btn-main{background:var(--accent);color:#fff;border:0;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:13.5px;padding:11px 22px;transition:.15s}
+#app .apub-btn-main{border-radius:0}
+.apub-btn-main:hover{background:#5b4e3a}
+.apub-btn-main.loading{opacity:.7;pointer-events:none}
+.apub-msg{font-size:13px;margin-top:10px;text-align:right;min-height:18px}
+.apub-msg.ok{color:#2E7D5B}
+.apub-msg.err{color:#B23B3B}
+.apub-ph{padding:50px 0;text-align:center;color:var(--muted)}
+.apub-opt{font-weight:400;color:var(--muted);font-size:11px}
+/* Chips de color */
+.apub-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.apub-chip{display:inline-flex;align-items:center;gap:7px;background:var(--fill);border:1px solid var(--sand-2);color:var(--ink-soft);
+  cursor:pointer;font-family:'Nunito Sans',sans-serif;font-weight:600;font-size:12.5px;padding:6px 11px 6px 8px;transition:.15s}
+#app .apub-chip{border-radius:0}
+.apub-chip:hover{background:var(--sand)}
+.apub-chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.apub-chip-dot{width:15px;height:15px;display:inline-block;flex:0 0 auto}
+#app .apub-chip-dot{border-radius:0}
+/* Vista previa estilo tarjeta del catálogo */
+.apub-prevcard{margin-top:6px;background:#fff;border:1px solid var(--sand-2);overflow:hidden}
+#app .apub-prevcard{border-radius:0}
+.apub-prevcard-img{position:relative;aspect-ratio:1/1;background:var(--sand);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.apub-prevcard-img img{width:100%;height:100%;object-fit:cover;display:block}
+.apub-prevcard-num{position:absolute;top:8px;left:8px;background:rgba(255,255,255,.9);color:var(--ink);font-family:'Poppins',sans-serif;font-weight:600;font-size:11px;padding:3px 8px}
+#app .apub-prevcard-num{border-radius:0}
+.apub-prevcard-body{display:flex;flex-direction:column;gap:2px;padding:9px 11px}
+.apub-prevcard-body .tnum{font-family:'Poppins',sans-serif;font-weight:600;font-size:15px;color:var(--ink)}
+.apub-prevcard-cu{font-size:11px;color:var(--muted)}
+
+/* ===== Crear publicación: pantalla previa, formulario con aspecto de publicación y éxito ===== */
+.apub-intro{display:flex;flex-direction:column;align-items:center;text-align:center;padding:56px 0 40px;gap:12px}
+.apub-intro-ic{width:76px;height:76px;background:var(--sand);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+#app .apub-intro-ic{border-radius:0}
+.apub-intro-ic svg{width:34px;height:34px;stroke-width:1.8}
+.apub-intro p{color:var(--muted);max-width:420px;line-height:1.55;margin:0}
+.apub-intro-btn{margin-top:10px;padding:14px 30px;font-size:15px}
+
+.apub-prod{min-height:0;background:transparent}
+.apub-prod .prod-grid{margin-top:16px}
+.apub-crumb{display:flex;gap:12px;flex-wrap:wrap}
+.apub-crumb-f{display:flex;flex-direction:column;gap:6px;flex:1 1 200px;max-width:300px}
+.apub-crumb-f:empty{display:none}
+/* foto */
+.apub-pimg{cursor:pointer;flex-direction:column;transition:background .15s}
+.apub-pimg:hover{background:var(--sand)}
+.apub-pimg-ph{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);text-align:center;padding:20px}
+.apub-pimg-ph svg{width:40px;height:40px;stroke-width:1.5}
+.apub-pimg-ph b{font-family:'Poppins',sans-serif;font-size:15px;color:var(--ink-soft)}
+.apub-pimg-ph span{font-size:12.5px}
+.apub-photobtn{margin-top:12px}
+.apub-notes{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+/* número y título con prefijo fijo */
+.apub-fix{display:inline-flex;align-items:baseline;max-width:100%;background:var(--fill-2);border:1px solid var(--sand-2);padding:3px 12px;transition:.15s}
+#app .apub-fix{border-radius:0}
+.apub-fix:focus-within{border-color:var(--accent);background:#fff}
+.apub-pre{font:inherit;color:var(--ink);white-space:pre;user-select:none}
+#app .apub-fix input{font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--ink);background:transparent!important;border:0!important;box-shadow:none!important;outline:0;padding:0;margin:0;min-width:0;border-radius:0}
+.apub-fix input::placeholder{color:var(--muted2);opacity:.7}
+.apub-fix-code input{width:8ch}
+.apub-fix-title input{width:6.5ch}
+.apub-fix-title{margin-top:0}
+/* precio y unidad */
+.apub-priceline{flex-wrap:wrap;align-items:center;gap:10px}
+.apub-priceline>b{display:inline-flex;align-items:center;gap:4px}
+.apub-cur{font-size:24px}
+.apub-pin{width:132px;font-family:'Poppins',sans-serif;font-size:22px;font-weight:700;padding:6px 10px}
+.apub-pin::placeholder,.apub-minin::placeholder{color:var(--muted2);font-weight:400}
+.apub-pin::-webkit-outer-spin-button,.apub-pin::-webkit-inner-spin-button,.apub-minin::-webkit-outer-spin-button,.apub-minin::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.apub-pin,.apub-minin{-moz-appearance:textfield;appearance:textfield}
+.apub-unitsel{font-size:14px;padding:6px 10px;color:var(--ink-soft);cursor:pointer}
+.apub-descin{display:block;width:100%;margin-top:22px;line-height:1.6;resize:vertical}
+.apub-medrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.apub-medin{flex:1 1 180px;max-width:300px;padding:6px 10px;font-size:14px}
+.apub-qty-deco{pointer-events:none;opacity:.5}
+.apub-qtymin{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.apub-minin{width:84px;padding:6px 10px;font-size:14px;text-align:center}
+.apub-estado{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;max-width:320px}
+.apub-publish.loading{opacity:.7;pointer-events:none}
+/* menú desplegable de colores */
+.apub-dd{position:relative;margin-top:12px;max-width:440px}
+.apub-dd-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:46px;padding:7px 12px;background:var(--fill-2);border:1px solid var(--sand-2);cursor:pointer;text-align:left;color:var(--ink);font-family:'Nunito Sans',sans-serif;font-size:14px;transition:.15s}
+#app .apub-dd-trigger{border-radius:0}
+.apub-dd-trigger:hover{background:#fff}
+.apub-dd-trigger.open{border-color:var(--accent);background:#fff}
+.apub-dd-sel{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 auto;min-width:0}
+.apub-dd-ph{color:var(--muted)}
+.apub-selchip{display:inline-flex;align-items:center;gap:6px;background:var(--sand);padding:4px 10px 4px 7px;font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+#app .apub-selchip{border-radius:0}
+.apub-dot{width:14px;height:14px;display:inline-block;flex:0 0 auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+#app .apub-dot{border-radius:0}
+.apub-dd-arrow{width:18px;height:18px;flex:0 0 auto;stroke-width:2;transition:transform .15s}
+.apub-dd-trigger.open .apub-dd-arrow{transform:rotate(180deg)}
+.apub-dd-menu{position:absolute;z-index:30;left:0;right:0;top:calc(100% + 6px);max-height:280px;overflow-y:auto;background:#fff;border:1px solid var(--sand-2);padding:6px;box-shadow:var(--sh-lg)}
+#app .apub-dd-menu{border-radius:0}
+.apub-dd-item{width:100%;display:flex;align-items:center;gap:10px;padding:9px 10px;background:transparent;border:0;cursor:pointer;font-family:'Nunito Sans',sans-serif;font-size:14px;color:var(--ink);text-align:left}
+#app .apub-dd-item{border-radius:0}
+.apub-dd-item:hover{background:var(--fill)}
+.apub-dd-item.on{background:var(--sand-hi);font-weight:700}
+.apub-dd-chk{margin-left:auto;width:16px;height:16px;stroke-width:3;opacity:0}
+.apub-dd-item.on .apub-dd-chk{opacity:1}
+/* éxito: círculo verde con tilde (1 segundo) */
+.apub-success{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:90px 0}
+.apub-pop{animation:apubPop .42s cubic-bezier(.2,.9,.3,1.3) both}
+.apub-chk{stroke-dasharray:24;stroke-dashoffset:24;animation:apubDraw .35s .3s ease forwards}
+.apub-success-t{margin:0;font-family:'Poppins',sans-serif;font-weight:600;font-size:20px;color:var(--ink);opacity:0;animation:apubUp .35s .3s ease forwards}
+@keyframes apubPop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes apubDraw{to{stroke-dashoffset:0}}
+@keyframes apubUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* el cartel de aviso vive fuera de #app */
+#apub-modal-root .apub-btn-main{border-radius:0}
+/* Borrar: toggle activas/ocultas */
+.apub-delnav{display:flex;gap:8px;margin-bottom:16px}
+.apub-dtab{background:var(--fill);border:0;cursor:pointer;color:var(--ink-soft);font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;padding:8px 15px;transition:.15s}
+#app .apub-dtab{border-radius:0}
+.apub-dtab:hover{background:var(--sand)}
+.apub-dtab.on{background:var(--accent);color:#fff}
+.apub-hide-btn,.apub-del-btn,.apub-restore-btn{flex:0 0 auto;border:0;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;padding:9px 16px;transition:.15s;color:#fff}
+#app .apub-hide-btn,#app .apub-del-btn,#app .apub-restore-btn{border-radius:0}
+.apub-hide-btn{background:#8A6D1B}
+.apub-hide-btn:hover{background:#755c16}
+.apub-del-btn{background:#B23B3B}
+.apub-del-btn:hover{background:#9a3030}
+.apub-restore-btn{background:#2E7D5B}
+.apub-restore-btn:hover{background:#276a4e}
+.apub-hide-btn.loading,.apub-del-btn.loading{opacity:.7;pointer-events:none}
+/* Modal de confirmación */
+.apub-modal-bg{position:fixed;inset:0;background:rgba(28,25,22,.45);z-index:1000}
+#apub-modal-root .apub-modal{border-radius:0}
+#apub-modal-root .apub-modal-err{border-radius:0}
+#apub-modal-root .apub-btn-ghost,#apub-modal-root .apub-del-btn{border-radius:0}
+.apub-modal{position:fixed;z-index:1001;left:50%;top:50%;transform:translate(-50%,-50%);width:calc(100% - 40px);max-width:420px;background:#fff;padding:24px;box-shadow:var(--sh-lg)}
+#app .apub-modal{border-radius:0}
+.apub-modal-h{font-family:'Poppins',sans-serif;font-weight:600;font-size:18px;color:var(--ink);margin:0 0 10px}
+.apub-modal-p{font-size:14px;line-height:1.55;color:var(--ink-soft);margin:0 0 20px}
+.apub-modal-p b{color:var(--ink)}
+.apub-modal-err{font-size:13px;color:#B23B3B;background:#fbeeee;padding:9px 12px;margin:-8px 0 16px;line-height:1.45;word-break:break-word}
+#app .apub-modal-err{border-radius:0}
+.apub-modal-actions{display:flex;gap:10px;justify-content:flex-end}
+/* ===== Administración: paleta neutra (blanco / negro), verde sólo en acciones principales ===== */
+.apub,#apub-modal-root{--fill:#f3f3f3;--fill-2:#fafafa;--sand:#ececec;--sand-2:#e3e3e3;--sand-hi:#f3f3f3;--accent:#111;--muted:#6b6b6b;--muted2:#9a9a9a;--ink-soft:#333}
+.apub{background:#fff}
+.apub-subhd{background:#fff;box-shadow:0 1px 0 #e6e6e6}
+.apub-tab{background:#fff;color:#111;box-shadow:inset 0 0 0 1px #d6d6d6}
+.apub-tab:hover{background:#f3f3f3}
+.apub-tab.on,.apub-tab.on:hover{background:#111;color:#fff;box-shadow:none}
+.apub-tab.dis:hover{background:#fff}
+.apub-edit-btn,.apub-btn-main{background:#111;color:#fff}
+.apub-edit-btn:hover,.apub-btn-main:hover{background:#333}
+.apub-btn-ghost{background:#f3f3f3;color:#111}
+.apub-btn-ghost:hover{background:#e8e8e8}
+.apub-card{background:#fff;color:#111;border:1px solid #e3e3e3}
+.apub-thumb{background:#f3f3f3}
+.apub-dtab.on{background:#111;color:#fff}
+.apub-input{background:#fff;border:1px solid #d9d9d9}
+.apub-input:focus,.apub-fix:focus-within{border-color:#111;background:#fff}
+.apub-fix{background:#fff;border-color:#d9d9d9}
+.apub-dd-trigger{background:#fff;border-color:#d9d9d9}
+.apub-dd-trigger.open{border-color:#111}
+.apub-dd-menu{border-color:#e3e3e3}
+.apub-dd-item.on{background:#f3f3f3}
+.apub-intro-ic{background:#111;color:#fff}
+.apub-pimg:hover{background:#f3f3f3}
+.apub-go,.apub-publish{background:#2E7D5B!important;color:#fff!important}
+.apub-go:hover,.apub-publish:hover{background:#276a4e!important}
+/* menús desplegables (categoría, unidad, estado…) */
+.apub-sd{margin-top:0;max-width:none}
+.apub-sd .apub-dd-trigger{min-height:42px;font-size:14px;font-weight:600}
+.apub-sd .apub-dd-sel{flex-wrap:nowrap;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.apub-sd .apub-dd-menu{z-index:60}
+#app .apub-sd .apub-dd-trigger{border-radius:0}
+#app .apub-sd .apub-dd-menu{border-radius:0;padding:6px}
+#app .apub-sd .apub-dd-item{border-radius:0}
+#app .apub-dd-trigger{border-radius:0}
+#app .apub-dd-menu{border-radius:0}
+#app .apub-dd-item{border-radius:0}
+.apub-tools .apub-sd{flex:0 1 260px;min-width:200px}
+.apub-crumb .apub-sd{width:100%}
+.apub-unitline{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.apub-unitline .apub-sd{width:auto;min-width:120px}
+.apub-unitline em{font-style:normal}
+.apub-estado .apub-sd,.apub-fld-estado .apub-sd{max-width:320px}
+.apub-e-pricebox{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.apub-e-pricebox .apub-sd{min-width:120px}
+.apub-fld-price .apub-e-pricebox .apub-pin{width:120px}
+/* Editar: campos con lápiz */
+.apub-fld{display:flex;align-items:flex-start;gap:10px}
+.apub-fld>.apub-fld-main{flex:1 1 auto;min-width:0}
+.apub-fld>:first-child:not(.apub-fld-main){flex:1 1 auto;min-width:0}
+.apub-fld .prod-title{margin:0}
+.apub-fld-price{margin-top:6px;align-items:center}
+.apub-fld-desc{margin-top:22px}
+.apub-fld-inline{display:inline-flex;align-items:center}
+.apub-fld-estado{margin-bottom:16px;max-width:380px}
+.apub-fld-estado .field-l{display:block;margin-bottom:6px}
+.apub-fld .apub-descin{margin-top:6px}
+.apub-fld-desc .field-l{margin-bottom:4px}
+.apub-e-title{width:100%;font-family:'Poppins',sans-serif;font-size:20px;font-weight:600;padding:8px 12px}
+.apub-empty{margin:0;font-size:13.5px;color:#8a8a8a;font-style:italic}
+.apub-desc-txt{margin:0;white-space:pre-wrap}
+.apub-estado-v{margin:0}
+.apub-crumbtxt{margin:0;font-size:13px;color:#6b6b6b}
+.apub-pencil{flex:0 0 auto;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#111;border:1px solid #d6d6d6;cursor:pointer;transition:.15s;padding:0}
+.apub-pencil svg{width:16px;height:16px;stroke-width:2}
+.apub-pencil:hover{background:#111;color:#fff;border-color:#111}
+.apub-pencil.apub-done{background:#2E7D5B;color:#fff;border-color:#2E7D5B}
+.apub-pencil.apub-done:hover{background:#276a4e}
+#app .apub-pencil{border-radius:0}
+.apub-pwrap{position:relative}
+.apub-pencil-photo{position:absolute;top:10px;right:10px;width:40px;height:40px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.apub-pimg-ed{cursor:default}
+.apub-pimg-ed:hover{background:inherit}
+.apub-sw{cursor:default;pointer-events:none}
+.apub-cancelbtn{margin-top:10px;width:100%}
+/* cartel al salir */
+.apub-leave-stay,.apub-leave-go{flex:1 1 0;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:13.5px;padding:12px 14px;transition:.15s}
+.apub-leave-stay{background:#fff;color:#111;border:1.5px solid #111}
+.apub-leave-stay:hover{background:#f3f3f3}
+.apub-leave-go{background:#C62828;color:#fff;border:1.5px solid #C62828}
+.apub-leave-go:hover{background:#a81f1f}
+#apub-modal-root .apub-leave-stay,#apub-modal-root .apub-leave-go{border-radius:0}
+.apub-modal-bg{background:rgba(0,0,0,.45)}
+.apub-edit-btn,.apub-edit-btn:focus{background:#2E7D5B!important;color:#fff!important}
+.apub-edit-btn:hover{background:#276a4e!important}
+.apub-leave-save{flex:1 1 0;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:13.5px;padding:12px 14px;transition:.15s;background:#2E7D5B;color:#fff;border:1.5px solid #2E7D5B}
+.apub-leave-save:hover{background:#276a4e}
+#apub-modal-root .apub-leave-save{border-radius:0}
+.apub-modal-col{flex-direction:column}
+.apub-modal-col>button{flex:0 0 auto;width:100%}
+.apub-ed-colors{margin-top:0!important;max-width:none!important}
+/* administrador: sin carrito en el celular */
+@media(max-width:640px){ body.is-owner .cart-btn, body.is-owner .cart-fab{display:none!important} }
+/* ===== Ofertas ===== */
+.of-lead{color:#6b6b6b;font-size:14px;line-height:1.55;margin:-4px 0 22px;max-width:640px}
+.of-group{margin-bottom:26px}
+.of-group-h{font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;letter-spacing:.02em;color:#111;margin:0 0 12px}
+.of-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.of-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;background:#fff;border:1px solid #e3e3e3;padding:16px 16px 18px;cursor:pointer;transition:.15s;min-height:104px}
+#app .of-card{border-radius:0}
+.of-card:hover{border-color:#111;box-shadow:0 8px 24px -18px rgba(0,0,0,.5);transform:translateY(-1px)}
+.of-card-ic{width:30px;height:30px;color:#111}
+.of-card-ic svg{width:100%;height:100%;stroke-width:1.7}
+.of-card-t{font-family:'Poppins',sans-serif;font-weight:600;font-size:14.5px;color:#111;line-height:1.3}
+.of-card-q{position:absolute;top:10px;right:10px;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;background:#f0f0f0;color:#333;font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:.15s;line-height:1}
+#app .of-card-q{border-radius:0}
+.of-card-q:hover{background:#111;color:#fff}
+.of-q-head{position:static;margin-left:auto}
+.of-created{margin-top:30px;border-top:1px solid #e6e6e6;padding-top:22px}
+.of-crow{align-items:center}
+.of-crow-btns{display:flex;gap:8px;flex:0 0 auto}
+/* armador */
+.of-form{max-width:760px}
+.of-common{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.of-field{display:flex;flex-direction:column;gap:6px}
+.of-field .field-l{margin:0}
+.of-sub{color:#444;font-size:13.5px;line-height:1.5;margin:0 0 14px}
+.of-grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
+.of-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;max-height:460px;overflow-y:auto;padding:2px}
+.of-row{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e3e3e3;padding:9px 11px;transition:.12s}
+#app .of-row{border-radius:0}
+.of-row.on{border-color:#111;background:#fafafa}
+.of-catsub{margin-left:22px}
+.of-check{flex:0 0 auto;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:#fff;border:1.5px solid #c9c9c9;color:#fff;cursor:pointer;padding:0;transition:.12s}
+#app .of-check{border-radius:0}
+.of-row.on .of-check{background:#2E7D5B;border-color:#2E7D5B}
+.of-check svg{width:15px;height:15px}
+.of-thumb{flex:0 0 46px;width:46px;height:46px}
+.of-row .apub-info{flex:1 1 auto;min-width:0}
+.of-row .apub-id{font-size:10.5px;color:#888}
+.of-row .apub-title{font-size:13.5px}
+.of-row .apub-price{font-size:12px;color:#555}
+.of-rowctl{flex:0 0 auto}
+.of-valbox{display:inline-flex;align-items:center;gap:6px}
+.of-valbox .apub-input{width:104px;padding:7px 10px;font-size:13.5px}
+.of-modo{flex:0 0 auto;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;background:#111;color:#fff;border:0;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;transition:.15s}
+#app .of-modo{border-radius:0}
+.of-modo:hover:not(:disabled){background:#333}
+.of-modo:disabled{background:#bbb;cursor:default}
+.of-suf{font-weight:700;color:#333}
+.of-x{font-weight:700;color:#555;font-size:16px}
+.of-colorwrap{margin-bottom:16px}
+.of-colorchip.on{background:#111;color:#fff;border-color:#111}
+.of-pctfield{max-width:260px}
+.of-scope{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.of-tramos{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.of-tramo{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#fafafa;border:1px solid #e6e6e6;padding:9px 11px}
+#app .of-tramo{border-radius:0}
+.of-tramo-l{font-size:13px;color:#555}
+.of-tramo .of-tdesde{width:90px}
+.of-tramo-del{margin-left:auto;flex:0 0 auto;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;background:#fff;border:1px solid #d9d9d9;color:#b23b3b;cursor:pointer;padding:0}
+#app .of-tramo-del{border-radius:0}
+.of-tramo-del:disabled{opacity:.4;cursor:default}
+.of-tramo-del svg{width:16px;height:16px}
+.of-addtramo{margin-bottom:6px}
+.of-giftline{font-size:14px;color:#333;margin-bottom:16px;line-height:2.2}
+.of-inline{display:inline-block;width:72px;padding:6px 8px;text-align:center;margin:0 2px}
+.of-combo-price{max-width:240px;margin-bottom:16px}
+.of-check-line{display:flex;align-items:center;gap:9px;font-size:14px;color:#333;cursor:pointer;margin-top:4px}
+.of-check-line input{width:17px;height:17px;accent-color:#2E7D5B}
+.of-save{margin-top:24px;display:flex;flex-direction:column;gap:10px;max-width:420px}
+.of-save .apub-msg{text-align:left}
+@media(max-width:640px){
+  .apub-subhd{top:56px}
+  .of-common{grid-template-columns:1fr}
+  .of-grid2{grid-template-columns:1fr}
+  .of-cards{grid-template-columns:1fr 1fr}
+  .of-valbox .apub-input{width:88px}
+  .of-crow{flex-wrap:wrap}
+  .apub-form{grid-template-columns:1fr;gap:18px;max-width:none}
+  .apub-form-photo{max-width:260px}
+  .apub-grid{grid-template-columns:1fr}
+}
+#app .apub-intro .apub-intro-ic{border-radius:50%!important}
 </style>
 </head>
 <body>
@@ -869,6 +1301,7 @@ body.mega-open{overflow:hidden}
   <!-- Header -->
   <header class="hd" id="header">
     <div class="wrap hd-inner">
+      <button class="hb-btn" data-action="toggle-sidebar" aria-label="Menú"><svg class="hb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg></button>
       <button data-action="home" aria-label="Avios Nito — Inicio" class="brand-btn">
         <span class="brand"><span class="brand-w">AVI<span class="brand-o"><svg viewBox="0 0 36.94 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#C6A44E" d="M0,14.93v-3.4l.67-2.31.8-2.77,2.18-3.56,2.26-1.97,2.18-.92h4.07l1.51.38,2.39,1.09,2.56,1.09,2.18,1.01,1.89.71,1.76.55,1.68.88,1.89.67,1.17.67,2.31,1.22.92,1.09,1.17,1.51.92,1.38.38,1.13.38,1.09v10.73l.34.34.42.42.34,1.3.59,1.05v2.31l-.13,1.05-.42.21v1.51l-1.43,2.01-1.8,1.68-1.8,1.17-1.8.59-2.18.67h-1.38l-3.35.5-1.51-.59-2.18-.59-2.01-1.09-1.97-1.8-1.8-2.26-1.8-1.97-1.89-2.31-1.76-2.05-2.22-2.39-2.18-2.81-1.22-2.18-.92-1.8-.71-1.8-.38-1.47-.08.04ZM5.74,17.02l.59,1.01,2.89,2.47,1.01,1.38,1.59,1.51.88,1.68,1.01,1.89.71,1.22,1.22,1.89,2.81,2.77,1.38.92,1.47.67,1.22.38h4.78l1.76-.59,1.76-1.09.59-1.47v-3.27l-.42-.38v-1.22l-.59-1.09-1.01-1.22-.5-1.47-.42-.88v-2.98l.42-.71v-3.06l-.5-1.51-1.09-2.01-1.89-1.76-1.97-.59-2.47-1.17-2.26-.92-2.26-1.01-1.97-.92-1.38-.59h-2.77l-1.38.59-1.51,1.51-1.17,1.59-.67,1.97-.67,1.51v3.27l.71,1.68h.13Z"/></svg></span>S</span><span class="brand-w">NITO</span></span>
       </button>
@@ -1129,6 +1562,15 @@ body.mega-open{overflow:hidden}
     </div>
   </div>
 </div>
+
+<div class="sb-back" id="sb-back" data-action="close-sidebar"></div>
+<nav class="sidebar" id="sidebar" aria-label="Menú principal">
+  <div class="sb-head">
+    <button class="hb-btn" data-action="toggle-sidebar" aria-label="Cerrar menú"><svg class="hb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg></button>
+    <button class="brand-btn sb-brand" data-action="home" data-close-sb="1" aria-label="Avíos Nito — Inicio"><span class="brand"><span class="brand-w">AVI<span class="brand-o"><svg viewBox="0 0 36.94 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#C6A44E" d="M0,14.93v-3.4l.67-2.31.8-2.77,2.18-3.56,2.26-1.97,2.18-.92h4.07l1.51.38,2.39,1.09,2.56,1.09,2.18,1.01,1.89.71,1.76.55,1.68.88,1.89.67,1.17.67,2.31,1.22.92,1.09,1.17,1.51.92,1.38.38,1.13.38,1.09v10.73l.34.34.42.42.34,1.3.59,1.05v2.31l-.13,1.05-.42.21v1.51l-1.43,2.01-1.8,1.68-1.8,1.17-1.8.59-2.18.67h-1.38l-3.35.5-1.51-.59-2.18-.59-2.01-1.09-1.97-1.8-1.8-2.26-1.8-1.97-1.89-2.31-1.76-2.05-2.22-2.39-2.18-2.81-1.22-2.18-.92-1.8-.71-1.8-.38-1.47-.08.04ZM5.74,17.02l.59,1.01,2.89,2.47,1.01,1.38,1.59,1.51.88,1.68,1.01,1.89.71,1.22,1.22,1.89,2.81,2.77,1.38.92,1.47.67,1.22.38h4.78l1.76-.59,1.76-1.09.59-1.47v-3.27l-.42-.38v-1.22l-.59-1.09-1.01-1.22-.5-1.47-.42-.88v-2.98l.42-.71v-3.06l-.5-1.51-1.09-2.01-1.89-1.76-1.97-.59-2.47-1.17-2.26-.92-2.26-1.01-1.97-.92-1.38-.59h-2.77l-1.38.59-1.51,1.51-1.17,1.59-.67,1.97-.67,1.51v3.27l.71,1.68h.13Z"/></svg></span>S</span><span class="brand-w">NITO</span></span></button>
+  </div>
+  <div id="sidebar-content"></div>
+</nav>
 
 <script>
 /* ================= Iconos ================= */
@@ -2096,7 +2538,7 @@ const XL = {
   491:{p:450,u:"u",m:200,med:["3,1 x 1,92 cm"]},
   492:{p:440,u:"u",m:200,med:["diametro 2,7 cm"]},
   493:{p:1550,u:"yarda",m:45,med:["ancho 3 cm"]},
-  494:{p:6000,u:"paq3",m:5,med:["ancho 9,5 cm"]},
+  494:{p:6000,u:"paq3",m:5,med:["9,5 cm x 3 m"]},
   "U01":{p:1400,u:"yarda",m:50,med:["D:25 mm S:20 mm"]},
   "U02":{p:1400,u:"yarda",m:50,med:["D:25 mm S:20 mm"]},
   "U08":{p:1220,u:"metro",m:100,med:["40 mm"]},
@@ -2358,17 +2800,101 @@ const XL = {
   "324A":{p:2050,u:"u",m:100,med:["8 x 85 cm"]},
   "324B":{p:2050,u:"u",m:100,med:["8 x 85 cm"]}
 };
-const UNIT_SUF = {u:"cada unidad", yarda:"cada yarda", metro:"cada metro", paq3:"cada paquete (3 mts)", cono30:"cada cono (30 mts)"};
-const UNIT_MIN = {u:"u.", yarda:"yardas", metro:"mts", paq3:"paq. (3 mts)", cono30:"cono(s) (30 mts)"};
+const UNIT_SUF = {u:"cada unidad", yarda:"cada yarda", metro:"cada metro", paq3:"cada tira (3 mts)", cono30:"cada cono (30 mts)"};
+const UNIT_MIN = {u:"u.", yarda:"yardas", metro:"mts", paq3:"tiras (3 mts)", cono30:"cono(s) (30 mts)"};
 function xlOf(p){ const code=(p&&p.id)?String(p.id).split("-")[1]:""; return XL[code]||null; }
-function pPrice(p){ const x=xlOf(p); return x?x.p:((p&&p.price)||0); }
-function pUnit(p){ const x=xlOf(p); return x?x.u:"u"; }
-function pMin(p){ const x=xlOf(p); return (x&&x.m)?x.m:MIN_QTY; }
-function pMed(p){ const x=xlOf(p); return (x&&x.med)?x.med:[]; }
+function pPrice(p){ if(p&&typeof p.ovPrice==="number") return p.ovPrice; const x=xlOf(p); return x?x.p:((p&&p.price)||0); }
+function pUnit(p){ if(p&&p.ovUnit) return p.ovUnit; const x=xlOf(p); return x?x.u:"u"; }
+function pMin(p){ if(p&&typeof p.ovMin==="number"&&p.ovMin>0) return p.ovMin; const x=xlOf(p); return (x&&x.m)?x.m:MIN_QTY; }
+function pMed(p){ if(p&&p.ovMed) return p.ovMed; const x=xlOf(p); return (x&&x.med)?x.med:[]; }
 function priceCU(p){ const pr=pPrice(p); if(!(pr>0)) return ""; return UNIT_SUF[pUnit(p)]||"c/u"; }
-function qtyDisplay(p, qty){ if(pUnit(p)==="cono30") return (qty*30)+" mts"; return String(qty); }
-function qtyMinLabel(p){ if(pUnit(p)==="cono30") return "Mínimo "+(pMin(p)*30)+" mts"; return "Mínimo "+pMin(p)+" "+(UNIT_MIN[pUnit(p)]||"u."); }
-function pState(p){ if(p&&p.nostock) return "nostock"; if(pPrice(p)>0) return "ok"; return "soon"; }
+function qtyDisplay(p, qty){ if(pUnit(p)==="cono30") return (qty*30)+" mts"; if(pUnit(p)==="paq3") return qty+" tiras"; return String(qty); }
+function qtyMinLabel(p){ if(pUnit(p)==="cono30") return "Mínimo "+(pMin(p)*30)+" mts"; if(pUnit(p)==="paq3") return "Mínimo 1 paquete ("+pMin(p)+" tiras · "+(pMin(p)*3)+" mts)"; return "Mínimo "+pMin(p)+" "+(UNIT_MIN[pUnit(p)]||"u."); }
+function pState(p){ if(p&&p.nostock) return "nostock"; if(p&&p._soon) return "soon"; if(pPrice(p)>0) return "ok"; return "soon"; }
+
+/* ===== Motor de overlay (catálogo base + modificaciones del admin) ===== */
+const FORCE_NOSTOCK = ["RY-P70","RY-P71","RY-477"];
+const CATS_ALL = JSON.parse(JSON.stringify(CATS));   // copia completa original (incluye precio 0)
+let CATALOG_OV = {};                                  // id -> fila de modificación (tabla products)
+
+function ovApply(p){
+  const r = CATALOG_OV[p.id]; if(!r) return p;
+  const d = r.data||{};
+  if(d.title!=null) p.title=d.title;
+  if(d.desc!=null) p.desc=d.desc;
+  if(d.img!=null) p.img=d.img;
+  if(d.imgs!=null) p.imgs=d.imgs;
+  if(d.colors!=null) p.colors=d.colors;
+  if(d.price!=null) p.ovPrice=Number(d.price)||0;
+  if(d.unit!=null) p.ovUnit=d.unit;
+  if(d.min!=null) p.ovMin=Number(d.min)||0;
+  if(d.med!=null) p.ovMed=d.med;
+  return p;
+}
+/* Estado efectivo: 'ok' | 'nostock' | 'soon' | 'drop' (drop = no se muestra) */
+function ovState(p){
+  const r = CATALOG_OV[p.id];
+  const est = r ? (r.estado||"normal") : null;
+  if(est==="eliminado") return "drop";
+  if(est==="nostock") return "nostock";
+  if(est==="proximamente") return "soon";
+  if(!r && FORCE_NOSTOCK.indexOf(p.id)>=0) return "nostock";   // forzados sólo si no hay override
+  return pPrice(p)>0 ? "ok" : "drop";                          // 'normal' sin precio = oculto (como hoy)
+}
+function buildProduct(src, isNew){
+  const p = isNew ? { id:src } : JSON.parse(JSON.stringify(src));
+  ovApply(p);
+  if(!p.colors) p.colors=[];
+  if(p.desc==null) p.desc="";
+  return p;
+}
+function reresolveState(){
+  try{
+    if(state.cat){ const c=CATS.find(x=>x.id===state.cat.id)||null; state.cat=c;
+      state.sub = (state.sub&&c&&c.subs)?(c.subs.find(x=>x.id===state.sub.id)||null):null; }
+    if(state.prod){ const f=findProductLoc(state.prod.id); if(f) state.prod=f.p; }
+  }catch(e){}
+}
+/* Reconstruye CATS (visible) desde CATS_ALL + modificaciones, en el mismo array. */
+/* Inserta la publicación nueva en su lugar según el número de artículo (orden natural: 8, 9, 13, 342… y luego letras), sin tocar el orden del resto */
+function ovCode(id){ return String(id||"").replace(/^RY-/i,""); }
+function ovInsert(list, np){
+  const cmp=(a,b)=>ovCode(a).localeCompare(ovCode(b), "en", {numeric:true, sensitivity:"base"});
+  let i=0; while(i<list.length && cmp(list[i].id, np.id)<=0) i++;
+  list.splice(i, 0, np);
+}
+function rebuildCatalog(){
+  const fresh = JSON.parse(JSON.stringify(CATS_ALL));
+  // publicaciones nuevas creadas por el admin
+  Object.keys(CATALOG_OV).sort((a,b)=>ovCode(a).localeCompare(ovCode(b),"en",{numeric:true})).forEach(function(id){
+    const r = CATALOG_OV[id];
+    if(!r.es_nueva || r.estado==="eliminado") return;
+    const np = buildProduct(id, true);
+    const cat = fresh.find(c=>c.id===r.cat);
+    if(!cat) return;
+    if(r.sub && cat.subs){ let s=cat.subs.find(x=>x.id===r.sub); if(s){ s.products=s.products||[]; ovInsert(s.products, np); } }
+    else { cat.products=cat.products||[]; ovInsert(cat.products, np); }
+  });
+  function keepVisible(src){
+    const p = buildProduct(src, !!src._new);
+    const st = ovState(p);
+    if(st==="drop") return null;
+    p.nostock = (st==="nostock");
+    p._soon   = (st==="soon");
+    return p;
+  }
+  fresh.forEach(function(c){
+    if(c.products){ c.products = c.products.map(keepVisible).filter(Boolean); }
+    if(c.subs){ c.subs.forEach(function(s){ s.products=(s.products||[]).map(keepVisible).filter(Boolean); });
+      c.subs = c.subs.filter(function(s){ return s.products.length; }); }
+  });
+  const visible = fresh.filter(function(c){ return (c.products&&c.products.length)||(c.subs&&c.subs.length); });
+  CATS.length = 0; visible.forEach(function(c){ CATS.push(c); });
+  reresolveState();
+}
+rebuildCatalog();   // estado inicial (sin modificaciones) = comportamiento actual
+function imgURL(file, params){ if(!file) return ""; if(/^https?:\/\//i.test(file)) return file; return "/.netlify/images?url=/"+file+(params?("&"+params):""); }
+
 function pBadge(p){ const s=pState(p); if(s==="nostock") return `<span class="pcard-flag flag-red">SIN STOCK</span>`; if(s==="soon") return `<span class="pcard-flag flag-green">PRÓXIMAMENTE</span>`; return ""; }
 
 const SLIDES = 4;
@@ -2584,12 +3110,15 @@ function applyHist(s){
   render(); window.scrollTo({top:0});
 }
 window.addEventListener("popstate", e=>{
+  if(typeof apubNewActive==="function" && apubNewActive() && apubNewDirty()){ try{ history.pushState(snapshot(), ""); }catch(err){} apubLeaveAsk({state:e.state}); return; }
+  if(typeof apubEditDirty==="function" && apubEditDirty()){ try{ history.pushState(snapshot(), ""); }catch(err){} apubLeaveAsk({state:e.state},"edit"); return; }
+  const sidebarOpen = $("#sidebar") && $("#sidebar").classList.contains("on");
   const drawerOpen = $("#drawer").classList.contains("on");
   const modalOpen  = $("#modal").classList.contains("on");
   const searchOpen = $("#search-panel").classList.contains("on");
   const authOpen = ["modal-register","modal-login","modal-orders","modal-editaccount","modal-checkout"].some(id=>$("#"+id).classList.contains("on"));
-  if(drawerOpen || modalOpen || searchOpen || authOpen || authState.menu){   // si hay algo abierto, atrás solo lo cierra
-    closeCart(); closeContact(); closeSearch(); closeAuthModals(); closeUserMenu(); closeCheckout();
+  if(sidebarOpen || drawerOpen || modalOpen || searchOpen || authOpen || authState.menu){   // si hay algo abierto, atrás solo lo cierra
+    closeSidebar(); closeCart(); closeContact(); closeSearch(); closeAuthModals(); closeUserMenu(); closeCheckout();
     try{ history.pushState(snapshot(), ""); }catch(err){}
     return;
   }
@@ -2634,6 +3163,16 @@ function slideTo(i){
 }
 
 /* ================= Render principal ================= */
+function apubSyncModal(){
+  try{
+    let r=document.getElementById("apub-modal-root");
+    const want = state.view==="adminpub" && typeof apubConfirmModal==="function";
+    if(!want){ if(r) r.innerHTML=""; return; }
+    if(!r){ r=document.createElement("div"); r.id="apub-modal-root"; document.body.appendChild(r); }
+    r.innerHTML = apubConfirmModal();
+  }catch(e){}
+}
+
 function render(){
   const chrome = state.view!=="product";
   $("#header").classList.toggle("hidden", !chrome);
@@ -2643,6 +3182,8 @@ function render(){
   else if(state.view==="product"){ view.innerHTML = renderProduct(); initZoom(); initReco(); }
   else if(state.view==="admin"){ view.innerHTML = renderAdminShell(); loadAdmin(); }
   else if(state.view==="catalog") view.innerHTML = renderCatalog();
+  else if(state.view==="adminpub") view.innerHTML = renderAdminPub();
+  apubSyncModal();
 }
 
 function renderHome(){
@@ -3059,7 +3600,7 @@ function megaOpenProd(id){ const f=findProductLoc(id); if(!f) return; if(pState(
 
 /* ================= Catálogo completo ================= */
 function catMaterial(p){ return "Consultar"; }
-function catPaquete(p){ const x=xlOf(p); if(x&&x.m){ if(x.u==="cono30") return (x.m*30)+" mts (cono)"; const uni=UNIT_MIN[x.u]||"u."; return x.m+" "+uni; } return "-"; }
+function catPaquete(p){ const x=xlOf(p); if(x&&x.m){ if(x.u==="cono30") return (x.m*30)+" mts (cono)"; if(x.u==="paq3") return "1 paquete ("+x.m+" tiras · "+(x.m*3)+" mts)"; const uni=UNIT_MIN[x.u]||"u."; return x.m+" "+uni; } return "-"; }
 function catMedida(p){ const m=pMed(p); return m&&m.length?m.join(" / "):"-"; }
 function catDesc(p){ return (p.desc&&p.desc.trim())?p.desc.trim():"-"; }
 function catColor(p){ return (p.colors&&p.colors.length)?p.colors.map(x=>x.n).join(", "):"-"; }
@@ -3263,7 +3804,7 @@ async function notifyOwnerNewOrder(o, u){
     });
   }catch(e){ console.error("EmailJS:", e); }
 }
-const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY):null;
+let sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY):null;
 const AUTH = { current(){ return state.user||null; } };
 async function loadProfile(){
   if(!sb) return null;
@@ -3297,8 +3838,22 @@ document.addEventListener("input", e=>{
   if(id==="rg-dni"||id==="ed-dni"||id==="g-dni"){ e.target.value=e.target.value.replace(/\D/g,"").slice(0,8); }
   if(id==="rg-pass") checkPass("rg",false);
   if(id==="ed-pass") checkPass("ed",true);
+  if(e.target.id==="apub-search"){ apubState.q=e.target.value; apubRenderList(); return; }
+  if(e.target.id==="of-search"){ ofSyncInputs(); ofState.q=e.target.value; ofListRerender(ofType(ofState.typeId)); return; }
+  if(e.target.id==="of-codigo"){ const v=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,""); if(v!==e.target.value) e.target.value=v; return; }
+  if(e.target.id==="apub-n-title"){ const v=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,5); if(v!==e.target.value) e.target.value=v; const cv=document.getElementById("apub-n-codeview"); if(cv) cv.textContent=apubCodeOf(v); return; }
+  if(e.target.id==="apub-n-min"){ const d=document.getElementById("apub-n-qtydisp"); if(d) d.textContent=e.target.value; return; }
 });
-document.addEventListener("change", e=>{ if(e.target && (e.target.id==="adm-mes"||e.target.id==="adm-anio")) renderAdminList(); });
+document.addEventListener("change", e=>{
+  if(e.target && (e.target.id==="adm-mes"||e.target.id==="adm-anio")){ renderAdminList(); return; }
+  if(e.target.id==="apub-cat-filter"){ apubState.cat=e.target.value; apubRenderList(); return; }
+  if(e.target.id==="of-cat-filter"){ ofSyncInputs(); ofState.cat=e.target.value; ofListRerender(ofType(ofState.typeId)); return; }
+  if(e.target.id==="apub-file"){ apubOnPhotoPick(e.target.files&&e.target.files[0]); return; }
+  if(e.target.id==="apub-nfile"){ apubNewOnPhoto(e.target.files&&e.target.files[0]); return; }
+  if(e.target.id==="apub-n-cat"){ apubNew.cat=e.target.value; apubNew.sub=""; const w=document.getElementById("apub-n-subwrap"); if(w) w.innerHTML=apubNewSubHTML(); return; }
+  if(e.target.id==="apub-e-unit"){ apubEditSync(); return; }
+  if(e.target.id==="apub-n-unit"){ const u=document.getElementById("apub-n-minunit"); if(u) u.textContent=UNIT_MIN[e.target.value]||"u."; return; }
+});
 function resetEye(id){ const el=$("#"+id); if(el) el.type="password"; const b=document.querySelector('[data-target="'+id+'"]'); if(b) b.classList.remove("on"); }
 function envioResumen(e){ if(!e) return ""; if(e.tipo==="Barrio Flores, CABA") return "Barrio Flores, CABA · "+(e.direccion||"")+(e.piso?(" · Piso "+e.piso):""); if(e.tipo==="Otro") return [e.empresa?("Empresa: "+e.empresa):"", e.calle, e.piso?("Piso "+e.piso):"", e.localidad, e.provincia, e.cp?("CP "+e.cp):"", e.referencia].filter(Boolean).join(" · "); return "Retiro por depósito"; }
 const authState = { menu:false };
@@ -3306,12 +3861,14 @@ function initials(u){ const a=(u.nombre||"").trim()[0]||""; const b=(u.apellido|
 function renderAuth(){
   const box=$("#auth-area"); if(!box) return;
   const u=AUTH.current();
+  document.body.classList.toggle("is-owner", !!(u&&u.is_owner));
   if(u){
     box.innerHTML = `
       <button class="profile-btn round" data-action="toggle-usermenu" aria-label="Mi cuenta">${esc(initials(u))}</button>
       <div class="user-menu${authState.menu?" on":""}" id="user-menu">
-        <div class="um-head"><div class="um-name">${esc(u.nombre)} ${esc(u.apellido)}</div><div class="um-mail">${esc(u.mail)}</div></div>
-        ${u.is_owner ? `<button class="um-item" data-action="open-admin"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="4"/><rect x="3" y="10" width="18" height="10"/><path d="M9 14h6"/></svg>Panel de pedidos</button>` : `<button class="um-item" data-action="open-orders"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Mis compras</button>
+        <div class="um-head"><div class="um-name">${u.is_owner?"Perfil Admin":(esc(u.nombre||"")+" "+esc(u.apellido||""))}</div><div class="um-mail">${esc(u.mail)}</div></div>
+        ${u.is_owner ? `<button class="um-item" data-action="open-admin"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="4"/><rect x="3" y="10" width="18" height="10"/><path d="M9 14h6"/></svg>Panel de pedidos</button>
+        <button class="um-item" data-action="open-adminpub"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8Z"/><circle cx="7" cy="7" r="1.2"/></svg>Administrar publicaciones</button>` : `<button class="um-item" data-action="open-orders"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Mis compras</button>
         <button class="um-item" data-action="open-editaccount"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Modificar datos</button>`}
         <button class="um-item danger" data-action="logout"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>Cerrar sesión</button>
       </div>`;
@@ -3324,6 +3881,7 @@ function renderAuth(){
         <button class="um-item" data-action="open-login"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg>Iniciar sesión</button>
         <button class="um-item" data-action="open-register"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="4"/><path d="M4 21c0-4 3-6 7-6"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>Registrarse</button>
       </div>`;
+    renderSidebar();
   }
 }
 function toggleUserMenu(){ authState.menu=!authState.menu; const m=$("#user-menu"); if(m) m.classList.toggle("on", authState.menu); }
@@ -3642,6 +4200,7 @@ document.addEventListener("click", e=>{
   const t = e.target.closest("[data-action]");
   if(!t) return;
   const a = t.dataset.action;
+  if(t.dataset.closeSb) closeSidebar();
   if(a==="promo-close"){ promoClose(); return; }
   if(a==="promo-chip-close"){ promoChipClose(); return; }
   if(a==="home") home();
@@ -3690,6 +4249,57 @@ document.addEventListener("click", e=>{
   else if(a==="logout") logout();
   else if(a==="toggle-pass") togglePass(t.dataset.target);
   else if(a==="open-admin") openAdmin();
+  else if(a==="toggle-sidebar") toggleSidebar();
+  else if(a==="close-sidebar") closeSidebar();
+  else if(a==="open-adminpub") openAdminPub();
+  else if(a==="apub-tab"){
+    if(t.dataset.tab==="crear" && apubState.tab==="crear") return;     // ya está en Crear: no redibujar (se perdería lo escrito)
+    if(t.dataset.tab!=="crear") apubNewReset();
+    if(t.dataset.tab!=="ofertas") ofState.view="grid";
+    apubState.tab=t.dataset.tab; apubState.editingId=null; render();
+  }
+  else if(a==="apub-edit"){ apubOpenEdit(t.dataset.id); }
+  else if(a==="apub-cancel"){ apubState.editingId=null; render(); }
+  else if(a==="apub-save"){ apubSave(); }
+  else if(a==="apub-pick-photo"){ const f=$("#apub-file"); if(f) f.click(); }
+  else if(a==="apub-clear-filter"){ apubState.q=""; apubState.cat=""; render(); }
+  else if(a==="apub-new-open"){ apubNew.open=true; render(); window.scrollTo({top:0}); }
+  else if(a==="apub-new-photo"){ const f=$("#apub-nfile"); if(f) f.click(); }
+  else if(a==="apub-ed-open"){ apubEditSync(); apubEdit.open[t.dataset.f]=true; apubEdit.dd=false; apubSdOpen=null; apubEditRerender(t.dataset.f); }
+  else if(a==="apub-ed-done"){ apubEditSync(); apubEdit.open[t.dataset.f]=false; apubEdit.dd=false; apubSdOpen=null; apubEditRerender(); }
+  else if(a==="apub-ed-dd"){ apubEdit.dd=!apubEdit.dd; apubEdRenderColors(); }
+  else if(a==="apub-ed-color"){ apubEdToggleColor(t.dataset.k); }
+  else if(a==="apub-leave-save"){ apubLeaveSave(); }
+  else if(a==="apub-sd-toggle"){ apubSdToggle(t.dataset.sd); }
+  else if(a==="apub-sd-pick"){ apubSdPick(t.dataset.sd, t.dataset.v); }
+  else if(a==="apub-new-dd"){ apubNew.ddOpen=!apubNew.ddOpen; apubNewRenderColors(); }
+  else if(a==="apub-new-color"){ apubNewToggleColor(t.dataset.k); }
+  else if(a==="apub-new-save"){ apubNewSave(); }
+  else if(a==="apub-leave-stay"){ apubLeaveStay(); }
+  else if(a==="apub-leave-go"){ apubLeaveGo(); }
+  else if(a==="apub-del-view"){ apubState.delView=t.dataset.v; render(); }
+  else if(a==="apub-del-ask"){ apubDelAsk(t.dataset.id); }
+  else if(a==="apub-del-cancel"){ apubDelClose(); }
+  else if(a==="apub-del-confirm"){ apubDelConfirm(); }
+  else if(a==="apub-restore"){ apubRestore(t.dataset.id); }
+  else if(a==="of-open"){ ofOpen(t.dataset.t); }
+  else if(a==="of-info"){ e.stopPropagation(); apubState.ofInfo=t.dataset.t; apubSyncModal(); }
+  else if(a==="of-info-close"){ apubState.ofInfo=null; apubSyncModal(); }
+  else if(a==="of-edit"){ ofOpenExisting(t.dataset.id); }
+  else if(a==="of-del"){ apubState.ofDel=t.dataset.id; apubState.ofDelErr=""; apubSyncModal(); }
+  else if(a==="of-del-cancel"){ apubState.ofDel=null; apubState.ofDelErr=""; apubSyncModal(); }
+  else if(a==="of-del-confirm"){ ofDelConfirm(); }
+  else if(a==="of-back"){ ofBack(); }
+  else if(a==="of-save"){ ofSave(); }
+  else if(a==="of-toggle"){ ofToggleItem(t.dataset.id); }
+  else if(a==="of-modo"){ ofToggleModo(t.dataset.id); }
+  else if(a==="of-cat-toggle"){ ofCatToggle(t.dataset.k); }
+  else if(a==="of-color"){ ofColorToggle(t.dataset.k); }
+  else if(a==="of-metodo"){ ofMetodoToggle(t.dataset.k); }
+  else if(a==="of-scope"){ ofScope(t.dataset.v); }
+  else if(a==="of-tramo-add"){ ofTramoAdd(); }
+  else if(a==="of-tramo-del"){ ofTramoDel(+t.dataset.i); }
+  else if(a==="of-tmodo"){ ofTramoModo(+t.dataset.i); }
   else if(a==="open-catalog"){ e.preventDefault(); closeMega(); openCatalog(); }
   else if(a==="open-mega") openMega();
   else if(a==="close-mega") closeMega();
@@ -3735,7 +4345,13 @@ document.addEventListener("focusin", e=>{
     renderSearch(e.target.value); openSearchPanel();
   }
 });
+document.addEventListener("wheel", function(e){
+  const el=e.target;
+  if(el && el.tagName==="INPUT" && el.type==="number" && el.closest && el.closest(".apub") && document.activeElement===el){ e.preventDefault(); el.blur(); }
+}, {passive:false});
 document.addEventListener("keydown", e=>{
+  if(e.key==="Escape" && apubSdOpen) apubSdClose();
+  if(e.key==="Enter" && e.target.id && /^apub-e-(title|price|min)$/.test(e.target.id)){ e.preventDefault(); const dn=e.target.closest(".apub-fld")&&e.target.closest(".apub-fld").querySelector('[data-action="apub-ed-done"]'); if(dn) dn.click(); }
   if(e.key==="Escape"){ closeCart(); closeContact(); closeSearch(); closeAuthModals(); closeUserMenu(); closeCheckout(); }
   if(e.key==="Enter" && e.target.classList && e.target.classList.contains("form-input")){
     if($("#modal-register").classList.contains("on")) doRegister();
@@ -3743,6 +4359,1411 @@ document.addEventListener("keydown", e=>{
     else if($("#modal-editaccount").classList.contains("on")) doEditAccount();
   }
   });
+
+function renderSidebar(){
+  var el = document.getElementById("sidebar-content"); if(!el) return;
+  var u = AUTH.current();
+  var isOwner = !!(u && u.is_owner);
+  var ICON_HOME = '<path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3m10-11v10a1 1 0 0 1-1 1h-3"/><path d="M9 20v-6h6v6"/>';
+  var ICON_CATALOG = '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 7h7"/><path d="M9 11h7"/>';
+  var ICON_BAG = '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>';
+  var ICON_PENCIL = '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>';
+  var ICON_PANEL = '<rect x="3" y="4" width="18" height="4"/><rect x="3" y="10" width="18" height="10"/><path d="M9 14h6"/>';
+  var ICON_TAG = '<path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59A2 2 0 0 0 3.83 11l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor" stroke="none"/>';
+  var ICON_PHONE = '<path d="M14 5h1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1"/><path d="M12 5V4"/><circle cx="12" cy="18" r=".6" fill="currentColor" stroke="none"/>';
+  var ICON_ABOUT = '<circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r=".6" fill="currentColor" stroke="none"/>';
+  var ICON_LOGIN = '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/>';
+  var ICON_REGISTER = '<circle cx="9" cy="8" r="4"/><path d="M4 21c0-4 3-6 7-6"/><path d="M19 8v6"/><path d="M22 11h-6"/>';
+  var ICON_PROFILE = '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>';
+  var ICON_LOGOUT = '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>';
+  function svg(inner){ return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+inner+'</svg>'; }
+  var out = '<button class="sb-item" data-action="home" data-close-sb="1">'+svg(ICON_HOME)+'<span>Home</span></button>';
+  var comprasBlocked = !u || isOwner;
+  if(comprasBlocked){
+    out += '<button class="sb-item sb-disabled" disabled aria-disabled="true">'+svg(ICON_BAG)+'<span>Mis compras</span></button>';
+    out += '<button class="sb-item sb-disabled" disabled aria-disabled="true">'+svg(ICON_PENCIL)+'<span>Modificar datos</span></button>';
+  } else {
+    out += '<button class="sb-item" data-action="open-orders" data-close-sb="1">'+svg(ICON_BAG)+'<span>Mis compras</span></button>';
+    out += '<button class="sb-item" data-action="open-editaccount" data-close-sb="1">'+svg(ICON_PENCIL)+'<span>Modificar datos</span></button>';
+  }
+  if(isOwner){
+    out += '<button class="sb-item" data-action="open-admin" data-close-sb="1">'+svg(ICON_PANEL)+'<span>Panel de pedidos</span></button>';
+    out += '<button class="sb-item" data-action="open-adminpub" data-close-sb="1">'+svg(ICON_TAG)+'<span>Administrar publicaciones</span></button>';
+  }
+  out += '<button class="sb-item" data-action="open-catalog" data-close-sb="1">'+svg(ICON_CATALOG)+'<span>Catálogo</span></button>';
+  out += '<button class="sb-item" data-action="open-contact" data-close-sb="1">'+svg(ICON_PHONE)+'<span>Contacto</span></button>';
+  out += '<div class="sb-spacer"></div>';
+  if(u){
+    out += '<div class="sb-user">'+svg(ICON_PROFILE)+'<span>'+(u.is_owner?"Perfil Admin":(esc(u.nombre||"")+" "+esc(u.apellido||"")))+'</span></div>';
+    out += '<button class="sb-item sb-logout" data-action="logout" data-close-sb="1">'+svg(ICON_LOGOUT)+'<span>Cerrar sesión</span></button>';
+  } else {
+    out += '<button class="sb-item" data-action="open-login" data-close-sb="1">'+svg(ICON_LOGIN)+'<span>Iniciar sesión</span></button>';
+    out += '<button class="sb-item" data-action="open-register" data-close-sb="1">'+svg(ICON_REGISTER)+'<span>Registrarse</span></button>';
+  }
+  el.innerHTML = out;
+}
+function openSidebar(){
+  renderSidebar();
+  var sb=document.getElementById("sidebar"), bk=document.getElementById("sb-back");
+  if(sb) sb.classList.add("on"); if(bk) bk.classList.add("on");
+  document.body.classList.add("sb-open"); document.documentElement.classList.add("sb-open");
+}
+function closeSidebar(){
+  var sb=document.getElementById("sidebar"), bk=document.getElementById("sb-back");
+  if(sb) sb.classList.remove("on"); if(bk) bk.classList.remove("on");
+  document.body.classList.remove("sb-open"); document.documentElement.classList.remove("sb-open");
+}
+function toggleSidebar(){
+  var hbs=document.querySelectorAll(".hb-ic");
+  hbs.forEach(function(hb){ hb.classList.remove("spin"); void hb.getBoundingClientRect(); hb.classList.add("spin"); });
+  var sb=document.getElementById("sidebar");
+  if(sb && sb.classList.contains("on")) closeSidebar(); else openSidebar();
+}
+
+const OV_KEY = "ryav_overlay_v1";
+const APUB_UNITS = [
+  {v:"u", t:"Unidad"}, {v:"yarda", t:"Yarda"}, {v:"metro", t:"Metro"},
+  {v:"paq3", t:"Tira (3 mts)"}, {v:"cono30", t:"Cono (30 mts)"}
+];
+const apubState = { tab:"crear", q:"", cat:"", editingId:null, photoBlob:null, photoPreview:null, saving:false, delView:"activas", confirm:null, working:false, leave:null, ofInfo:null, ofDel:null, ofDelErr:"" };
+
+function openAdminPub(){ if(!(state.user&&state.user.is_owner)) return; closeUserMenu(); apubState.tab="crear"; apubState.editingId=null; apubState.photoBlob=null; apubState.photoPreview=null; apubState.leave=null; apubNewReset(); go("adminpub"); }
+
+/* ---- Carga del overlay (modificaciones) desde Supabase + caché local ---- */
+function setOverlay(rows){
+  const m={}; (rows||[]).forEach(r=>{ if(r&&r.id) m[r.id]=r; });
+  CATALOG_OV = m;
+  rebuildCatalog();
+  if(["home","category","catalog","product","adminpub"].indexOf(state.view)>=0) render();
+}
+async function loadOverlay(){
+  try{ const c=JSON.parse(localStorage.getItem(OV_KEY)||"null"); if(c&&c.rows) setOverlay(c.rows); }catch(e){}
+  if(!sb) return;
+  try{
+    const { data, error } = await sb.from("products").select("*");
+    if(error||!data) return;
+    setOverlay(data);
+    try{ localStorage.setItem(OV_KEY, JSON.stringify({rows:data, ts:Date.now()})); }catch(e){}
+  }catch(e){ /* si falla, queda el catálogo del HTML + caché */ }
+}
+function cacheOverlay(){ try{ localStorage.setItem(OV_KEY, JSON.stringify({rows:Object.keys(CATALOG_OV).map(k=>CATALOG_OV[k]), ts:Date.now()})); }catch(e){} }
+
+/* ---- Lista completa de publicaciones para el admin (incluye ocultas) ---- */
+function adminAllProducts(){
+  const out=[];
+  const borrada=id=>{ const r=CATALOG_OV[id]; return !!(r&&r.estado==="eliminado"); };
+  CATS_ALL.forEach(c=>{
+    (c.products||[]).forEach(src=>{ if(!borrada(src.id)) out.push({cat:c, sub:null, p:buildProduct(src,false)}); });
+    (c.subs||[]).forEach(s=>(s.products||[]).forEach(src=>{ if(!borrada(src.id)) out.push({cat:c, sub:s, p:buildProduct(src,false)}); }));
+  });
+  Object.keys(CATALOG_OV).forEach(id=>{
+    const r=CATALOG_OV[id];
+    if(r.es_nueva && r.estado!=="eliminado"){
+      const c=CATS_ALL.find(x=>x.id===r.cat)||{id:r.cat,name:r.cat};
+      const s=r.sub?((c.subs||[]).find(x=>x.id===r.sub)||null):null;
+      out.push({cat:c, sub:s, p:buildProduct(id,true), isNew:true});
+    }
+  });
+  return out;
+}
+function apubEstado(p){
+  const r=CATALOG_OV[p.id]; const est=r?(r.estado||"normal"):null;
+  if(est==="nostock" || (!r && FORCE_NOSTOCK.indexOf(p.id)>=0)) return {k:"nostock", t:"Sin stock"};
+  if(est==="proximamente") return {k:"soon", t:"Próximamente"};
+  if(pPrice(p)>0) return {k:"ok", t:"Visible"};
+  return {k:"hidden", t:"Sin precio"};
+}
+
+/* ---- Menús desplegables personalizados (redondeados, como el de colores) ---- */
+const APUB_SD={}; let apubSdOpen=null;
+const APUB_ARROW='<svg class="ic apub-dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg>';
+const APUB_CHK='<svg class="ic apub-dd-chk" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg>';
+const APUB_ESTADOS=[["normal","Normal"],["proximamente","Próximamente"],["nostock","Sin stock"]];
+function apubSdInner(id){
+  const s=APUB_SD[id]; if(!s) return "";
+  const open=apubSdOpen===id;
+  const cur=s.opts.find(o=>String(o[0])===s.value);
+  const label=cur?esc(cur[1]):`<span class="apub-dd-ph">${esc(s.ph)}</span>`;
+  const items=s.opts.map(o=>{ const on=String(o[0])===s.value;
+    return `<button type="button" class="apub-dd-item${on?" on":""}" data-action="apub-sd-pick" data-sd="${id}" data-v="${esc(o[0])}" role="option" aria-selected="${on}"><span>${esc(o[1])}</span>${APUB_CHK}</button>`; }).join("");
+  return `<button type="button" class="apub-dd-trigger${open?" open":""}" data-action="apub-sd-toggle" data-sd="${id}" aria-haspopup="listbox" aria-expanded="${open}"><span class="apub-dd-sel">${label}</span>${APUB_ARROW}</button>${open?`<div class="apub-dd-menu" role="listbox">${items}</div>`:""}`;
+}
+/* id = id del <input type="hidden"> que guarda el valor (así el resto del código lo lee como un <select>) */
+function apubSelectHTML(id, opts, value, ph){
+  APUB_SD[id]={ opts:opts, ph:ph||"Elegir…", value:value==null?"":String(value) };
+  return `<div class="apub-dd apub-sd" id="apub-sd-${id}">${apubSdInner(id)}</div><input type="hidden" id="${id}" value="${esc(APUB_SD[id].value)}">`;
+}
+function apubSdRender(id){ const el=document.getElementById("apub-sd-"+id); if(el) el.innerHTML=apubSdInner(id); }
+function apubSdClose(){ const o=apubSdOpen; apubSdOpen=null; if(o) apubSdRender(o); }
+function apubSdToggle(id){ const prev=apubSdOpen; apubSdOpen=(prev===id)?null:id; if(prev&&prev!==id) apubSdRender(prev); apubSdRender(id); }
+function apubSdPick(id, v){
+  const s=APUB_SD[id]; if(!s) return;
+  s.value=String(v); apubSdOpen=null;
+  const h=document.getElementById(id);
+  if(h){ h.value=s.value; h.dispatchEvent(new Event("change",{bubbles:true})); }
+  apubSdRender(id);
+}
+
+/* ---- Vista principal con sub-header de tabs ---- */
+function renderAdminPub(){
+  if(!(state.user&&state.user.is_owner)) return `<section class="wrap admin"><p class="admin-empty">No autorizado.</p></section>`;
+  apubSdOpen=null;
+  const tab=apubState.tab;
+  const tabBtn=(id,label,dis)=>`<button class="apub-tab${tab===id?" on":""}${dis?" dis":""}" ${dis?"disabled aria-disabled=\"true\"":`data-action="apub-tab" data-tab="${id}"`}>${label}${dis?` <span class="apub-soon">Próximamente</span>`:""}</button>`;
+  let body="";
+  if(tab==="editar") body = apubState.editingId ? apubEditForm() : apubListHTML();
+  else if(tab==="crear") body = apubCreateForm();
+  else if(tab==="borrar") body = apubDelBody();
+  else if(tab==="ofertas") body = ofRender();
+  return `<div class="apub fade">
+    <div class="apub-subhd"><div class="wrap apub-subhd-in">
+      ${tabBtn("crear","Crear publicación",false)}
+      ${tabBtn("editar","Editar publicación",false)}
+      ${tabBtn("borrar","Borrar publicación",false)}
+      ${tabBtn("ofertas","Ofertas",true)}
+    </div></div>
+    <div class="wrap apub-body">${body}</div>
+    <input type="file" id="apub-file" accept="image/*" style="display:none">
+    <input type="file" id="apub-nfile" accept="image/*" style="display:none">
+  </div>`;
+}
+
+function apubCatFilterHTML(){
+  const opts=[["","Todas las categorías"]].concat(CATS_ALL.map(c=>[c.id,c.name]));
+  return apubSelectHTML("apub-cat-filter", opts, apubState.cat, "Todas las categorías");
+}
+function apubListHTML(){
+  return `<div class="apub-head">
+      <div><p class="eyebrow">Panel del dueño</p><h1 class="admin-h1">Editar publicaciones</h1></div>
+    </div>
+    <div class="apub-tools">
+      <input id="apub-search" class="apub-input" type="search" placeholder="Buscar por N° o título…" value="${esc(apubState.q)}">
+      ${apubCatFilterHTML()}
+    </div>
+    <div id="apub-list" class="apub-grid">${apubRows()}</div>`;
+}
+function apubRows(){
+  let arr=adminAllProducts();
+  const q=apubState.q.trim().toLowerCase();
+  if(apubState.cat) arr=arr.filter(x=>x.cat.id===apubState.cat);
+  if(q) arr=arr.filter(x=>(x.p.id+" "+(x.p.title||"")).toLowerCase().indexOf(q)>=0);
+  if(!arr.length) return `<p class="admin-empty">No hay publicaciones para ese filtro.</p>`;
+  return arr.map(x=>{
+    const p=x.p, est=apubEstado(p);
+    const thumb = p.img?`<img src="${imgURL(p.img,"w=120&q=70")}" alt="" loading="lazy">`:`<span class="apub-nothumb">${num(p.id)}</span>`;
+    const price = pPrice(p)>0?priceLabel(pPrice(p)):"—";
+    return `<div class="apub-card">
+      <div class="apub-thumb">${thumb}</div>
+      <div class="apub-info">
+        <div class="apub-id tnum">${esc(p.id)}</div>
+        <div class="apub-title">${esc(p.title||"")}</div>
+        <div class="apub-meta"><span class="apub-badge b-${est.k}">${est.t}</span><span class="apub-price tnum">${price}</span></div>
+      </div>
+      <button class="apub-edit-btn" data-action="apub-edit" data-id="${esc(p.id)}">Editar</button>
+    </div>`;
+  }).join("");
+}
+function apubRenderList(){ const l=$("#apub-list"); if(l) l.innerHTML = (apubState.tab==="borrar") ? apubDelRows() : apubRows(); }
+
+/* ---- Edición: se ve como la publicación; cada dato tiene un lápiz para modificarlo ---- */
+const APUB_PENCIL='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+const APUB_TICK='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg>';
+const apubEdit={ orig:null, draft:null, open:{}, dd:false };
+const APUB_E_IDS={ title:"apub-e-title", price:"apub-e-price", desc:"apub-e-desc", med:"apub-e-med", min:"apub-e-min" };
+
+function apubFindAdmin(id){ return adminAllProducts().find(x=>x.p.id===id)||null; }
+function apubOpenEdit(id){
+  const f=apubFindAdmin(id); if(!f) return;
+  const p=f.p, k=apubEstado(p).k;
+  const orig={ title:p.title||"", price:pPrice(p)||0, unit:pUnit(p), min:pMin(p)||0, desc:p.desc||"", med:(pMed(p)||[]).slice(), colors:(p.colors||[]).map(c=>({n:c.n,h:c.h})), dd:false,
+    estado:(k==="soon"?"proximamente":(k==="nostock"?"nostock":"normal")) };
+  apubEdit.orig=orig; apubEdit.draft=JSON.parse(JSON.stringify(orig)); apubEdit.open={};
+  apubState.editingId=id; apubEdit.dd=false; apubState.photoBlob=null; apubState.photoPreview=null; apubState.saving=false; apubSdOpen=null;
+  render(); window.scrollTo({top:0});
+}
+/* pasa lo que hay en los campos abiertos al borrador */
+function apubEditSync(){
+  const d=apubEdit.draft; if(!d) return;
+  const g=id=>{ const el=document.getElementById(id); return el?el.value:undefined; };
+  let v;
+  v=g("apub-e-title"); if(v!==undefined) d.title=v;
+  v=g("apub-e-price"); if(v!==undefined) d.price=v;
+  v=g("apub-e-unit");  if(v!==undefined) d.unit=v;
+  v=g("apub-e-min");   if(v!==undefined) d.min=v;
+  v=g("apub-e-desc");  if(v!==undefined) d.desc=v;
+  v=g("apub-e-med");   if(v!==undefined) d.med=v.split("\n").map(s=>s.trim()).filter(Boolean);
+  v=g("apub-e-estado");if(v!==undefined) d.estado=v;
+}
+function apubEditRerender(focusField){
+  const b=document.querySelector(".apub-body"); if(!b) return;
+  b.innerHTML=apubEditForm();
+  if(focusField && APUB_E_IDS[focusField]){ const el=document.getElementById(APUB_E_IDS[focusField]); if(el){ el.focus(); try{ el.setSelectionRange(el.value.length, el.value.length); }catch(e){} } }
+}
+function apubPencil(f,label){ return `<button type="button" class="apub-pencil" data-action="apub-ed-open" data-f="${f}" aria-label="Editar ${label}" title="Editar ${label}">${APUB_PENCIL}</button>`; }
+function apubDoneBtn(f){ return `<button type="button" class="apub-pencil apub-done" data-action="apub-ed-done" data-f="${f}" aria-label="Listo" title="Listo">${APUB_TICK}</button>`; }
+
+function apubEdColorsHTML(){
+  const sel=apubEdit.draft.colors||[];
+  const has=n=>sel.some(x=>x.n===n);
+  const trigger = sel.length
+    ? sel.map(c=>`<span class="apub-selchip"><i class="apub-dot" style="background:${c.h}"></i>${esc(c.n)}</span>`).join("")
+    : `<span class="apub-dd-ph">Sin colores. Tocá para elegir</span>`;
+  const extra=sel.filter(x=>!Object.keys(C).some(k=>C[k].n===x.n)).map(c=>({k:"x:"+c.n,n:c.n,h:c.h}));
+  const all=Object.keys(C).map(k=>({k:k,n:C[k].n,h:C[k].h})).concat(extra);
+  const items=all.map(c=>{ const on=has(c.n);
+    return `<button type="button" class="apub-dd-item${on?" on":""}" data-action="apub-ed-color" data-k="${esc(c.k)}" role="option" aria-selected="${on}"><i class="apub-dot" style="background:${c.h}"></i><span>${esc(c.n)}</span>${APUB_CHK}</button>`; }).join("");
+  return `<button type="button" class="apub-dd-trigger${apubEdit.dd?" open":""}" data-action="apub-ed-dd" aria-haspopup="listbox" aria-expanded="${apubEdit.dd}"><span class="apub-dd-sel">${trigger}</span>${APUB_ARROW}</button>${apubEdit.dd?`<div class="apub-dd-menu" role="listbox" aria-multiselectable="true">${items}</div>`:""}`;
+}
+function apubEdRenderColors(){
+  const b=document.getElementById("apub-e-colors"); if(!b) return;
+  const m=b.querySelector(".apub-dd-menu"); const st=m?m.scrollTop:0;
+  b.innerHTML=apubEdColorsHTML();
+  const m2=b.querySelector(".apub-dd-menu"); if(m2) m2.scrollTop=st;
+}
+function apubEdToggleColor(k){
+  const d=apubEdit.draft; if(!d) return;
+  let c=null;
+  if(k.indexOf("x:")===0){ c=(d.colors||[]).find(x=>x.n===k.slice(2)); } else c=C[k];
+  if(!c) return;
+  const i=d.colors.findIndex(x=>x.n===c.n);
+  if(i>=0) d.colors.splice(i,1); else d.colors.push({n:c.n,h:c.h});
+  apubEdRenderColors();
+}
+function apubEditDirty(){
+  if(!(state.view==="adminpub" && apubState.tab==="editar" && apubState.editingId && apubEdit.draft && apubEdit.orig)) return false;
+  try{ apubEditSync(); }catch(e){}
+  const d=apubEdit.draft, o=apubEdit.orig;
+  return String(d.title||"").trim()!==String(o.title||"").trim()
+    || (parseInt(d.price,10)||0)!==(parseInt(o.price,10)||0)
+    || (d.unit||"u")!==o.unit
+    || (parseInt(d.min,10)||0)!==(parseInt(o.min,10)||0)
+    || String(d.desc||"").trim()!==String(o.desc||"").trim()
+    || JSON.stringify(d.med||[])!==JSON.stringify(o.med||[])
+    || JSON.stringify(d.colors||[])!==JSON.stringify(o.colors||[])
+    || (d.estado||"normal")!==o.estado
+    || !!apubState.photoBlob;
+}
+function apubEditForm(){
+  const f=apubFindAdmin(apubState.editingId);
+  if(!f||!apubEdit.draft) return `<p class="admin-empty">No se encontró la publicación.</p>`;
+  apubEditSync();   // si se redibuja con un campo abierto, no perder lo escrito
+  const p=f.p, d=apubEdit.draft, o=(k)=>!!apubEdit.open[k];
+  const prev=apubState.photoPreview || (p.img?imgURL(p.img,"w=1000&q=78"):"");
+  const priceN=parseInt(d.price,10)||0, minN=parseInt(d.min,10)||0;
+  const unitOpts=APUB_UNITS.map(u=>[u.v, UNIT_SUF[u.v]||u.t]);
+  const estLabel=(APUB_ESTADOS.find(e=>e[0]===d.estado)||APUB_ESTADOS[0])[1];
+  const estCls=d.estado==="nostock"?"nostock":(d.estado==="proximamente"?"soon":"ok");
+  const catTxt=(f.cat?f.cat.name:"")+(f.sub?" › "+f.sub.name:"");
+  const minLabel=(d.unit==="cono30")?("Mínimo "+(minN*30)+" mts"):(d.unit==="paq3"?("Mínimo 1 paquete ("+minN+" tiras · "+(minN*3)+" mts)"):("Mínimo "+minN+" "+(UNIT_MIN[d.unit]||"u.")));
+  const colors=`<div style="margin-top:32px"><p class="field-l">Color</p><div class="apub-fld"><div class="apub-fld-main apub-dd apub-ed-colors" id="apub-e-colors">${apubEdColorsHTML()}</div><span class="apub-ed-note"></span></div></div>`;
+  return `<div class="apub-head">
+      <button class="apub-back" data-action="apub-cancel">${IC.arrowL} Volver</button>
+      <p class="apub-crumbtxt">${esc(catTxt)}</p>
+    </div>
+    <div class="prod apub-prod">
+    <div class="prod-grid">
+      <div>
+        <div class="apub-pwrap">
+          <div class="prod-img apub-pimg apub-pimg-ed" id="apub-e-imgbox">${prev?`<img class="prod-photo" src="${prev}" alt="Foto de la publicación">`:`<div class="apub-pimg-ph"><b>Sin foto</b></div>`}</div>
+          <button type="button" class="apub-pencil apub-pencil-photo" data-action="apub-pick-photo" aria-label="Cambiar foto" title="Cambiar foto">${APUB_PENCIL}</button>
+        </div>
+        <div class="apub-notes">
+          <p class="apub-note">El fondo de la imagen debe ser color <b>arena #efe7da</b>, igual que el resto del catálogo.</p>
+          <p class="apub-note">El formato ideal para las imágenes es la proporción <b>4:5</b> (vertical).</p>
+        </div>
+      </div>
+      <div>
+        <p class="prod-code tnum">${esc(p.id)}</p>
+        <div class="apub-fld">
+          ${o("title")?`<input id="apub-e-title" class="apub-input apub-e-title" maxlength="40" value="${esc(d.title)}" aria-label="Título">`:`<h1 class="prod-title">${esc(d.title)}</h1>`}
+          ${o("title")?apubDoneBtn("title"):apubPencil("title","título")}
+        </div>
+        <div class="apub-fld apub-fld-price">
+          ${o("price")
+            ?`<div class="apub-e-pricebox"><span class="apub-cur">$</span><input id="apub-e-price" class="apub-input apub-pin" type="number" min="0" inputmode="numeric" value="${esc(d.price)}" placeholder="0" aria-label="Precio">${apubSelectHTML("apub-e-unit", unitOpts, d.unit, "Unidad")}</div>`
+            :`<div class="prod-price"><b class="tnum">${priceLabel(priceN)}</b><span>${priceN>0?`${UNIT_SUF[d.unit]||"c/u"} · venta por mayor`:`venta por mayor`}</span></div>`}
+          ${o("price")?apubDoneBtn("price"):apubPencil("price","precio")}
+        </div>
+        <div class="apub-fld apub-fld-desc">
+          <div class="apub-fld-main">
+            <p class="field-l">Descripción</p>
+            ${o("desc")
+              ?`<textarea id="apub-e-desc" class="apub-input apub-descin" rows="3" placeholder="Escribí la descripción de la publicación">${esc(d.desc)}</textarea>`
+              :(d.desc?`<p class="prod-desc apub-desc-txt">${esc(d.desc)}</p>`:`<p class="apub-empty">Sin descripción. Tocá el lápiz para agregar una.</p>`)}
+          </div>
+          ${o("desc")?apubDoneBtn("desc"):apubPencil("desc","descripción")}
+        </div>
+        <div class="apub-fld">
+          <div class="apub-fld-main">
+            ${o("med")
+              ?`<p class="field-l">Medidas</p><textarea id="apub-e-med" class="apub-input apub-descin" rows="2" placeholder="Una medida por línea. Ej: 6,5 x 3,5 cm">${esc(d.med.join("\n"))}</textarea>`
+              :(d.med.length?d.med.map((m,k)=>`<p class="prod-meta"><span class="pm-l">Medida${d.med.length>1?" "+(k+1):""}:</span> ${esc(m)}</p>`).join(""):`<p class="apub-empty">Sin medida. Tocá el lápiz para agregar una.</p>`)}
+          </div>
+          ${o("med")?apubDoneBtn("med"):apubPencil("med","medidas")}
+        </div>
+        ${colors}
+        <div style="margin-top:32px">
+          <p class="field-l">Cantidad</p>
+          <div class="qty-row">
+            <div class="qty apub-qty-deco" aria-hidden="true"><button disabled tabindex="-1">${IC.minus}</button><span class="qty-display tnum">${minN}</span><button disabled tabindex="-1">${IC.plus}</button></div>
+            <div class="apub-fld apub-fld-inline">
+              ${o("min")?`<span class="qty-min apub-qtymin">Mínimo <input id="apub-e-min" class="apub-input apub-minin" type="number" min="1" inputmode="numeric" value="${esc(d.min)}" aria-label="Compra mínima"> ${esc(UNIT_MIN[d.unit]||"u.")}</span>`:`<span class="qty-min">${esc(minLabel)}</span>`}
+              ${o("min")?apubDoneBtn("min"):apubPencil("min","compra mínima")}
+            </div>
+          </div>
+        </div>
+        <div class="buy">
+          <div class="apub-fld apub-fld-estado">
+            <div class="apub-fld-main">
+              <p class="field-l">Estado de la publicación</p>
+              ${o("estado")?apubSelectHTML("apub-e-estado", APUB_ESTADOS, d.estado, "Estado"):`<p class="apub-estado-v"><span class="apub-badge b-${estCls}">${esc(estLabel)}</span></p>`}
+            </div>
+            ${o("estado")?apubDoneBtn("estado"):apubPencil("estado","estado")}
+          </div>
+          <button class="add-btn apub-publish apub-go${apubState.saving?" loading":""}" data-action="apub-save">${apubState.saving?"Guardando…":"Guardar cambios"}</button>
+          <button class="apub-btn-ghost apub-cancelbtn" data-action="apub-cancel">Cancelar</button>
+          <p id="apub-msg" class="apub-msg"></p>
+        </div>
+      </div>
+    </div>
+    </div>`;
+}
+
+/* ---- Foto: compresión + previsualización + subida ---- */
+function apubCompress(file, maxW){
+  return new Promise((res,rej)=>{
+    const rd=new FileReader();
+    rd.onload=()=>{ const img=new Image(); img.onload=()=>{
+      let w=img.width, h=img.height; const mw=maxW||1200;
+      if(w>mw){ h=Math.round(h*mw/w); w=mw; }
+      const cv=document.createElement("canvas"); cv.width=w; cv.height=h;
+      const ctx=cv.getContext("2d"); ctx.drawImage(img,0,0,w,h);
+      cv.toBlob(b=>{ b?res(b):rej(new Error("No se pudo procesar la imagen")); }, "image/jpeg", 0.82);
+    }; img.onerror=()=>rej(new Error("Imagen inválida")); img.src=rd.result; };
+    rd.onerror=()=>rej(new Error("No se pudo leer el archivo")); rd.readAsDataURL(file);
+  });
+}
+async function apubOnPhotoPick(file){
+  if(!file) return;
+  try{
+    const blob=await apubCompress(file,1200);
+    apubState.photoBlob=blob;
+    if(apubState.photoPreview) try{ URL.revokeObjectURL(apubState.photoPreview); }catch(e){}
+    apubState.photoPreview=URL.createObjectURL(blob);
+    const box=document.getElementById("apub-e-imgbox");
+    if(box) box.innerHTML=`<img class="prod-photo" src="${apubState.photoPreview}" alt="Foto de la publicación">`;
+  }catch(err){ apubMsg(err.message||"No se pudo cargar la foto", true); }
+}
+function apubStoragePath(url){ const m=/\/productos\/(.+)$/.exec(url||""); return m?decodeURIComponent(m[1].split("?")[0]):null; }
+async function apubUploadPhoto(){
+  const blob=apubState.photoBlob; if(!blob) return null;
+  const name="p_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)+".jpg";
+  const up=await sb.storage.from("productos").upload(name, blob, {contentType:"image/jpeg", upsert:false});
+  if(up.error) throw up.error;
+  const { data } = sb.storage.from("productos").getPublicUrl(name);
+  return data.publicUrl;
+}
+function apubMsg(txt, err){ const m=$("#apub-msg"); if(m){ m.textContent=txt; m.className="apub-msg"+(err?" err":" ok"); } }
+
+async function apubSave(){
+  if(apubState.saving) return;
+  const id=apubState.editingId; const f=apubFindAdmin(id); if(!f) return;
+  if(!sb){ apubMsg("Sin conexión con el servidor.", true); return; }
+  /* 1) leer lo escrito ANTES de tocar el DOM */
+  apubEditSync();
+  const d=apubEdit.draft, o=apubEdit.orig;
+  const title=String(d.title||"").trim();
+  if(!title){ apubMsg("El título no puede estar vacío.", true); return; }
+  const price=parseInt(d.price,10)||0, unit=d.unit||"u", min=parseInt(d.min,10)||0;
+  if(!(min>=1)){ apubMsg("La compra mínima no puede quedar vacía (mínimo 1).", true); return; }
+  if(!(price>=1) && price!==(parseInt(o.price,10)||0)){ apubMsg("El precio no puede quedar vacío (mínimo $1).", true); return; }
+  if(!unit){ apubMsg("Elegí la unidad de venta.", true); return; }
+  const desc=String(d.desc||"").trim(), med=(d.med||[]).slice(), estado=d.estado||"normal";
+  /* 2) sólo se guardan los campos que cambiaron */
+  const prev=CATALOG_OV[id]||{}; const prevData=prev.data||{};
+  const data=Object.assign({}, prevData);
+  if(title!==o.title) data.title=title;
+  if(price!==(parseInt(o.price,10)||0)) data.price=price;
+  if(unit!==o.unit) data.unit=unit;
+  if(min!==(parseInt(o.min,10)||0)) data.min=min;
+  if(desc!==String(o.desc||"").trim()) data.desc=desc;
+  if(JSON.stringify(med)!==JSON.stringify(o.med)) data.med=med;
+  const colorsNow=(d.colors||[]).map(c=>({n:c.n,h:c.h}));
+  if(JSON.stringify(colorsNow)!==JSON.stringify(o.colors||[])) data.colors=colorsNow;
+  const changed = JSON.stringify(data)!==JSON.stringify(prevData) || estado!==o.estado || !!apubState.photoBlob;
+  if(!changed){ apubState.editingId=null; apubState.photoBlob=null; apubState.photoPreview=null; render(); return; }
+  /* 3) estado "guardando" sin redibujar, para conservar lo escrito si algo falla */
+  apubState.saving=true;
+  const saveBtn=document.querySelector('[data-action="apub-save"]');
+  const setBtn=(busy)=>{ if(saveBtn){ saveBtn.textContent=busy?"Guardando…":"Guardar cambios"; saveBtn.classList.toggle("loading",busy); } };
+  setBtn(true); apubMsg("", false);
+  let uploaded=null;
+  try{
+    let oldPhoto=null;
+    if(apubState.photoBlob){
+      const url=await apubUploadPhoto();
+      if(url){ uploaded=apubStoragePath(url); if(prevData.img && /^https?:/i.test(prevData.img)) oldPhoto=prevData.img; data.img=url; data.imgs={}; }
+    }
+    const row={ id, es_nueva: !!prev.es_nueva, estado, cat: f.cat.id, sub: f.sub?f.sub.id:null, data };
+    const { data:saved, error } = await sb.from("products").upsert(row, { onConflict:"id" }).select();
+    if(error) throw error;
+    if(!saved || !saved.length) throw new Error("Supabase no guardó el cambio (revisá los permisos de administrador).");
+    if(oldPhoto){ const pth=apubStoragePath(oldPhoto); if(pth){ try{ await sb.storage.from("productos").remove([pth]); }catch(e){} } }
+    CATALOG_OV[id]=row; cacheOverlay(); rebuildCatalog();
+    apubState.saving=false; apubState.editingId=null; apubState.photoBlob=null; apubState.photoPreview=null;
+    render();
+  }catch(err){
+    if(uploaded){ try{ await sb.storage.from("productos").remove([uploaded]); }catch(e){} }
+    apubState.saving=false; setBtn(false);
+    apubMsg((err&&err.message)?("No se pudo guardar: "+err.message):"No se pudo guardar.", true);
+  }
+}
+
+/* =====================================================================
+   BORRAR PUBLICACIONES (fase 3)
+   - Creadas por el admin: se borran definitivamente (fila + foto).
+   - Del HTML: se ocultan con una marca (estado 'eliminado'), restaurable.
+   ===================================================================== */
+function apubIsNew(id){ const r=CATALOG_OV[id]; return !!(r&&r.es_nueva); }
+function apubHiddenList(){
+  const out=[];
+  CATS_ALL.forEach(c=>{
+    const take=(src,sub)=>{ const r=CATALOG_OV[src.id]; if(r&&r.estado==="eliminado") out.push({cat:c, sub, p:buildProduct(src,false)}); };
+    (c.products||[]).forEach(p=>take(p,null));
+    (c.subs||[]).forEach(s=>(s.products||[]).forEach(p=>take(p,s)));
+  });
+  return out;
+}
+/* Para el dueño todo es "Borrar". Internamente: las nuevas se eliminan de verdad;
+   las del catálogo (HTML) se marcan 'eliminado' (el cliente ve que ya no existen). */
+function apubDelRows(){
+  let arr=adminAllProducts().filter(x=>{ const r=CATALOG_OV[x.p.id]; return !(r&&r.estado==="eliminado"); });
+  const q=apubState.q.trim().toLowerCase();
+  if(apubState.cat) arr=arr.filter(x=>x.cat.id===apubState.cat);
+  if(q) arr=arr.filter(x=>(x.p.id+" "+(x.p.title||"")).toLowerCase().indexOf(q)>=0);
+  return arr.length ? arr.map(apubDelCard).join("") : `<p class="admin-empty">No hay publicaciones para ese filtro.</p>`;
+}
+function apubDelBody(){
+  const list = apubDelRows();
+  return `<div class="apub-head"><div><p class="eyebrow">Panel del dueño</p><h1 class="admin-h1">Borrar publicaciones</h1></div></div>
+    <div class="apub-tools">
+      <input id="apub-search" class="apub-input" type="search" placeholder="Buscar por N° o título…" value="${esc(apubState.q)}">
+      ${apubCatFilterHTML()}
+    </div>
+    <div id="apub-list" class="apub-grid">${list}</div>`;
+}
+function apubDelCard(x){
+  const p=x.p;
+  const thumb = p.img?`<img src="${imgURL(p.img,"w=120&q=70")}" alt="" loading="lazy">`:`<span class="apub-nothumb">${num(p.id)}</span>`;
+  const est=apubEstado(p);
+  const price = pPrice(p)>0?priceLabel(pPrice(p)):"—";
+  return `<div class="apub-card">
+    <div class="apub-thumb">${thumb}</div>
+    <div class="apub-info">
+      <div class="apub-id tnum">${esc(p.id)}</div>
+      <div class="apub-title">${esc(p.title||"")}</div>
+      <div class="apub-meta"><span class="apub-badge b-${est.k}">${est.t}</span><span class="apub-price tnum">${price}</span></div>
+    </div>
+    <button class="apub-del-btn" data-action="apub-del-ask" data-id="${esc(p.id)}">Borrar</button>
+  </div>`;
+}
+function apubDelAsk(id){
+  const isNew=apubIsNew(id);
+  const f=apubFindAdmin(id); const title=f?(f.p.title||id):id;
+  apubState.confirm = { id, isNew, title };
+  render();
+}
+function apubDelClose(){ apubState.confirm=null; apubState.working=false; render(); }
+function apubConfirmModal(){
+  if(apubState.ofInfo){
+    const t=ofType(apubState.ofInfo);
+    return `<div class="apub-modal-bg" data-action="of-info-close"></div>
+    <div class="apub-modal" role="dialog" aria-modal="true">
+      <h3 class="apub-modal-h">${esc(t?t.title:"")}</h3>
+      <p class="apub-modal-p">${esc(t?t.info:"")}</p>
+      <div class="apub-modal-actions"><button class="apub-btn-main" data-action="of-info-close">Entendido</button></div>
+    </div>`;
+  }
+  if(apubState.ofDel){
+    return `<div class="apub-modal-bg" data-action="of-del-cancel"></div>
+    <div class="apub-modal" role="dialog" aria-modal="true">
+      <h3 class="apub-modal-h">Borrar oferta</h3>
+      <p class="apub-modal-p">Esta oferta se va a <b>borrar</b> definitivamente.</p>
+      ${apubState.ofDelErr?`<p class="apub-modal-err">${esc(apubState.ofDelErr)}</p>`:""}
+      <div class="apub-modal-actions">
+        <button class="apub-btn-ghost" data-action="of-del-cancel">Cancelar</button>
+        <button class="apub-del-btn" data-action="of-del-confirm">Borrar</button>
+      </div>
+    </div>`;
+  }
+  if(apubState.leave && apubState.leave.kind==="edit"){
+    return `<div class="apub-modal-bg" data-action="apub-leave-stay"></div>
+    <div class="apub-modal" role="dialog" aria-modal="true">
+      <h3 class="apub-modal-h">Tenés cambios sin guardar</h3>
+      <p class="apub-modal-p">Modificaste esta publicación. Si salís ahora, <b>los cambios se van a perder</b>.</p>
+      <div class="apub-modal-actions apub-modal-col">
+        <button class="apub-leave-save" data-action="apub-leave-save">Guardar cambios</button>
+        <button class="apub-leave-stay" data-action="apub-leave-stay">Seguir editando</button>
+        <button class="apub-leave-go" data-action="apub-leave-go">Salir de todos modos</button>
+      </div>
+    </div>`;
+  }
+  if(apubState.leave){
+    return `<div class="apub-modal-bg" data-action="apub-leave-stay"></div>
+    <div class="apub-modal" role="dialog" aria-modal="true">
+      <h3 class="apub-modal-h">¿Salir sin publicar?</h3>
+      <p class="apub-modal-p">Si salís ahora, <b>los datos que cargaste se van a perder</b>.</p>
+      <div class="apub-modal-actions">
+        <button class="apub-leave-stay" data-action="apub-leave-stay">Seguir editando</button>
+        <button class="apub-leave-go" data-action="apub-leave-go">Salir de todos modos</button>
+      </div>
+    </div>`;
+  }
+  const c=apubState.confirm; if(!c) return "";
+  const msg = `Vas a <b>borrar</b> la publicación <b>${esc(c.id)}</b> (${esc(c.title)}). Dejará de mostrarse a los clientes.`;
+  const btnTxt = apubState.working ? "Borrando…" : "Borrar";
+  return `<div class="apub-modal-bg" data-action="apub-del-cancel"></div>
+    <div class="apub-modal" role="dialog" aria-modal="true">
+      <h3 class="apub-modal-h">Borrar publicación</h3>
+      <p class="apub-modal-p">${msg}</p>
+      ${c.error?`<p class="apub-modal-err">${esc(c.error)}</p>`:""}
+      <div class="apub-modal-actions">
+        <button class="apub-btn-ghost" data-action="apub-del-cancel">Cancelar</button>
+        <button class="apub-del-btn${apubState.working?" loading":""}" data-action="apub-del-confirm">${btnTxt}</button>
+      </div>
+    </div>`;
+}
+async function apubDelConfirm(){
+  const c=apubState.confirm; if(!c||apubState.working) return;
+  if(!sb){ apubDelClose(); return; }
+  apubState.working=true; render();
+  try{
+    const id=c.id;
+    if(c.isNew){
+      const row=CATALOG_OV[id]||{}; const img=row.data&&row.data.img;
+      const { data:gone, error } = await sb.from("products").delete().eq("id", id).select();
+      if(error) throw error;
+      if(!gone || !gone.length) throw new Error("Supabase no borró la fila (revisá los permisos de administrador).");
+      if(img && /^https?:/i.test(img)){ const pth=apubStoragePath(img); if(pth){ try{ await sb.storage.from("productos").remove([pth]); }catch(e){} } }
+      delete CATALOG_OV[id];
+    } else {
+      const prev=CATALOG_OV[id]||{}; const data=prev.data||{};
+      const f=apubFindAdmin(id);
+      const row={ id, es_nueva:false, estado:"eliminado", cat:f?f.cat.id:(prev.cat||null), sub:f&&f.sub?f.sub.id:(prev.sub||null), data };
+      const { data:saved, error } = await sb.from("products").upsert(row, { onConflict:"id" }).select();
+      if(error) throw error;
+      if(!saved || !saved.length) throw new Error("Supabase no guardó el cambio (revisá los permisos de administrador).");
+      CATALOG_OV[id]=row;
+    }
+    cacheOverlay(); rebuildCatalog();
+    apubState.confirm=null; apubState.working=false; render();
+  }catch(err){
+    console.error("apubDelConfirm", err);
+    apubState.working=false;
+    if(apubState.confirm) apubState.confirm.error = "No se pudo borrar: "+((err&&(err.message||err.details))||"error desconocido");
+    render();
+  }
+}
+async function apubRestore(id){
+  if(!sb) return;
+  const prev=CATALOG_OV[id]; if(!prev) return;
+  const data=prev.data||{};
+  const hasEdits = Object.keys(data).length>0;
+  try{
+    if(hasEdits){
+      const row={ id, es_nueva:false, estado:"normal", cat:prev.cat||null, sub:prev.sub||null, data };
+      const { error } = await sb.from("products").upsert(row, { onConflict:"id" });
+      if(error) throw error;
+      CATALOG_OV[id]=row;
+    } else {
+      // tombstone puro -> borrar la fila y volver al estado original del HTML
+      const { error } = await sb.from("products").delete().eq("id", id);
+      if(error) throw error;
+      delete CATALOG_OV[id];
+    }
+    cacheOverlay(); rebuildCatalog(); render();
+  }catch(err){ alert((err&&err.message)?("No se pudo restaurar: "+err.message):"No se pudo restaurar."); }
+}
+
+/* =====================================================================
+   CREAR PUBLICACIONES NUEVAS
+   Se ve como una publicación real: cada campo está donde iría en la página
+   del producto. Antes de entrar hay una pantalla con el botón "Crear publicación".
+   ===================================================================== */
+const apubNew = { open:false, done:false, ddOpen:false, cat:"", sub:"", colors:[], photoBlob:null, photoPreview:null, saving:false,
+  f:{ title:"", price:"", unit:"u", min:"100", med:"", desc:"", estado:"normal" } };
+let apubDoneTimer=null;
+
+function apubNewReset(){
+  if(apubDoneTimer){ clearTimeout(apubDoneTimer); apubDoneTimer=null; }
+  if(apubNew.photoPreview) try{ URL.revokeObjectURL(apubNew.photoPreview); }catch(e){}
+  apubNew.open=false; apubNew.done=false; apubNew.ddOpen=false;
+  apubNew.cat=""; apubNew.sub=""; apubNew.colors=[]; apubNew.photoBlob=null; apubNew.photoPreview=null; apubNew.saving=false;
+  apubNew.f={ title:"", price:"", unit:"u", min:"100", med:"", desc:"", estado:"normal" };
+}
+/* lee los valores actuales del DOM al estado (antes de re-renderizar o de salir) */
+function apubNewSync(){
+  const g=id=>{ const el=document.getElementById(id); return el?el.value:undefined; };
+  const f=apubNew.f;
+  const v=(k,id)=>{ const x=g(id); if(x!==undefined) f[k]=x; };
+  v("title","apub-n-title"); v("price","apub-n-price");
+  v("unit","apub-n-unit"); v("min","apub-n-min"); v("med","apub-n-med"); v("desc","apub-n-desc"); v("estado","apub-n-estado");
+  const c=g("apub-n-cat"); if(c!==undefined) apubNew.cat=c;
+  const s=g("apub-n-sub"); if(s!==undefined) apubNew.sub=s;
+}
+/* ¿hay algo escrito/elegido que se perdería al irse? */
+function apubNewDirty(){
+  if(!apubNew.open || apubNew.done) return false;
+  try{ apubNewSync(); }catch(e){}
+  const f=apubNew.f;
+  return !!( String(f.title||"").trim() || String(f.price||"").trim() || String(f.med||"").trim() || String(f.desc||"").trim()
+    || apubNew.colors.length || apubNew.photoBlob || apubNew.cat || apubNew.sub
+    || f.unit!=="u" || String(f.min)!=="100" || f.estado!=="normal" );
+}
+function apubNewActive(){ return state.view==="adminpub" && apubState.tab==="crear" && apubNew.open && !apubNew.done; }
+
+function apubCatById(id){ return CATS_ALL.find(c=>c.id===id)||null; }
+function apubAllIds(){
+  const set={};
+  CATS_ALL.forEach(c=>{ (c.products||[]).forEach(p=>set[p.id]=1); (c.subs||[]).forEach(s=>(s.products||[]).forEach(p=>set[p.id]=1)); });
+  Object.keys(CATALOG_OV).forEach(id=>set[id]=1);
+  return set;
+}
+
+/* ---- piezas del formulario ---- */
+function apubNewSubHTML(){
+  const selCat=apubCatById(apubNew.cat);
+  if(!(selCat && selCat.subs)) return "";
+  const opts=selCat.subs.map(x=>[x.id,x.name]);
+  return `<span class="field-l">Subcategoría</span>${apubSelectHTML("apub-n-sub", opts, apubNew.sub, "Elegir…")}`;
+}
+function apubNewImgHTML(){
+  return apubNew.photoPreview
+    ? `<img class="prod-photo" src="${apubNew.photoPreview}" alt="Foto de la publicación">`
+    : `<div class="apub-pimg-ph"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8a2 2 0 0 1 2-2h1.5l1.2-1.8A1 1 0 0 1 9.5 4h5a1 1 0 0 1 .8.2L16.5 6H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="12.5" r="3.5"/></svg><b>Subir foto</b><span>Formato ideal 4:5</span></div>`;
+}
+function apubNewColorsHTML(){
+  const sel=apubNew.colors;
+  const trigger = sel.length
+    ? sel.map(k=>{ const c=C[k]; return `<span class="apub-selchip"><i class="apub-dot" style="background:${c.h}"></i>${esc(c.n)}</span>`; }).join("")
+    : `<span class="apub-dd-ph">Elegir colores (opcional)</span>`;
+  const items=Object.keys(C).map(k=>{ const c=C[k]; const on=sel.indexOf(k)>=0;
+    return `<button type="button" class="apub-dd-item${on?" on":""}" data-action="apub-new-color" data-k="${k}" role="option" aria-selected="${on}"><i class="apub-dot" style="background:${c.h}"></i><span>${esc(c.n)}</span><svg class="ic apub-dd-chk" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></button>`; }).join("");
+  return `<button type="button" class="apub-dd-trigger${apubNew.ddOpen?" open":""}" data-action="apub-new-dd" aria-haspopup="listbox" aria-expanded="${apubNew.ddOpen}"><span class="apub-dd-sel">${trigger}</span><svg class="ic apub-dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></button>${apubNew.ddOpen?`<div class="apub-dd-menu" role="listbox" aria-multiselectable="true">${items}</div>`:""}`;
+}
+function apubNewRenderColors(){
+  const b=document.getElementById("apub-n-colors"); if(!b) return;
+  const m=b.querySelector(".apub-dd-menu"); const st=m?m.scrollTop:0;
+  b.innerHTML=apubNewColorsHTML();
+  const m2=b.querySelector(".apub-dd-menu"); if(m2) m2.scrollTop=st;
+}
+
+function apubCreateForm(){
+  if(apubNew.done) return `<div class="apub-success"><div class="co-ok-ic apub-pop"><svg class="ic chk" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path class="apub-chk" d="M20 6 9 17l-5-5"/></svg></div><p class="apub-success-t">¡Publicación creada con éxito!</p></div>`;
+  if(!apubNew.open) return `<div class="apub-intro">
+      <div class="apub-intro-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14"/><path d="M5 12h14"/></svg></div>
+      <h1 class="admin-h1">Crear publicación</h1>
+      <p>Sumá una publicación nueva al catálogo. Vas a armarla tal como la va a ver el cliente.</p>
+      <button class="apub-btn-main apub-intro-btn" data-action="apub-new-open">Crear publicación</button>
+    </div>`;
+  apubNewSync();   // por si se redibuja con el formulario abierto, no perder lo escrito
+  const f=apubNew.f;
+  const catSel=apubSelectHTML("apub-n-cat", CATS_ALL.map(c=>[c.id,c.name]), apubNew.cat, "Elegir…");
+  const unitSel=apubSelectHTML("apub-n-unit", APUB_UNITS.map(u=>[u.v, UNIT_SUF[u.v]||u.t]), f.unit, "Unidad");
+  const estSel=apubSelectHTML("apub-n-estado", APUB_ESTADOS, f.estado, "Estado");
+  const subHTML=apubNewSubHTML();
+  return `<div class="prod apub-prod">
+    <div class="apub-crumb">
+      <div class="apub-crumb-f"><span class="field-l">Categoría</span>${catSel}</div>
+      <div class="apub-crumb-f" id="apub-n-subwrap">${subHTML}</div>
+    </div>
+    <div class="prod-grid">
+      <div>
+        <div class="prod-img apub-pimg" id="apub-n-imgbox" data-action="apub-new-photo" role="button" tabindex="0" aria-label="Subir foto">${apubNewImgHTML()}</div>
+        <button class="apub-btn-ghost apub-photobtn" id="apub-n-photobtn" data-action="apub-new-photo">${apubNew.photoPreview?"Cambiar foto":"Subir foto"}</button>
+        <div class="apub-notes">
+          <p class="apub-note">El fondo de la imagen debe ser color <b>arena #efe7da</b>, igual que el resto del catálogo.</p>
+          <p class="apub-note">El formato ideal para las imágenes es la proporción <b>4:5</b> (vertical).</p>
+        </div>
+      </div>
+      <div>
+        <p class="prod-code tnum" id="apub-n-codeview">${esc(apubCodeOf(f.title))}</p>
+        <h1 class="prod-title apub-titlerow"><span class="apub-fix apub-fix-title"><span class="apub-pre">N° </span><input id="apub-n-title" maxlength="5" autocomplete="off" spellcheck="false" value="${esc(f.title)}" placeholder="1000" aria-label="Título (máx. 5 caracteres)"></span></h1>
+        <div class="prod-price apub-priceline"><b class="tnum"><span class="apub-cur">$</span><input id="apub-n-price" class="apub-input apub-pin" type="number" min="0" inputmode="numeric" value="${esc(f.price)}" placeholder="0" aria-label="Precio"></b><span class="apub-unitline">${unitSel}<em>· venta por mayor</em></span></div>
+        <textarea id="apub-n-desc" class="apub-input apub-descin" rows="3" placeholder="Descripción de la publicación (opcional)">${esc(f.desc)}</textarea>
+        <p class="prod-meta apub-medrow"><span class="pm-l">Medida:</span><input id="apub-n-med" class="apub-input apub-medin" value="${esc(f.med)}" placeholder="ej: 6,5 x 3,5 cm (opcional)"></p>
+        <div style="margin-top:32px">
+          <p class="field-l">Color</p>
+          <div class="apub-dd" id="apub-n-colors">${apubNewColorsHTML()}</div>
+        </div>
+        <div style="margin-top:32px">
+          <p class="field-l">Cantidad</p>
+          <div class="qty-row">
+            <div class="qty apub-qty-deco" aria-hidden="true"><button disabled tabindex="-1">${IC.minus}</button><span class="qty-display tnum" id="apub-n-qtydisp">${esc(f.min||"")}</span><button disabled tabindex="-1">${IC.plus}</button></div>
+            <span class="qty-min apub-qtymin">Mínimo <input id="apub-n-min" class="apub-input apub-minin" type="number" min="1" inputmode="numeric" value="${esc(f.min)}" aria-label="Compra mínima"> <span id="apub-n-minunit">${esc(UNIT_MIN[f.unit]||"u.")}</span></span>
+          </div>
+        </div>
+        <div class="buy">
+          <div class="apub-estado"><span class="field-l">Estado de la publicación</span>${estSel}</div>
+          <button class="add-btn apub-publish" data-action="apub-new-save">Publicar</button>
+          <p id="apub-n-msg" class="apub-msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function apubCodeOf(t){ const c=String(t||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,5); return "RY-"+(c||"…"); }
+function apubNewMsg(txt, err){ const m=$("#apub-n-msg"); if(m){ m.textContent=txt; m.className="apub-msg"+(err?" err":" ok"); } }
+function apubNewToggleColor(k){
+  const i=apubNew.colors.indexOf(k); if(i>=0) apubNew.colors.splice(i,1); else apubNew.colors.push(k);
+  apubNewRenderColors();
+}
+async function apubNewOnPhoto(file){
+  if(!file) return;
+  try{
+    const blob=await apubCompress(file,1200);
+    apubNew.photoBlob=blob;
+    if(apubNew.photoPreview) try{ URL.revokeObjectURL(apubNew.photoPreview); }catch(e){}
+    apubNew.photoPreview=URL.createObjectURL(blob);
+    const box=document.getElementById("apub-n-imgbox"); if(box) box.innerHTML=apubNewImgHTML();
+    const b=document.getElementById("apub-n-photobtn"); if(b) b.textContent="Cambiar foto";
+  }catch(err){ apubNewMsg(err.message||"No se pudo cargar la foto", true); }
+}
+async function apubNewSave(){
+  if(apubNew.saving) return;
+  apubNewSync();
+  const f=apubNew.f;
+  if(!sb){ apubNewMsg("Sin conexión con el servidor.", true); return; }
+  const tt=String(f.title||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,5);
+  if(!tt){ apubNewMsg("Completá el título (por ejemplo 1000): de ahí sale el número de artículo.", true); return; }
+  const id="RY-"+tt;
+  if(apubAllIds()[id]){ apubNewMsg("Ya existe una publicación con ese número de artículo ("+id+"). Cambiá el título.", true); return; }
+  if(!apubNew.cat){ apubNewMsg("Elegí una categoría.", true); return; }
+  const selCat=apubCatById(apubNew.cat);
+  if(selCat && selCat.subs && !apubNew.sub){ apubNewMsg("Elegí una subcategoría.", true); return; }
+  if(!apubNew.photoBlob){ apubNewMsg("Subí una foto.", true); return; }
+  const price=parseInt(f.price,10)||0;
+  if(!(price>=1)){ apubNewMsg("Poné el precio (mínimo $1).", true); return; }
+  if(!f.unit){ apubNewMsg("Elegí la unidad de venta.", true); return; }
+  const minQ=parseInt(f.min,10);
+  if(!(minQ>=1)){ apubNewMsg("Poné la compra mínima (mínimo 1).", true); return; }
+  if(!f.estado){ apubNewMsg("Elegí el estado de la publicación.", true); return; }
+
+  apubNew.saving=true;
+  const btn=document.querySelector('[data-action="apub-new-save"]');
+  const setBtn=busy=>{ if(btn){ btn.textContent=busy?"Publicando…":"Publicar"; btn.classList.toggle("loading",busy); } };
+  setBtn(true); apubNewMsg("", false);
+  let uploaded=null;
+  try{
+    const name="p_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)+".jpg";
+    const up=await sb.storage.from("productos").upload(name, apubNew.photoBlob, {contentType:"image/jpeg", upsert:false});
+    if(up.error) throw up.error;
+    uploaded=name;
+    const imgUrl=sb.storage.from("productos").getPublicUrl(name).data.publicUrl;
+    const colors=apubNew.colors.map(k=>C[k]).filter(Boolean);
+    const data={ title:"N° "+tt, price, unit:f.unit||"u", min:minQ,
+      med:(f.med||"").trim()?[(f.med||"").trim()]:[], desc:(f.desc||"").trim(), img:imgUrl, imgs:{}, colors };
+    const row={ id, es_nueva:true, estado:f.estado||"normal", cat:apubNew.cat, sub:apubNew.sub||null, data };
+    const { data:saved, error } = await sb.from("products").upsert(row, { onConflict:"id" }).select();
+    if(error) throw error;
+    if(!saved || !saved.length) throw new Error("Supabase no guardó la publicación (revisá los permisos de administrador).");
+    CATALOG_OV[id]=row; cacheOverlay(); rebuildCatalog();
+    /* éxito: animación de 1 segundo y vuelve el botón "Crear publicación" */
+    apubNewReset(); apubNew.done=true; render();
+    apubDoneTimer=setTimeout(()=>{ apubDoneTimer=null; apubNew.done=false; if(state.view==="adminpub" && apubState.tab==="crear") render(); }, 1000);
+  }catch(err){
+    if(uploaded){ try{ await sb.storage.from("productos").remove([uploaded]); }catch(e){} }   // no dejar fotos huérfanas
+    apubNew.saving=false; setBtn(false);
+    apubNewMsg((err&&err.message)?("No se pudo publicar: "+err.message):"No se pudo publicar.", true);
+  }
+}
+
+/* ---- Aviso al salir con datos sin guardar ---- */
+function apubLeaveAsk(pending,kind){ pending=pending||{}; pending.kind=kind||"new"; apubState.leave=pending; apubSyncModal(); }
+function apubLeaveStay(){ apubState.leave=null; apubSyncModal(); }
+function apubEditReset(){ apubState.editingId=null; apubState.photoBlob=null; if(apubState.photoPreview){ try{ URL.revokeObjectURL(apubState.photoPreview); }catch(e){} } apubState.photoPreview=null; apubEdit.draft=null; apubEdit.orig=null; apubEdit.open={}; apubEdit.dd=false; }
+function apubLeaveProceed(p){
+  if(!p) return;
+  if(p.state!==undefined){ try{ applyHist(p.state); }catch(e){} }
+  else if(p.el && document.body.contains(p.el)) p.el.click();
+}
+async function apubLeaveSave(){
+  const p=apubState.leave; if(!p) return;
+  apubState.leave=null; apubSyncModal();
+  await apubSave();
+  if(!apubState.editingId) apubLeaveProceed(p);     // guardó bien: sigue hacia donde iba. Si falló, queda en el formulario con el error
+}
+function apubLeaveGo(){
+  const p=apubState.leave; apubState.leave=null;
+  if(p&&p.kind==="edit") apubEditReset(); else apubNewReset();
+  apubSyncModal();
+  if(!p) return;
+  if(p.state!==undefined){ try{ applyHist(p.state); }catch(e){} }
+  else if(p.el && document.body.contains(p.el)) p.el.click();
+}
+const APUB_FREE_ACTIONS=["toggle-sidebar","close-sidebar","toggle-usermenu","open-mega","close-mega","mega-back","open-cart","close-cart","open-contact","close-contact","open-search","close-search","soon-close","soon-msg","reco-soon"];
+document.addEventListener("click", function(e){
+  if(!apubNewActive()) return;
+  const t=e.target.closest("[data-action]"); if(!t) return;
+  const a=t.dataset.action;
+  if(a.indexOf("apub-new-")===0 || a.indexOf("apub-leave-")===0 || a.indexOf("apub-sd-")===0 || APUB_FREE_ACTIONS.indexOf(a)>=0) return;
+  if(a==="apub-tab" && t.dataset.tab==="crear") return;
+  if(!apubNewDirty()){ apubNewReset(); return; }      // formulario vacío: se puede salir sin aviso
+  e.preventDefault(); e.stopImmediatePropagation();
+  apubLeaveAsk({el:t});
+}, true);
+const APUB_ED_OK=["apub-ed-","apub-sd-","apub-leave-"];
+document.addEventListener("click", function(e){          // aviso al salir de la edición con cambios sin guardar
+  if(!(state.view==="adminpub" && apubState.tab==="editar" && apubState.editingId)) return;
+  const t=e.target.closest("[data-action]"); if(!t) return;
+  const a=t.dataset.action;
+  if(APUB_ED_OK.some(x=>a.indexOf(x)===0) || a==="apub-save" || a==="apub-pick-photo" || APUB_FREE_ACTIONS.indexOf(a)>=0) return;
+  if(!apubEditDirty()) return;
+  e.preventDefault(); e.stopImmediatePropagation();
+  apubLeaveAsk({el:t},"edit");
+}, true);
+document.addEventListener("click", function(e){          // cerrar el menú de colores (edición) al tocar afuera
+  if(!apubEdit.dd) return;
+  const path=(e.composedPath&&e.composedPath())||[];
+  if(!path.some(n=>n&&n.id==="apub-e-colors")){ apubEdit.dd=false; apubEdRenderColors(); }
+});
+document.addEventListener("click", function(e){          // cerrar los menús desplegables al tocar afuera
+  if(!apubSdOpen) return;
+  const path=(e.composedPath&&e.composedPath())||[];
+  if(!path.some(n=>n&&n.id==="apub-sd-"+apubSdOpen)) apubSdClose();
+});
+document.addEventListener("click", function(e){          // cerrar el menú de colores al tocar afuera
+  if(!apubNew.ddOpen) return;
+  /* composedPath: el elemento tocado puede haberse redibujado ya (y quedar fuera del DOM) */
+  const path=(e.composedPath&&e.composedPath())||[];
+  const inside=path.some(n=>n&&n.id==="apub-n-colors") || (e.target.closest&&e.target.closest("#apub-n-colors"));
+  if(!inside){ apubNew.ddOpen=false; apubNewRenderColors(); }
+});
+window.addEventListener("beforeunload", function(e){     // cerrar/recargar la pestaña con datos cargados
+  if((apubNewActive() && apubNewDirty()) || apubEditDirty()){ e.preventDefault(); e.returnValue=""; }
+});
+
+/* =====================================================================
+   OFERTAS (solo dueño) — tarjetas por tipo de oferta.
+   Cada tarjeta: título + botón "?" (explica al cliente) + armador propio.
+   Se guardan en la tabla public.ofertas (jsonb config). Aplicarlas a lo que
+   ve el cliente es la próxima fase.
+   ===================================================================== */
+const OF_KEY = "ryav_ofertas_v1";
+let OFERTAS = [];
+const ofState = { view:"grid", typeId:null, editingId:null, nombre:"", fin:"", cfg:null, q:"", cat:"", saving:false };
+const $$ofall = s => Array.prototype.slice.call(document.querySelectorAll(s));
+
+const OF_TYPES = [
+  // --- Descuentos directos ---
+  { id:"desc_pub",  grupo:"Descuentos", title:"Descuento por publicación", kind:"products", opts:{modo:"pct"},
+    info:"Bajá el precio de las publicaciones que elijas. Podés poner un porcentaje de descuento o un precio de oferta fijo para cada una. El cliente ve el precio anterior tachado y el nuevo." },
+  { id:"desc_cat",  grupo:"Descuentos", title:"Descuento por categoría", kind:"cats",
+    info:"Aplicá un porcentaje de descuento a toda una categoría o subcategoría de una sola vez. Ideal para liquidar un rubro entero." },
+  { id:"desc_color",grupo:"Descuentos", title:"Descuento por color", kind:"colors",
+    info:"Elegí uno o varios colores y un porcentaje. El descuento se aplica a las publicaciones que tengan esos colores." },
+  // --- Por cantidad ---
+  { id:"escalonado",grupo:"Por cantidad", title:"Precio por cantidad", kind:"tiers",
+    info:"Cuanto más compra el cliente, menos paga. Definís tramos por cantidad (por ejemplo: desde 500, 5% menos; desde 1000, 10% menos)." },
+  { id:"dos_x_uno", grupo:"Por cantidad", title:"2x1 / 3x2", kind:"ratio",
+    info:"Llevando cierta cantidad, una parte va sin cargo. Por ejemplo 2x1 (lleva 2, paga 1) o 3x2 (lleva 3, paga 2)." },
+  { id:"regalo_qty",grupo:"Por cantidad", title:"Regalo por cantidad", kind:"giftqty",
+    info:"Por cada cierta cantidad comprada, el cliente recibe unidades de regalo. Por ejemplo: cada 10 paquetes, 1 gratis." },
+  { id:"min_red",   grupo:"Por cantidad", title:"Mínimo reducido", kind:"newmin",
+    info:"Bajá por un tiempo la compra mínima de algunas publicaciones, para que más clientes se animen a comprar." },
+  // --- Por monto del pedido ---
+  { id:"monto_desc",grupo:"Por monto del pedido", title:"Descuento por monto", kind:"amount", opts:{modo:"pct"},
+    info:"Descuento sobre el total del pedido a partir de cierto monto. Por ejemplo: 10% en compras de más de $200.000." },
+  { id:"envio_free",grupo:"Por monto del pedido", title:"Envío gratis", kind:"amount", opts:{modo:"envio"},
+    info:"El envío sale sin cargo a partir de cierto monto de compra." },
+  { id:"regalo_cmp",grupo:"Por monto del pedido", title:"Regalo con la compra", kind:"amount", opts:{modo:"regalo"},
+    info:"Superando cierto monto, el cliente recibe un regalo o muestra que vos indicás." },
+  // --- Clientes y cupones ---
+  { id:"cupon",     grupo:"Clientes y cupones", title:"Cupón de código", kind:"coupon",
+    info:"El cliente escribe un código al finalizar la compra y obtiene un descuento. Sirve para campañas de Instagram o WhatsApp." },
+  { id:"primera",   grupo:"Clientes y cupones", title:"Primera compra", kind:"clientpct", opts:{param:"none"},
+    info:"Descuento para quien hace su primera compra." },
+  { id:"frecuente", grupo:"Clientes y cupones", title:"Cliente frecuente", kind:"clientpct", opts:{param:"pedidos"},
+    info:"Descuento para los clientes que ya hicieron varias compras." },
+  { id:"recompra",  grupo:"Clientes y cupones", title:"Recompra", kind:"clientpct", opts:{param:"dias"},
+    info:"Descuento para que el cliente vuelva a comprar dentro de cierta cantidad de días." },
+  { id:"pago",      grupo:"Clientes y cupones", title:"Descuento por pago", kind:"payment",
+    info:"Descuento según la forma de pago, por ejemplo efectivo o transferencia." },
+  // --- Stock y packs ---
+  { id:"liquidacion",grupo:"Stock y packs", title:"Liquidación", kind:"products", opts:{modo:"fijo", badge:"LIQUIDACIÓN"},
+    info:"Precio de remate para publicaciones discontinuadas o con mucho stock. Podés poner un precio fijo bajo." },
+  { id:"ultimas",   grupo:"Stock y packs", title:"Últimas unidades", kind:"products", opts:{modo:"pct", badge:"ÚLTIMAS UNIDADES"},
+    info:"Marca las publicaciones con poco stock y un descuento, con la etiqueta «Últimas unidades»." },
+  { id:"preventa",  grupo:"Stock y packs", title:"Preventa / lanzamiento", kind:"products", opts:{modo:"fijo", badge:"PREVENTA"},
+    info:"Precio especial para una publicación nueva durante sus primeras semanas." },
+  { id:"relampago", grupo:"Stock y packs", title:"Oferta relámpago", kind:"products", opts:{modo:"pct", badge:"OFERTA"},
+    info:"Un descuento fuerte por muy poco tiempo. Acordate de poner una fecha de fin cercana." },
+  { id:"combo",     grupo:"Stock y packs", title:"Combos / packs", kind:"combo",
+    info:"Armá un pack con varias publicaciones y una cantidad de cada una, a un precio cerrado." }
+];
+const ofType = id => OF_TYPES.find(t=>t.id===id)||null;
+const OF_GRUPOS = ["Descuentos","Por cantidad","Por monto del pedido","Clientes y cupones","Stock y packs"];
+
+/* ---------- cfg por defecto según el tipo ---------- */
+function ofDefaultCfg(t){
+  switch(t.kind){
+    case "products": return { modoDefault:(t.opts&&t.opts.modo)||"pct", items:{} };
+    case "cats":     return { items:{} };
+    case "colors":   return { colors:[], pct:"" };
+    case "tiers":    return { scope:"all", items:[], tramos:[{desde:"",modo:"pct",val:""}] };
+    case "ratio":    return { items:[], ratio:"2x1" };
+    case "giftqty":  return { items:[], cada:"", gratis:"1", texto:"" };
+    case "newmin":   return { items:{} };
+    case "amount":   return { modo:(t.opts&&t.opts.modo)||"pct", desde:"", val:"", texto:"" };
+    case "coupon":   return { codigo:"", modo:"pct", val:"", vence:"", tope:"", unoPorCliente:true };
+    case "clientpct":return { pct:"", param:"" };
+    case "payment":  return { metodos:[], pct:"" };
+    case "combo":    return { items:{}, precio:"" };
+    default:         return {};
+  }
+}
+
+/* ---------- carga / guardado ---------- */
+async function ofLoad(){
+  try{ const c=JSON.parse(localStorage.getItem(OF_KEY)||"null"); if(c&&c.rows){ OFERTAS=c.rows; } }catch(e){}
+  if(!sb) return;
+  try{
+    const { data, error } = await sb.from("ofertas").select("*").order("created_at",{ascending:false});
+    if(error||!data) return;
+    OFERTAS=data;
+    try{ localStorage.setItem(OF_KEY, JSON.stringify({rows:data, ts:Date.now()})); }catch(e){}
+    if(state.view==="adminpub" && apubState.tab==="ofertas") render();
+  }catch(e){}
+}
+function ofCache(){ try{ localStorage.setItem(OF_KEY, JSON.stringify({rows:OFERTAS, ts:Date.now()})); }catch(e){} }
+function ofFinISO(d){ return d ? new Date(d+"T23:59:59-03:00").toISOString() : null; }
+function ofFinInput(iso){ if(!iso) return ""; try{ const dt=new Date(iso); const tz=new Date(dt.getTime()-180*60000); return tz.toISOString().slice(0,10); }catch(e){ return ""; } }
+function ofFinLabel(iso){ if(!iso) return "Sin fecha de fin"; try{ return "Termina el "+new Date(iso).toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric"}); }catch(e){ return ""; } }
+function ofVencida(iso){ if(!iso) return false; try{ return new Date(iso).getTime() < Date.now(); }catch(e){ return false; } }
+
+/* ============================ VISTA ============================ */
+function ofRender(){ return ofState.view==="build" ? ofBuild() : ofGrid(); }
+
+function ofGrid(){
+  const tiles = OF_GRUPOS.map(g=>{
+    const cards = OF_TYPES.filter(t=>t.grupo===g).map(t=>`
+      <button class="of-card" data-action="of-open" data-t="${t.id}">
+        <span class="of-card-q" data-action="of-info" data-t="${t.id}" role="button" aria-label="Qué es ${escA(t.title)}" title="¿Qué es?">?</span>
+        <span class="of-card-ic">${OF_KIND_IC[t.kind]||OF_KIND_IC.default}</span>
+        <span class="of-card-t">${esc(t.title)}</span>
+      </button>`).join("");
+    return `<div class="of-group"><h2 class="of-group-h">${esc(g)}</h2><div class="of-cards">${cards}</div></div>`;
+  }).join("");
+  return `<div class="apub-head"><div><p class="eyebrow">Panel del dueño</p><h1 class="admin-h1">Ofertas</h1></div></div>
+    <p class="of-lead">Elegí un tipo de oferta para armarla. Tocá el <b>?</b> de cada tarjeta para ver cómo la va a entender tu cliente.</p>
+    ${tiles}
+    ${ofCreatedHTML()}`;
+}
+function ofCreatedHTML(){
+  if(!OFERTAS.length) return `<div class="of-created"><h2 class="of-group-h">Ofertas creadas</h2><p class="admin-empty">Todavía no creaste ninguna oferta.</p></div>`;
+  const rows=OFERTAS.map(o=>{
+    const t=ofType(o.tipo); const venc=ofVencida(o.fin);
+    const estado = (!o.activa)?`<span class="apub-badge b-hidden">Pausada</span>` : (venc?`<span class="apub-badge b-nostock">Vencida</span>`:`<span class="apub-badge b-ok">Activa</span>`);
+    return `<div class="apub-card of-crow">
+      <div class="apub-info">
+        <div class="apub-id">${esc(t?t.title:o.tipo)}</div>
+        <div class="apub-title">${esc(o.nombre||(t?t.title:"Oferta"))}</div>
+        <div class="apub-meta">${estado}<span class="apub-price">${esc(ofFinLabel(o.fin))}</span><span class="apub-price">${esc(ofResumen(o))}</span></div>
+      </div>
+      <div class="of-crow-btns">
+        <button class="apub-edit-btn" data-action="of-edit" data-id="${esc(o.id)}">Editar</button>
+        <button class="apub-del-btn" data-action="of-del" data-id="${esc(o.id)}">Borrar</button>
+      </div>
+    </div>`;
+  }).join("");
+  return `<div class="of-created"><h2 class="of-group-h">Ofertas creadas</h2><div class="apub-grid">${rows}</div></div>`;
+}
+function ofResumen(o){
+  const c=o.config||{}; const t=ofType(o.tipo); if(!t) return "";
+  try{ switch(t.kind){
+    case "products": return Object.keys(c.items||{}).length+" publicaciones";
+    case "cats":     return Object.keys(c.items||{}).length+" categorías";
+    case "colors":   return (c.colors||[]).length+" colores · "+(c.pct||0)+"%";
+    case "tiers":    return (c.tramos||[]).length+" tramos";
+    case "ratio":    return c.ratio+" · "+(c.items||[]).length+" publicaciones";
+    case "giftqty":  return "cada "+(c.cada||"?")+", "+(c.gratis||"?")+" gratis";
+    case "newmin":   return Object.keys(c.items||{}).length+" publicaciones";
+    case "amount":   return c.modo==="envio"?("desde "+money(c.desde||0)):(c.modo==="regalo"?("desde "+money(c.desde||0)):(c.val||0)+"% desde "+money(c.desde||0));
+    case "coupon":   return "código "+(c.codigo||"—");
+    case "clientpct":return (c.pct||0)+"%";
+    case "payment":  return (c.metodos||[]).length+" formas · "+(c.pct||0)+"%";
+    case "combo":    return Object.keys(c.items||{}).length+" items · "+money(c.precio||0);
+  } }catch(e){} return "";
+}
+const OF_KIND_IC = {
+  products:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8Z"/><circle cx="7" cy="7" r="1.3"/></svg>',
+  cats:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+  colors:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1.4"/><circle cx="15" cy="9" r="1.4"/><circle cx="9.5" cy="15" r="1.4"/></svg>',
+  tiers:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg>',
+  ratio:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 7h8M8 12h8M8 17h4"/><circle cx="4" cy="7" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="17" r="1"/></svg>',
+  giftqty:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="8" width="18" height="13"/><path d="M12 8v13M3 12h18M12 8S10 3 7.5 4.5 10 8 12 8ZM12 8s2-5 4.5-3.5S14 8 12 8Z"/></svg>',
+  newmin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14"/></svg>',
+  amount:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  coupon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1 0 4 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2 2 2 0 0 0 0-4 2 2 0 0 1 0-4Z"/><path d="M9 6v12" stroke-dasharray="2 2"/></svg>',
+  clientpct:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+  payment:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>',
+  combo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
+  default:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/></svg>'
+};
+
+/* ============================ ARMADOR ============================ */
+function ofOpen(typeId){ const t=ofType(typeId); if(!t) return; ofState.view="build"; ofState.typeId=typeId; ofState.editingId=null; ofState.nombre=""; ofState.fin=""; ofState.q=""; ofState.cat=""; ofState.cfg=ofDefaultCfg(t); ofState.saving=false; apubSdOpen=null; render(); window.scrollTo({top:0}); }
+function ofOpenExisting(id){ const o=OFERTAS.find(x=>x.id===id); if(!o) return; const t=ofType(o.tipo); if(!t) return; ofState.view="build"; ofState.typeId=o.tipo; ofState.editingId=id; ofState.nombre=o.nombre||""; ofState.fin=ofFinInput(o.fin); ofState.q=""; ofState.cat=""; ofState.cfg=Object.assign(ofDefaultCfg(t), JSON.parse(JSON.stringify(o.config||{}))); ofState.saving=false; apubSdOpen=null; render(); window.scrollTo({top:0}); }
+function ofBack(){ ofState.view="grid"; ofState.cfg=null; apubSdOpen=null; render(); window.scrollTo({top:0}); }
+
+function ofBuild(){
+  const t=ofType(ofState.typeId); if(!t) return ofGrid();
+  return `<div class="apub-head">
+      <button class="apub-back" data-action="of-back">${IC.arrowL} Ofertas</button>
+      <p class="apub-crumbtxt">${esc(t.title)}</p>
+      <span class="of-card-q of-q-head" data-action="of-info" data-t="${t.id}" role="button" title="¿Qué es?">?</span>
+    </div>
+    <div class="of-form">
+      <div class="of-common">
+        <div class="of-field"><label class="field-l" for="of-nombre">Nombre de la oferta</label>
+          <input id="of-nombre" class="apub-input" maxlength="60" value="${esc(ofState.nombre)}" placeholder="${escA(t.title)}"></div>
+        <div class="of-field"><label class="field-l" for="of-fin">¿Cuándo termina?</label>
+          <input id="of-fin" class="apub-input" type="date" value="${esc(ofState.fin)}">
+          <span class="apub-note">Dejalo vacío si la oferta no tiene fecha de fin.</span></div>
+      </div>
+      <div class="of-bodywrap">${ofBody(t)}</div>
+      <div class="of-save">
+        <button class="add-btn apub-go${ofState.saving?" loading":""}" data-action="of-save">${ofState.saving?"Guardando…":(ofState.editingId?"Guardar cambios":"Guardar oferta")}</button>
+        <button class="apub-btn-ghost" data-action="of-back">Cancelar</button>
+        <p id="of-msg" class="apub-msg"></p>
+      </div>
+    </div>`;
+}
+function ofMsg(txt,err){ const m=document.getElementById("of-msg"); if(m){ m.textContent=txt; m.className="apub-msg"+(err?" err":" ok"); } }
+
+/* ---- cuerpo según tipo ---- */
+function ofBody(t){
+  const k=t.kind;
+  if(k==="products") return ofPickerHTML(t,"Elegí las publicaciones y poné el descuento de cada una.");
+  if(k==="newmin")   return ofPickerHTML(t,"Elegí las publicaciones y poné la nueva compra mínima de cada una.");
+  if(k==="combo")    return ofComboHTML(t);
+  if(k==="cats")     return ofCatsHTML(t);
+  if(k==="colors")   return ofColorsHTML(t);
+  if(k==="tiers")    return ofTiersHTML(t);
+  if(k==="ratio")    return ofRatioHTML(t);
+  if(k==="giftqty")  return ofGiftHTML(t);
+  if(k==="amount")   return ofAmountHTML(t);
+  if(k==="coupon")   return ofCouponHTML(t);
+  if(k==="clientpct")return ofClientHTML(t);
+  if(k==="payment")  return ofPaymentHTML(t);
+  return "";
+}
+
+/* ---------- selector de publicaciones (compartido) ---------- */
+function ofProdFiltered(){
+  let arr=adminAllProducts();
+  const q=ofState.q.trim().toLowerCase();
+  if(ofState.cat) arr=arr.filter(x=>x.cat.id===ofState.cat);
+  if(q) arr=arr.filter(x=>(x.p.id+" "+(x.p.title||"")).toLowerCase().indexOf(q)>=0);
+  return arr;
+}
+function ofPickerTools(){
+  const opts=[["","Todas las categorías"]].concat(CATS_ALL.map(c=>[c.id,c.name]));
+  return `<div class="apub-tools">
+    <input id="of-search" class="apub-input" type="search" placeholder="Buscar por N° o título…" value="${esc(ofState.q)}">
+    ${apubSelectHTML("of-cat-filter", opts, ofState.cat, "Todas las categorías")}
+  </div>`;
+}
+function ofPickerHTML(t,lead){
+  return `<p class="of-sub">${esc(lead)}</p>${ofPickerTools()}<div id="of-list" class="of-list">${ofListRows(t)}</div>`;
+}
+function ofComboHTML(t){
+  return `<p class="of-sub">Elegí las publicaciones del pack y la cantidad de cada una.</p>
+    <div class="of-field of-combo-price"><label class="field-l" for="of-precio">Precio cerrado del pack</label>
+      <div class="apub-e-pricebox"><span class="apub-cur">$</span><input id="of-precio" class="apub-input apub-pin" type="number" min="0" inputmode="numeric" value="${esc((ofState.cfg.precio)||"")}" placeholder="0"></div></div>
+    ${ofPickerTools()}<div id="of-list" class="of-list">${ofListRows(t)}</div>`;
+}
+function ofListRows(t){
+  const arr=ofProdFiltered();
+  if(!arr.length) return `<p class="admin-empty">No hay publicaciones para ese filtro.</p>`;
+  return arr.map(x=>{
+    const p=x.p; const on=ofRowOn(t,p.id);
+    const thumb=p.img?`<img src="${imgURL(p.img,"w=90&q=70")}" alt="" loading="lazy">`:`<span class="apub-nothumb">${num(p.id)}</span>`;
+    const price=pPrice(p)>0?priceLabel(pPrice(p)):"—";
+    return `<div class="of-row${on?" on":""}">
+      <button type="button" class="of-check" data-action="of-toggle" data-id="${esc(p.id)}" aria-pressed="${on}">${on?APUB_SD_CHK:""}</button>
+      <div class="apub-thumb of-thumb">${thumb}</div>
+      <div class="apub-info"><div class="apub-id tnum">${esc(p.id)}</div><div class="apub-title">${esc(p.title||"")}</div><div class="apub-price tnum">${price}</div></div>
+      <div class="of-rowctl">${on?ofRowControl(t,p):""}</div>
+    </div>`;
+  }).join("");
+}
+const APUB_SD_CHK='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>';
+function ofRowOn(t,id){
+  const c=ofState.cfg;
+  if(t.kind==="products"||t.kind==="newmin") return !!c.items[id];
+  if(t.kind==="combo") return c.items[id]!=null;
+  return (c.items||[]).indexOf(id)>=0;
+}
+function ofRowControl(t,p){
+  const c=ofState.cfg, id=p.id;
+  if(t.kind==="products"){
+    const it=c.items[id]||{modo:c.modoDefault,val:""};
+    const pct=it.modo!=="fijo";
+    return `<div class="of-valbox${pct?" pct":" fijo"}">
+      <button type="button" class="of-modo" data-action="of-modo" data-id="${esc(id)}" title="Cambiar entre % y precio fijo">${pct?"%":"$"}</button>
+      <input class="apub-input of-val" data-id="${esc(id)}" type="number" min="0" inputmode="numeric" value="${esc(it.val)}" placeholder="${pct?"% desc.":"precio"}">
+    </div>`;
+  }
+  if(t.kind==="newmin"){
+    const v=c.items[id]||"";
+    return `<div class="of-valbox"><input class="apub-input of-minval" data-id="${esc(id)}" type="number" min="1" inputmode="numeric" value="${esc(v)}" placeholder="nuevo mín."></div>`;
+  }
+  if(t.kind==="combo"){
+    const v=c.items[id]||"";
+    return `<div class="of-valbox"><span class="of-x">×</span><input class="apub-input of-cant" data-id="${esc(id)}" type="number" min="1" inputmode="numeric" value="${esc(v)}" placeholder="cant."></div>`;
+  }
+  return "";
+}
+function ofListRerender(t){ const l=document.getElementById("of-list"); if(l) l.innerHTML=ofListRows(t); }
+
+/* ---------- categorías ---------- */
+function ofCatsHTML(t){
+  const rows=[];
+  CATS_ALL.forEach(c=>{
+    rows.push(ofCatRow(c.name, c.id, true));
+    (c.subs||[]).forEach(s=> rows.push(ofCatRow("— "+s.name, c.id+"/"+s.id, false)));
+  });
+  return `<p class="of-sub">Elegí las categorías o subcategorías y poné el porcentaje de descuento de cada una.</p>
+    <div id="of-list" class="of-list">${rows.join("")}</div>`;
+}
+function ofCatRow(label,key,isCat){
+  const v=ofState.cfg.items[key]; const on=v!=null;
+  return `<div class="of-row${on?" on":""}${isCat?" of-catmain":" of-catsub"}">
+    <button type="button" class="of-check" data-action="of-cat-toggle" data-k="${esc(key)}" aria-pressed="${on}">${on?APUB_SD_CHK:""}</button>
+    <div class="apub-info"><div class="apub-title">${esc(label)}</div></div>
+    <div class="of-rowctl">${on?`<div class="of-valbox pct"><button type="button" class="of-modo" disabled>%</button><input class="apub-input of-catval" data-k="${esc(key)}" type="number" min="0" inputmode="numeric" value="${esc(v)}" placeholder="% desc."></div>`:""}</div>
+  </div>`;
+}
+
+/* ---------- colores ---------- */
+function ofColorsHTML(t){
+  const sel=ofState.cfg.colors||[];
+  const chips=Object.keys(C).map(k=>{ const c=C[k]; const on=sel.indexOf(k)>=0;
+    return `<button type="button" class="apub-chip of-colorchip${on?" on":""}" data-action="of-color" data-k="${k}"><i class="apub-chip-dot" style="background:${c.h}"></i>${esc(c.n)}</button>`; }).join("");
+  return `<p class="of-sub">Elegí uno o varios colores y el porcentaje de descuento que se aplica a las publicaciones con esos colores.</p>
+    <div class="apub-chips of-colorwrap">${chips}</div>
+    <div class="of-field of-pctfield"><label class="field-l" for="of-pct">Porcentaje de descuento</label>
+      <div class="of-valbox pct"><input id="of-pct" class="apub-input of-val" type="number" min="0" max="100" inputmode="numeric" value="${esc(ofState.cfg.pct)}" placeholder="% desc."><span class="of-suf">%</span></div></div>`;
+}
+
+/* ---------- tramos (precio por cantidad) ---------- */
+function ofTiersHTML(t){
+  const c=ofState.cfg;
+  const tramos=c.tramos.map((tr,i)=>`<div class="of-tramo" data-i="${i}">
+      <span class="of-tramo-l">Desde</span>
+      <input class="apub-input of-tdesde" data-i="${i}" type="number" min="1" inputmode="numeric" value="${esc(tr.desde)}" placeholder="cant.">
+      <span class="of-tramo-l">unidades:</span>
+      <div class="of-valbox ${tr.modo==="fijo"?"fijo":"pct"}"><button type="button" class="of-modo" data-action="of-tmodo" data-i="${i}">${tr.modo==="fijo"?"$":"%"}</button>
+        <input class="apub-input of-tval" data-i="${i}" type="number" min="0" inputmode="numeric" value="${esc(tr.val)}" placeholder="${tr.modo==="fijo"?"precio":"% desc."}"></div>
+      <button type="button" class="of-tramo-del" data-action="of-tramo-del" data-i="${i}" title="Quitar tramo" ${c.tramos.length<=1?"disabled":""}>${IC.trash||"✕"}</button>
+    </div>`).join("");
+  const scopePick=`<div class="of-scope">
+      <button type="button" class="apub-chip${c.scope==="all"?" on":""}" data-action="of-scope" data-v="all">Todas las publicaciones</button>
+      <button type="button" class="apub-chip${c.scope==="sel"?" on":""}" data-action="of-scope" data-v="sel">Elegir publicaciones</button>
+    </div>`;
+  const picker = c.scope==="sel" ? `${ofPickerTools()}<div id="of-list" class="of-list">${ofListRows(t)}</div>` : "";
+  return `<p class="of-sub">Cuanto más compra el cliente, menos paga. Definí los tramos por cantidad.</p>
+    ${scopePick}
+    <div id="of-tramos" class="of-tramos">${tramos}</div>
+    <button type="button" class="apub-btn-ghost of-addtramo" data-action="of-tramo-add">+ Agregar tramo</button>
+    <div class="of-scopebody">${picker}</div>`;
+}
+
+/* ---------- 2x1 / 3x2 ---------- */
+function ofRatioHTML(t){
+  const ratios=[["2x1","2x1 — lleva 2, paga 1"],["3x2","3x2 — lleva 3, paga 2"],["4x3","4x3 — lleva 4, paga 3"]];
+  return `<p class="of-sub">Elegí la promoción y las publicaciones donde se aplica.</p>
+    <div class="of-field"><label class="field-l">Promoción</label>${apubSelectHTML("of-ratio", ratios, ofState.cfg.ratio, "Elegí…")}</div>
+    ${ofPickerTools()}<div id="of-list" class="of-list">${ofListRows(t)}</div>`;
+}
+
+/* ---------- regalo por cantidad ---------- */
+function ofGiftHTML(t){
+  const c=ofState.cfg;
+  return `<p class="of-sub">Por cada cierta cantidad comprada, el cliente recibe unidades de regalo.</p>
+    <div class="of-giftline">Cada <input id="of-cada" class="apub-input of-inline" type="number" min="1" inputmode="numeric" value="${esc(c.cada)}" placeholder="10"> compradas,
+      <input id="of-gratis" class="apub-input of-inline" type="number" min="1" inputmode="numeric" value="${esc(c.gratis)}" placeholder="1"> de regalo.</div>
+    <div class="of-field"><label class="field-l" for="of-gtexto">Texto del regalo (opcional)</label>
+      <input id="of-gtexto" class="apub-input" maxlength="80" value="${esc(c.texto)}" placeholder="Ej: 1 unidad del mismo artículo"></div>
+    ${ofPickerTools()}<div id="of-list" class="of-list">${ofListRows(t)}</div>`;
+}
+
+/* ---------- por monto del pedido ---------- */
+function ofAmountHTML(t){
+  const c=ofState.cfg;
+  const desde=`<div class="of-field"><label class="field-l" for="of-desde">Monto mínimo del pedido</label>
+      <div class="apub-e-pricebox"><span class="apub-cur">$</span><input id="of-desde" class="apub-input apub-pin" type="number" min="0" inputmode="numeric" value="${esc(c.desde)}" placeholder="0"></div></div>`;
+  if(c.modo==="pct") return `<p class="of-sub">Descuento sobre el total del pedido a partir de cierto monto.</p>${desde}
+      <div class="of-field"><label class="field-l" for="of-val">Descuento</label><div class="of-valbox pct"><input id="of-val" class="apub-input of-val" type="number" min="0" max="100" inputmode="numeric" value="${esc(c.val)}" placeholder="% desc."><span class="of-suf">%</span></div></div>`;
+  if(c.modo==="envio") return `<p class="of-sub">El envío sale sin cargo a partir de este monto.</p>${desde}`;
+  return `<p class="of-sub">Superando este monto, el cliente recibe un regalo.</p>${desde}
+      <div class="of-field"><label class="field-l" for="of-texto">¿Qué regalo?</label><input id="of-texto" class="apub-input" maxlength="80" value="${esc(c.texto)}" placeholder="Ej: una muestra de regalo"></div>`;
+}
+
+/* ---------- cupón ---------- */
+function ofCouponHTML(t){
+  const c=ofState.cfg;
+  const modos=[["pct","Porcentaje (%)"],["fijo","Monto fijo ($)"]];
+  return `<p class="of-sub">El cliente escribe este código al finalizar la compra para obtener el descuento.</p>
+    <div class="of-grid2">
+      <div class="of-field"><label class="field-l" for="of-codigo">Código</label><input id="of-codigo" class="apub-input of-codeup" maxlength="20" value="${esc(c.codigo)}" placeholder="VERANO10"></div>
+      <div class="of-field"><label class="field-l">Tipo de descuento</label>${apubSelectHTML("of-modo", modos, c.modo, "Elegí…")}</div>
+      <div class="of-field"><label class="field-l" for="of-val">Valor</label><div class="of-valbox"><input id="of-val" class="apub-input of-val" type="number" min="0" inputmode="numeric" value="${esc(c.val)}" placeholder="${c.modo==="fijo"?"$":"%"}"></div></div>
+      <div class="of-field"><label class="field-l" for="of-tope">Tope de usos (opcional)</label><input id="of-tope" class="apub-input" type="number" min="1" inputmode="numeric" value="${esc(c.tope)}" placeholder="sin tope"></div>
+    </div>
+    <label class="of-check-line"><input id="of-unocli" type="checkbox" ${c.unoPorCliente?"checked":""}> Un solo uso por cliente</label>`;
+}
+
+/* ---------- por tipo de cliente ---------- */
+function ofClientHTML(t){
+  const c=ofState.cfg, param=(t.opts&&t.opts.param)||"none";
+  let extra="";
+  if(param==="pedidos") extra=`<div class="of-field"><label class="field-l" for="of-param">Cantidad de compras para ser «frecuente»</label><input id="of-param" class="apub-input" type="number" min="1" inputmode="numeric" value="${esc(c.param)}" placeholder="3"></div>`;
+  if(param==="dias") extra=`<div class="of-field"><label class="field-l" for="of-param">Días para volver a comprar</label><input id="of-param" class="apub-input" type="number" min="1" inputmode="numeric" value="${esc(c.param)}" placeholder="30"></div>`;
+  return `<p class="of-sub">${esc(t.info)}</p>
+    <div class="of-field"><label class="field-l" for="of-pct">Porcentaje de descuento</label><div class="of-valbox pct"><input id="of-pct" class="apub-input of-val" type="number" min="0" max="100" inputmode="numeric" value="${esc(c.pct)}" placeholder="% desc."><span class="of-suf">%</span></div></div>
+    ${extra}`;
+}
+
+/* ---------- por forma de pago ---------- */
+function ofPaymentHTML(t){
+  const metodos=[["efectivo","Efectivo"],["transferencia","Transferencia"],["deposito","Depósito"],["mercadopago","Mercado Pago"]];
+  const sel=ofState.cfg.metodos||[];
+  const chips=metodos.map(m=>`<button type="button" class="apub-chip${sel.indexOf(m[0])>=0?" on":""}" data-action="of-metodo" data-k="${m[0]}">${esc(m[1])}</button>`).join("");
+  return `<p class="of-sub">Elegí las formas de pago con descuento y el porcentaje.</p>
+    <div class="apub-chips">${chips}</div>
+    <div class="of-field of-pctfield"><label class="field-l" for="of-pct">Porcentaje de descuento</label><div class="of-valbox pct"><input id="of-pct" class="apub-input of-val" type="number" min="0" max="100" inputmode="numeric" value="${esc(ofState.cfg.pct)}" placeholder="% desc."><span class="of-suf">%</span></div></div>`;
+}
+
+/* ============================ SYNC (DOM -> cfg) ============================ */
+function ofSyncInputs(){
+  const g=id=>{ const el=document.getElementById(id); return el?el.value:undefined; };
+  let v;
+  v=g("of-nombre"); if(v!==undefined) ofState.nombre=v;
+  v=g("of-fin");    if(v!==undefined) ofState.fin=v;
+  v=g("of-search"); if(v!==undefined) ofState.q=v;
+  const c=ofState.cfg, t=ofType(ofState.typeId); if(!c||!t) return;
+  if(t.kind==="products"){
+    $$ofall(".of-val[data-id]").forEach(el=>{ const id=el.dataset.id; if(c.items[id]) c.items[id].val=el.value; });
+  } else if(t.kind==="newmin"){
+    $$ofall(".of-minval[data-id]").forEach(el=>{ const id=el.dataset.id; if(c.items[id]!=null) c.items[id]=el.value; });
+  } else if(t.kind==="combo"){
+    v=g("of-precio"); if(v!==undefined) c.precio=v;
+    $$ofall(".of-cant[data-id]").forEach(el=>{ const id=el.dataset.id; if(c.items[id]!=null) c.items[id]=el.value; });
+  } else if(t.kind==="cats"){
+    $$ofall(".of-catval[data-k]").forEach(el=>{ const k=el.dataset.k; if(c.items[k]!=null) c.items[k]=el.value; });
+  } else if(t.kind==="colors"){
+    v=g("of-pct"); if(v!==undefined) c.pct=v;
+  } else if(t.kind==="tiers"){
+    $$ofall(".of-tdesde[data-i]").forEach(el=>{ const i=+el.dataset.i; if(c.tramos[i]) c.tramos[i].desde=el.value; });
+    $$ofall(".of-tval[data-i]").forEach(el=>{ const i=+el.dataset.i; if(c.tramos[i]) c.tramos[i].val=el.value; });
+  } else if(t.kind==="giftqty"){
+    v=g("of-cada"); if(v!==undefined) c.cada=v; v=g("of-gratis"); if(v!==undefined) c.gratis=v; v=g("of-gtexto"); if(v!==undefined) c.texto=v;
+  } else if(t.kind==="amount"){
+    v=g("of-desde"); if(v!==undefined) c.desde=v; v=g("of-val"); if(v!==undefined) c.val=v; v=g("of-texto"); if(v!==undefined) c.texto=v;
+  } else if(t.kind==="coupon"){
+    v=g("of-codigo"); if(v!==undefined) c.codigo=v; v=g("of-val"); if(v!==undefined) c.val=v; v=g("of-tope"); if(v!==undefined) c.tope=v;
+    const u=document.getElementById("of-unocli"); if(u) c.unoPorCliente=u.checked;
+    const m=document.getElementById("of-modo"); if(m) c.modo=m.value;
+  } else if(t.kind==="clientpct"){
+    v=g("of-pct"); if(v!==undefined) c.pct=v; v=g("of-param"); if(v!==undefined) c.param=v;
+  } else if(t.kind==="payment"){
+    v=g("of-pct"); if(v!==undefined) c.pct=v;
+  } else if(t.kind==="ratio"){
+    const r=document.getElementById("of-ratio"); if(r) c.ratio=r.value;
+  }
+}
+
+/* ============================ ACCIONES ============================ */
+function ofToggleItem(id){
+  ofSyncInputs(); const c=ofState.cfg, t=ofType(ofState.typeId);
+  if(t.kind==="products"){ if(c.items[id]) delete c.items[id]; else c.items[id]={modo:c.modoDefault,val:""}; }
+  else if(t.kind==="newmin"){ if(c.items[id]!=null) delete c.items[id]; else c.items[id]=""; }
+  else if(t.kind==="combo"){ if(c.items[id]!=null) delete c.items[id]; else c.items[id]=""; }
+  else { const i=c.items.indexOf(id); if(i>=0) c.items.splice(i,1); else c.items.push(id); }
+  ofListRerender(t);
+}
+function ofToggleModo(id){ ofSyncInputs(); const it=ofState.cfg.items[id]; if(it){ it.modo=(it.modo==="fijo"?"pct":"fijo"); } ofListRerender(ofType(ofState.typeId)); }
+function ofCatToggle(k){ ofSyncInputs(); const c=ofState.cfg; if(c.items[k]!=null) delete c.items[k]; else c.items[k]=""; const w=document.querySelector(".of-bodywrap"); if(w) w.innerHTML=ofCatsHTML(ofType(ofState.typeId)); }
+function ofColorToggle(k){ ofSyncInputs(); const c=ofState.cfg; const i=c.colors.indexOf(k); if(i>=0) c.colors.splice(i,1); else c.colors.push(k); const w=document.querySelector(".of-bodywrap"); if(w) w.innerHTML=ofColorsHTML(ofType(ofState.typeId)); }
+function ofMetodoToggle(k){ ofSyncInputs(); const c=ofState.cfg; const i=c.metodos.indexOf(k); if(i>=0) c.metodos.splice(i,1); else c.metodos.push(k); const w=document.querySelector(".of-bodywrap"); if(w) w.innerHTML=ofPaymentHTML(ofType(ofState.typeId)); }
+function ofScope(v){ ofSyncInputs(); ofState.cfg.scope=v; const w=document.querySelector(".of-bodywrap"); if(w) w.innerHTML=ofTiersHTML(ofType(ofState.typeId)); }
+function ofTramoAdd(){ ofSyncInputs(); ofState.cfg.tramos.push({desde:"",modo:"pct",val:""}); const w=document.querySelector(".of-bodywrap"); if(w) w.innerHTML=ofTiersHTML(ofType(ofState.typeId)); }
+function ofTramoDel(i){ ofSyncInputs(); ofState.cfg.tramos.splice(i,1); if(!ofState.cfg.tramos.length) ofState.cfg.tramos.push({desde:"",modo:"pct",val:""}); const w=document.querySelector(".of-bodywrap"); if(w) w.innerHTML=ofTiersHTML(ofType(ofState.typeId)); }
+function ofTramoModo(i){ ofSyncInputs(); const tr=ofState.cfg.tramos[i]; if(tr) tr.modo=(tr.modo==="fijo"?"pct":"fijo"); const w=document.querySelector(".of-bodywrap"); if(w) w.innerHTML=ofTiersHTML(ofType(ofState.typeId)); }
+
+/* ---------- validación + guardado ---------- */
+function ofValidate(t,c){
+  const asNum=v=>{ const n=parseFloat(v); return isNaN(n)?null:n; };
+  const pctOk=v=>{ const n=asNum(v); return n!=null && n>0 && n<=100; };
+  switch(t.kind){
+    case "products": { const ids=Object.keys(c.items); if(!ids.length) return "Elegí al menos una publicación."; for(const id of ids){ const it=c.items[id]; const n=asNum(it.val); if(n==null||n<=0) return "Completá el valor de "+id+"."; if(it.modo!=="fijo" && n>100) return "El % de "+id+" no puede ser mayor a 100."; } return null; }
+    case "newmin":  { const ids=Object.keys(c.items); if(!ids.length) return "Elegí al menos una publicación."; for(const id of ids){ const n=asNum(c.items[id]); if(n==null||n<1) return "Poné el nuevo mínimo de "+id+" (mínimo 1)."; } return null; }
+    case "combo":   { const ids=Object.keys(c.items); if(ids.length<2) return "Un combo necesita al menos 2 publicaciones."; for(const id of ids){ const n=asNum(c.items[id]); if(n==null||n<1) return "Poné la cantidad de "+id+"."; } if((asNum(c.precio)||0)<1) return "Poné el precio del pack (mínimo $1)."; return null; }
+    case "cats":    { const ks=Object.keys(c.items); if(!ks.length) return "Elegí al menos una categoría."; for(const k of ks){ if(!pctOk(c.items[k])) return "Poné un % válido (1 a 100) en cada categoría."; } return null; }
+    case "colors":  { if(!c.colors.length) return "Elegí al menos un color."; if(!pctOk(c.pct)) return "Poné un % de descuento válido (1 a 100)."; return null; }
+    case "tiers":   { if(c.scope==="sel" && !c.items.length) return "Elegí las publicaciones o cambiá a «Todas»."; if(!c.tramos.length) return "Agregá al menos un tramo."; for(const tr of c.tramos){ if((asNum(tr.desde)||0)<1) return "Cada tramo necesita una cantidad mínima."; const n=asNum(tr.val); if(n==null||n<=0) return "Completá el valor de cada tramo."; if(tr.modo!=="fijo" && n>100) return "El % de un tramo no puede ser mayor a 100."; } return null; }
+    case "ratio":   { if(!c.items.length) return "Elegí al menos una publicación."; if(!c.ratio) return "Elegí la promoción."; return null; }
+    case "giftqty": { if((asNum(c.cada)||0)<1) return "Poné cada cuántas unidades se regala."; if((asNum(c.gratis)||0)<1) return "Poné cuántas unidades de regalo."; if(!c.items.length) return "Elegí al menos una publicación."; return null; }
+    case "amount":  { if((asNum(c.desde)||0)<1) return "Poné el monto mínimo del pedido."; if(c.modo==="pct" && !pctOk(c.val)) return "Poné un % de descuento válido (1 a 100)."; if(c.modo==="regalo" && !String(c.texto||"").trim()) return "Escribí qué regalo recibe el cliente."; return null; }
+    case "coupon":  { if(!String(c.codigo||"").trim()) return "Poné el código del cupón."; const n=asNum(c.val); if(n==null||n<=0) return "Poné el valor del descuento."; if(c.modo==="pct" && n>100) return "El % no puede ser mayor a 100."; return null; }
+    case "clientpct":{ if(!pctOk(c.pct)) return "Poné un % de descuento válido (1 a 100)."; const p=(t.opts&&t.opts.param)||"none"; if(p!=="none" && (asNum(c.param)||0)<1) return "Completá el dato pedido (mínimo 1)."; return null; }
+    case "payment": { if(!c.metodos.length) return "Elegí al menos una forma de pago."; if(!pctOk(c.pct)) return "Poné un % de descuento válido (1 a 100)."; return null; }
+  }
+  return null;
+}
+async function ofSave(){
+  if(ofState.saving) return;
+  ofSyncInputs();
+  const t=ofType(ofState.typeId); if(!t) return;
+  if(!sb){ ofMsg("Sin conexión con el servidor.", true); return; }
+  // normaliza el cupón a mayúsculas
+  if(t.kind==="coupon") ofState.cfg.codigo=String(ofState.cfg.codigo||"").trim().toUpperCase();
+  const err=ofValidate(t, ofState.cfg);
+  if(err){ ofMsg(err, true); return; }
+  ofState.saving=true;
+  const btn=document.querySelector('[data-action="of-save"]');
+  if(btn){ btn.textContent="Guardando…"; btn.classList.add("loading"); }
+  ofMsg("", false);
+  const row={ tipo:t.id, nombre:String(ofState.nombre||"").trim()||t.title, activa:true, fin:ofFinISO(ofState.fin), config:ofState.cfg };
+  if(ofState.editingId) row.id=ofState.editingId;
+  try{
+    const q = ofState.editingId ? sb.from("ofertas").update(row).eq("id", ofState.editingId).select() : sb.from("ofertas").insert(row).select();
+    const { data:saved, error } = await q;
+    if(error) throw error;
+    if(!saved || !saved.length) throw new Error("No se guardó (revisá los permisos de administrador).");
+    const srow=saved[0];
+    const i=OFERTAS.findIndex(o=>o.id===srow.id);
+    if(i>=0) OFERTAS[i]=srow; else OFERTAS.unshift(srow);
+    ofCache();
+    ofState.saving=false; ofState.view="grid"; ofState.cfg=null;
+    render(); window.scrollTo({top:0});
+  }catch(e){
+    ofState.saving=false; if(btn){ btn.textContent=ofState.editingId?"Guardar cambios":"Guardar oferta"; btn.classList.remove("loading"); }
+    ofMsg((e&&e.message)?("No se pudo guardar: "+e.message):"No se pudo guardar.", true);
+  }
+}
+async function ofDelConfirm(){
+  const id=apubState.ofDel; if(!id){ return; }
+  if(!sb){ return; }
+  try{
+    const { error } = await sb.from("ofertas").delete().eq("id", id);
+    if(error) throw error;
+    OFERTAS=OFERTAS.filter(o=>o.id!==id); ofCache();
+    apubState.ofDel=null; render();
+  }catch(e){ apubState.ofDelErr=(e&&e.message)||"No se pudo borrar."; apubSyncModal(); }
+}
 
 /* ================= Init ================= */
 $("#ft-copy").textContent = "© "+new Date().getFullYear()+" Avíos Nito · Venta mayorista";
@@ -3766,7 +5787,10 @@ try{
 })();
 updateCartUI();
 renderAuth();
+renderSidebar();
 render();
+loadOverlay();
+ofLoad();
 if(sb){ sb.auth.onAuthStateChange(()=>{ refreshUser(); }); refreshUser(); }
 try{ history.replaceState(snapshot(), ""); }catch(e){}
 function reveal(){ document.documentElement.classList.remove("booting"); }
